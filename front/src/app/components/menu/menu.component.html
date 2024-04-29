@@ -1,0 +1,27 @@
+<!--List of all items to show-->
+<ng-template #menuTemplate>
+  <div
+    *ngIf="user?.roles?.includes('ADMIN')"
+    routerLink="/ishta"
+    class="link admin"
+  >
+    Dev.
+  </div>
+</ng-template>
+
+<div id="menu">
+  <div id="infos">
+    <img src="../../../favicon.ico" alt="app_logo" />
+    <div class="title">Ishtamar</div>
+    <ng-container *ngTemplateOutlet="menuTemplate"></ng-container>
+  </div>
+  <div id="items" *ngIf="isLogged">
+    <span routerLink="me" class="link">Mon compte</span>
+    <span (click)="logout()" class="link">Déconnexion</span>
+  </div>
+  <div id="items" *ngIf="!isLogged">
+    <span routerLink="login" class="link">Se connecter</span>
+    <span routerLink="register" class="link">S'inscrire</span>
+  </div>
+</div>
+<hr />

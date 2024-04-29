@@ -1,0 +1,53 @@
+#---------------------------------------------
+#Use .gitignored .env file for private data
+#---------------------------------------------
+#---------------------------------------------
+
+#Database settings
+spring:
+  main.allow-circular-references: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+  #email settings
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#JWT Security
+fr.ishtamar.starter:
+  lifespan: 9999 #jwt duration in minutes
+  secret: 1117566B59812468367639792F423E4528482B4D6253A95468574B5A71347211
+  dev-url: ${server.servlet.context-path}/
+  prod-url: test.com
+  files-upload: Files-Upload
+
+#Server settings
+server:
+  port: 3001
+  servlet.context-path: /api
+
+#Logging levels
+logging:
+  level:
+    root: ERROR
+    fr.ishtamar.starter: INFO
+    org.springframework.boot.web.embedded.tomcat: INFO
+  file:
+    path: logs/
+    max-history: 5
