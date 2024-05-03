@@ -1,7 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../services/session.service';
-import { Observable, of } from 'rxjs';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';

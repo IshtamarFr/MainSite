@@ -2,7 +2,7 @@
 <ng-template #menuTemplate>
   <div
     *ngIf="user?.roles?.includes('ADMIN')"
-    routerLink="/ishta"
+    routerLink="ishta"
     class="link admin"
   >
     Dev.
@@ -11,9 +11,9 @@
 
 <div id="menu">
   <div id="infos">
-    <img src="../../../favicon.ico" alt="app_logo" />
-    <div class="title">Ishtamar</div>
-    <ng-container *ngTemplateOutlet="menuTemplate"></ng-container>
+    <img src="../../../favicon.ico" alt="app_logo" routerLink="" class="link" />
+    <div class="link title" routerLink="">Ishtamar</div>
+    <ng-container *ngTemplateOutlet="menuTemplate" />
   </div>
   <div id="items" *ngIf="isLogged">
     <span routerLink="me" class="link">Mon compte</span>

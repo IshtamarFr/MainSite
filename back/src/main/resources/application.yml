@@ -1,8 +1,3 @@
-#---------------------------------------------
-#Use .gitignored .env file for private data
-#---------------------------------------------
-#---------------------------------------------
-
 #Database settings
 spring:
   main.allow-circular-references: false

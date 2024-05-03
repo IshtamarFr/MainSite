@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MainComponent } from './main.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+import { SudokuComponent } from './sudoku.component';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('SudokuComponent', () => {
+  let component: SudokuComponent;
+  let fixture: ComponentFixture<SudokuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainComponent, RouterModule.forRoot([]), NoopAnimationsModule],
+      imports: [SudokuComponent, NoopAnimationsModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(SudokuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
