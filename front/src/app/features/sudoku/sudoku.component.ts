@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SudokuService } from './sudoku.service';
 
 @Component({
   selector: 'app-sudoku',
@@ -10,14 +11,19 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sudoku.component.scss',
 })
 export class SudokuComponent {
-  S: (number | null)[] = Array(81).fill(0);
+  S: (number | null)[]; //Sudoku grid as it's already known
+  T: (number | null)[] = Array(81).fill(0); //Temporary grid as it's filled
+
+  constructor(private sudokuService: SudokuService) {
+    this.S = sudokuService.S;
+  }
 
   test(): void {
-    window.alert(this.S.toString());
+    window.alert(this.T.toString());
   }
 
   verify(rank: number): void {
-    if (![null, 1, 2, 3, 4, 5, 6, 7, 8, 9].includes(this.S[rank]))
-      this.S[rank] = null;
+    if (![null, 1, 2, 3, 4, 5, 6, 7, 8, 9].includes(this.T[rank]))
+      this.T[rank] = null;
   }
 }
