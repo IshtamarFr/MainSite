@@ -1,1 +1,15 @@
-<p>sudoku works!</p>
+<div class="mainContainer">
+  <table class="principal">
+    <tr
+      *ngFor="let li of [0, 1, 2, 3, 4, 5, 6, 7, 8]"
+      [ngClass]="{ row: li % 3 === 0 }"
+    >
+      <td
+        *ngFor="let co of [0, 1, 2, 3, 4, 5, 6, 7, 8]"
+        [ngClass]="{ column: co % 3 === 0 }"
+      >
+        {{ li }}{{ co }}
+      </td>
+    </tr>
+  </table>
+</div>

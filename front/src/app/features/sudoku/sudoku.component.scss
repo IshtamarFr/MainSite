@@ -1,0 +1,21 @@
+.mainContainer {
+  th,
+  td {
+    border: 1px solid black;
+    padding: 5px;
+  }
+
+  .principal {
+    border-collapse: collapse;
+    border: 3px solid black;
+    margin: 10px;
+  }
+
+  .row {
+    border-top: 3px solid black;
+  }
+
+  .column {
+    border-left: 3px solid black;
+  }
+}

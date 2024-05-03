@@ -5,6 +5,7 @@ import { SessionService } from './services/session.service';
 import { AuthService } from './features/auth/services/auth.service';
 import { of, throwError } from 'rxjs';
 import { User } from './interfaces/user.interface';
+import { RouterModule } from '@angular/router';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -21,7 +22,11 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, HttpClientTestingModule],
+      imports: [
+        AppComponent,
+        HttpClientTestingModule,
+        RouterModule.forRoot([]),
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
