@@ -60,13 +60,27 @@ describe('SudokuService', () => {
   });
 
   it('getOtherRanksInLCS work', () => {
-    expect(service['getOtherRanksinLCS'](30)).toStrictEqual([
+    expect(service['getOtherRanksInLCS'](30)).toStrictEqual([
       3, 12, 21, 27, 28, 29, 31, 32, 33, 34, 35, 39, 40, 41, 48, 49, 50, 57, 66,
       75,
     ]);
-    expect(service['getOtherRanksinLCS'](64)).toStrictEqual([
+    expect(service['getOtherRanksInLCS'](64)).toStrictEqual([
       1, 10, 19, 28, 37, 46, 54, 55, 56, 63, 65, 66, 67, 68, 69, 70, 71, 72, 73,
       74,
     ]);
+  });
+
+  it('setCellPossibilities work for cell 23', () => {
+    //Given
+    service.S = Array(81).fill(null);
+    service.S[23] = 7;
+
+    //When
+    const P = service['setCellPossibilities'](service.S);
+
+    //Then
+    expect(P[21][7]).toBe(0);
+    expect(P[21][6]).toBe(1);
+    expect(P[21][0]).toBe(8);
   });
 });

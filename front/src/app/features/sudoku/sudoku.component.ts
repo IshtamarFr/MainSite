@@ -12,7 +12,7 @@ import { SudokuService } from './sudoku.service';
 })
 export class SudokuComponent {
   S: (number | null)[]; //Sudoku grid as it's already known
-  T: (number | null)[] = Array(81).fill(0); //Temporary grid as it's filled
+  T: (number | null)[] = [...Array(81)].map((_) => null); //Temporary grid as it's filled
 
   constructor(private sudokuService: SudokuService) {
     this.S = sudokuService.S;

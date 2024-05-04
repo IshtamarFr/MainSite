@@ -4,8 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SudokuService {
-  public S: (number | null)[] = Array(81).fill(0);
+  public S: (number | null)[] = [...Array(81)].map((_) => 0); //Sudoku grid as it's used in service
 
+  /*
+  Functions dealing with Lines, Colums, and Sectors (LCS)
+  */
   private getLine(rank: number): number {
     return Math.floor(rank / 9);
   }
@@ -49,12 +52,35 @@ export class SudokuService {
     return answer;
   }
 
-  private getOtherRanksinLCS(rank: number): number[] {
+  private getOtherRanksInLCS(rank: number): number[] {
     const set1 = new Set([
       ...this.getOtherRanksinLine(rank),
       ...this.getOtherRanksinColumn(rank),
       ...this.getOtherRanksinSector(rank),
     ]);
     return Array.from(set1).sort((a, b) => a - b);
+  }
+
+  /*
+  Functions dealing with logics
+  */
+  private setCellPossibilities(grid: (number | null)[]): number[][] {
+    var P: number[][] = [...Array(81)].map((_) => [
+      9, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    ]); //Initializes all 81 cases to allow all 9 numbers
+    for (let rank of [...Array(81).keys()]) {
+      if (grid[rank] != null) {
+        const value = grid[rank]!;
+        P[rank] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (let rank2 of this.getOtherRanksInLCS(rank)) {
+          if (P[rank2][value] === 1) {
+            P[rank2][value] = 0;
+            P[rank2][0]--;
+          }
+        }
+      }
+    }
+    console.log(P);
+    return P;
   }
 }
