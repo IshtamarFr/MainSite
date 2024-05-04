@@ -8,7 +8,9 @@
         *ngFor="let co of [0, 1, 2, 3, 4, 5, 6, 7, 8]"
         [ngClass]="{ column: co % 3 === 0 }"
       >
-        <span *ngIf="S[9 * li + co]">{{ S[9 * li + co] }}</span>
+        <span *ngIf="S[9 * li + co]" class="validate">{{
+          S[9 * li + co]
+        }}</span>
         <input
           *ngIf="!S[9 * li + co]"
           [(ngModel)]="T[9 * li + co]"
@@ -20,5 +22,9 @@
       </td>
     </tr>
   </table>
-  <button (click)="test()">Tester</button>
+
+  <div class="actions">
+    <button mat-raised-button (click)="validate()">Valider</button>
+    <button mat-raised-button (click)="showPossible()">Montrer cases</button>
+  </div>
 </div>

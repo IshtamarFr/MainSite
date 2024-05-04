@@ -1,20 +1,45 @@
 .mainContainer {
+  padding: 10px;
+
   td {
     border: 1px solid black;
-    padding: 5px;
+    text-align: center;
+    width: 45px;
+    height: 30px;
+
+    .validate {
+      font-weight: bold;
+    }
+
+    input {
+      border: 0px solid;
+      width: 40px;
+      height: 30px;
+      text-align: center;
+    }
   }
 
   .principal {
     border-collapse: collapse;
     border: 3px solid black;
     margin: 10px;
+
+    .row {
+      border-top: 3px solid black;
+    }
+
+    .column {
+      border-left: 3px solid black;
+    }
   }
 
-  .row {
-    border-top: 3px solid black;
-  }
+  .actions {
+    button {
+      background-color: lightblue;
+    }
 
-  .column {
-    border-left: 3px solid black;
+    button + button {
+      margin-left: 10px;
+    }
   }
 }
