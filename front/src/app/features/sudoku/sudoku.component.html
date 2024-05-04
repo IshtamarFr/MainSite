@@ -28,4 +28,6 @@
     <button mat-raised-button (click)="validate()">Valider</button>
     <button mat-raised-button (click)="showPossible()">Montrer cases</button>
   </div>
+
+  <div class="error" *ngIf="error != ''">Erreur : {{ error }}</div>
 </div>

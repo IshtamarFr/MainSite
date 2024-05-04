@@ -40,10 +40,13 @@ export class SudokuComponent {
   }
 
   showPossible(): void {
+    this.error = '';
+    this.N = [...Array(81)].map((_) => null);
+
     try {
       this.N = this.sudokuService.nextMovesGrid(this.sudokuService.S);
     } catch (error: any) {
-      //TODO: Take care of exception
+      this.error = error.message;
     }
   }
 }
