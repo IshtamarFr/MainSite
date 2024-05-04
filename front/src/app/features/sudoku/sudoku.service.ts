@@ -65,22 +65,34 @@ export class SudokuService {
   Functions dealing with logics
   */
   private setCellPossibilities(grid: (number | null)[]): number[][] {
-    var P: number[][] = [...Array(81)].map((_) => [
+    let P: number[][] = [...Array(81)].map((_) => [
       9, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     ]); //Initializes all 81 cases to allow all 9 numbers
+
     for (let rank of [...Array(81).keys()]) {
       if (grid[rank] != null) {
         const value = grid[rank]!;
         P[rank] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         for (let rank2 of this.getOtherRanksInLCS(rank)) {
-          if (P[rank2][value] === 1) {
-            P[rank2][value] = 0;
-            P[rank2][0]--;
+          if (grid[rank2] == null) {
+            if (P[rank2][value] === 1) {
+              P[rank2][value] = 0;
+
+              if (P[rank2][0] > 1) P[rank2][0]--;
+              else
+                throw new Error(
+                  `cell in rank ${rank2} is not set but has 0 possibilities`
+                );
+            }
+          } else {
+            if (grid[rank2] === value)
+              throw new Error(
+                `duplicate value ${value} in ranks ${rank} and ${rank2}`
+              );
           }
         }
       }
     }
-    console.log(P);
     return P;
   }
 }

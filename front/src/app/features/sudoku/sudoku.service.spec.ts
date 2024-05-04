@@ -82,5 +82,29 @@ describe('SudokuService', () => {
     expect(P[21][7]).toBe(0);
     expect(P[21][6]).toBe(1);
     expect(P[21][0]).toBe(8);
+
+    expect(P[33][7]).toBe(1);
+    expect(P[33][6]).toBe(1);
+    expect(P[33][0]).toBe(9);
+
+    expect(P[23][7]).toBe(0);
+    expect(P[23][6]).toBe(0);
+    expect(P[23][0]).toBe(0);
+  });
+
+  it('setCellPossibilities throw error for duplicates', () => {
+    //Given
+    service.S = Array(81).fill(null);
+    service.S[41] = 2;
+    service.S[36] = 2;
+
+    //When
+    try {
+      const P = service['setCellPossibilities'](service.S);
+    } catch (error: any) {
+      //Then
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe('duplicate value 2 in ranks 36 and 41');
+    }
   });
 });
