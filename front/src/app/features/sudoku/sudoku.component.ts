@@ -15,7 +15,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 export class SudokuComponent {
   S: (number | null)[]; //Sudoku grid as it's already known
   T: (number | null)[] = [...Array(81)].map((_) => null); //Temporary grid as it's filled
+  N: (number | null)[] = [...Array(81)].map((_) => null); //Next moves possible
+
   isModified: boolean = false;
+  error: string = '';
 
   constructor(private sudokuService: SudokuService) {
     this.S = sudokuService.S;
@@ -36,5 +39,11 @@ export class SudokuComponent {
     });
   }
 
-  showPossible(): void {}
+  showPossible(): void {
+    try {
+      this.N = this.sudokuService.nextMovesGrid(this.sudokuService.S);
+    } catch (error: any) {
+      //TODO: Take care of exception
+    }
+  }
 }

@@ -31,6 +31,13 @@
     .column {
       border-left: 3px solid black;
     }
+
+    .nextMove {
+      background-color: yellow;
+      input {
+        background-color: yellow;
+      }
+    }
   }
 
   .actions {

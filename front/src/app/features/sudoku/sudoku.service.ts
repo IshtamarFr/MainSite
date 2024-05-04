@@ -43,6 +43,8 @@ export class SudokuService {
     let answer: number[] = [];
     const baseline = 3 * Math.floor(this.getLine(rank) / 3);
     const basecolumn = 3 * Math.floor(this.getColumn(rank) / 3);
+
+    //Doesn't use getSector, as I prefer havinf the top-left index for sector instead
     for (var comp = 0; comp < 3; comp++) {
       for (var comp2 = 0; comp2 < 3; comp2++) {
         const candidate = 9 * (baseline + comp) + basecolumn + comp2;
@@ -101,11 +103,11 @@ export class SudokuService {
   }
 
   public nextMovesGrid(grid: (number | null)[]): (number | null)[] {
-    let N = [...grid];
+    let N: (number | null)[] = [...Array(81)].map((_) => null);
     let P = this.setCellPossibilities(grid);
 
     P.forEach((item, index) => {
-      if (N[index] == null) {
+      if (grid[index] == null) {
         if (item[0] === 1) {
           //I know there's only one value possible for N[index] which is not set up
           item[0] = 0;
@@ -113,7 +115,7 @@ export class SudokuService {
         }
       }
     });
-    return N;
+    return N; //I just have unset cells which have only 1 cell candidates in them
   }
 
   /*
