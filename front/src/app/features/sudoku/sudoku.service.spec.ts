@@ -140,4 +140,42 @@ describe('SudokuService', () => {
       );
     }
   });
+
+  it('nextMoveGrid works for cell where there is one candidate only (line)', () => {
+    //Given
+    service.S = Array(81).fill(null);
+    service.S[0] = 1;
+    service.S[1] = 2;
+    service.S[2] = 3;
+    service.S[3] = 4;
+    service.S[4] = 5;
+    service.S[5] = 6;
+    service.S[6] = 7;
+    service.S[7] = 8;
+
+    //When
+    const N = service.nextMovesGrid(service.S);
+
+    //Then
+    expect(N[8]).toBe(9);
+  });
+
+  it('nextMoveGrid works for cell where there is one candidate only (sector)', () => {
+    //Given
+    service.S = Array(81).fill(null);
+    service.S[30] = 1;
+    service.S[31] = 2;
+    service.S[32] = 3;
+    service.S[39] = 4;
+    service.S[40] = 5;
+    service.S[48] = 7;
+    service.S[49] = 8;
+    service.S[50] = 9;
+
+    //When
+    const N = service.nextMovesGrid(service.S);
+
+    //Then
+    expect(N[41]).toBe(6);
+  });
 });

@@ -71,10 +71,13 @@ export class SudokuService {
 
     for (let rank of [...Array(81).keys()]) {
       if (grid[rank] != null) {
+        //I get value of grid[rank] and set it to all OK
         const value = grid[rank]!;
         P[rank] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
         for (let rank2 of this.getOtherRanksInLCS(rank)) {
           if (grid[rank2] == null) {
+            //I work to disallow value to all cells in line, column, sector
             if (P[rank2][value] === 1) {
               P[rank2][value] = 0;
 
@@ -85,6 +88,7 @@ export class SudokuService {
                 );
             }
           } else {
+            //I check if cell is not a duplicate in line, column, sector
             if (grid[rank2] === value)
               throw new Error(
                 `duplicate value ${value} in ranks ${rank} and ${rank2}`
@@ -95,4 +99,24 @@ export class SudokuService {
     }
     return P;
   }
+
+  public nextMovesGrid(grid: (number | null)[]): (number | null)[] {
+    let N = [...grid];
+    let P = this.setCellPossibilities(grid);
+
+    P.forEach((item, index) => {
+      if (N[index] == null) {
+        if (item[0] === 1) {
+          //I know there's only one value possible for N[index] which is not set up
+          item[0] = 0;
+          N[index] = item.findIndex((value) => value === 1);
+        }
+      }
+    });
+    return N;
+  }
+
+  /*
+  Functions dealing with showing (cells, full grids, etc.)
+  */
 }
