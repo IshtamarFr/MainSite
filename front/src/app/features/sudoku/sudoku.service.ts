@@ -44,11 +44,39 @@ export class SudokuService {
     const baseline = 3 * Math.floor(this.getLine(rank) / 3);
     const basecolumn = 3 * Math.floor(this.getColumn(rank) / 3);
 
-    //Doesn't use getSector, as I prefer havinf the top-left index for sector instead
+    //Doesn't use getSector, as I prefer having the top-left index for sector instead
     for (var comp = 0; comp < 3; comp++) {
       for (var comp2 = 0; comp2 < 3; comp2++) {
         const candidate = 9 * (baseline + comp) + basecolumn + comp2;
         if (candidate !== rank) answer.push(candidate);
+      }
+    }
+    return answer;
+  }
+
+  private getAllRanksInLine(li: number): number[] {
+    let answer: number[] = [];
+    for (var comp = 0; comp < 9; comp++) {
+      answer.push(comp + 9 * li);
+    }
+    return answer;
+  }
+
+  private getAllRanksinColumn(co: number): number[] {
+    let answer: number[] = [];
+    for (var comp = 0; comp < 9; comp++) {
+      answer.push(9 * comp + co);
+    }
+    return answer;
+  }
+
+  private getAllRanksinSector(sector: number): number[] {
+    let answer: number[] = [];
+
+    const baseCell = 27 * Math.floor(sector / 3) + 3 * (sector % 3);
+    for (var comp = 0; comp < 3; comp++) {
+      for (var comp2 = 0; comp2 < 3; comp2++) {
+        answer.push(baseCell + 9 * comp + comp2);
       }
     }
     return answer;
