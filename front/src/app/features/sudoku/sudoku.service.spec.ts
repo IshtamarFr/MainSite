@@ -178,4 +178,13 @@ describe('SudokuService', () => {
     //Then
     expect(N[41]).toBe(6);
   });
+
+  it('valuesFor1Candidates send array of values to be worked with', () => {
+    expect(
+      service['valuesFor1Candidates']([null, null, null, 9, null, 3, 1, 7, 4])
+    ).toStrictEqual([2, 5, 6, 8]);
+    expect(
+      service['valuesFor1Candidates']([8, null, 1, 4, null, 5, null, null, 2])
+    ).toStrictEqual([3, 6, 7, 9]);
+  });
 });

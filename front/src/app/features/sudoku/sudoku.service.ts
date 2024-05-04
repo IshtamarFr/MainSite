@@ -115,10 +115,15 @@ export class SudokuService {
         }
       }
     });
-    return N; //I just have unset cells which have only 1 cell candidates in them
+    return N; //It just returns unset cells which have only 1 cell candidates in them
   }
 
-  /*
-  Functions dealing with showing (cells, full grids, etc.)
-  */
+  private valuesFor1Candidates(block: (number | null)[]): number[] {
+    let answer: Set<number> = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    block.forEach((value) => {
+      if (value != null) answer.delete(value);
+    });
+    return Array.from(answer).sort((a, b) => a - b);
+  }
 }
