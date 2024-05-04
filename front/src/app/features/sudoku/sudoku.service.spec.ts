@@ -100,11 +100,44 @@ describe('SudokuService', () => {
 
     //When
     try {
-      const P = service['setCellPossibilities'](service.S);
+      service['setCellPossibilities'](service.S);
     } catch (error: any) {
       //Then
       expect(error).toBeInstanceOf(Error);
       expect(error.message).toBe('duplicate value 2 in ranks 36 and 41');
+    }
+  });
+
+  it('setCellPossibilities throw error for 0 possibilities', () => {
+    //Given
+    service.S = Array(81).fill(null);
+    service.S[0] = 1;
+    service.S[1] = 2;
+    service.S[2] = 3;
+    service.S[3] = 4;
+    service.S[4] = 5;
+    service.S[5] = 6;
+    service.S[6] = 7;
+    service.S[7] = 8;
+
+    //When
+    const P = service['setCellPossibilities'](service.S);
+
+    //Then
+    expect(P[8]).toStrictEqual([1, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+
+    //And Given
+    service.S[25] = 9;
+
+    //When
+    try {
+      service['setCellPossibilities'](service.S);
+    } catch (error: any) {
+      //Then
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe(
+        'cell in rank 8 is not set but has 0 possibilities'
+      );
     }
   });
 });
