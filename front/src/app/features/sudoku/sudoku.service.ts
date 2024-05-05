@@ -242,4 +242,25 @@ export class SudokuService {
     }
     return actions;
   }
+
+  /*
+  Functions dealing with filling (simple, complex, montecarlo)
+  */
+  public simpleFill(grid: (number | null)[]): (number | null)[] {
+    let F1: (number | null)[] = [...grid];
+    let oldGridLength: number = F1.filter((x) => x !== null).length;
+    let newGridLength: number;
+    let toBeContinued: boolean = oldGridLength < 81;
+
+    while (toBeContinued) {
+      //TODO: New F must be old F1 plus old F1
+
+      newGridLength = F1.filter((x) => x !== null).length;
+      toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
+      oldGridLength = newGridLength;
+    }
+
+    console.log(F1);
+    return F1;
+  }
 }

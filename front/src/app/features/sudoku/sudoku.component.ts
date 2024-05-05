@@ -65,6 +65,28 @@ export class SudokuComponent {
   }
 
   fillValues(): void {
-    this.T = this.sudokuService.nextMovesGrid(this.S);
+    this.error = '';
+    this.N = [...Array(81)].map((_) => null);
+    this.nextValues = new Set();
+
+    try {
+      const temp = this.sudokuService.nextMovesGrid(this.sudokuService.S);
+      this.N = temp;
+      this.T = temp;
+    } catch (error: any) {
+      this.error = error.message;
+    }
+  }
+
+  simpleFill(): void {
+    this.error = '';
+    this.N = [...Array(81)].map((_) => null);
+    this.nextValues = new Set();
+
+    try {
+      this.T = this.sudokuService.simpleFill(this.sudokuService.S);
+    } catch (error: any) {
+      this.error = error.message;
+    }
   }
 }
