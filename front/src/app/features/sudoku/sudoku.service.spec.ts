@@ -274,4 +274,15 @@ describe('SudokuService', () => {
       );
     }
   });
+
+  it('blockify a sector works', () => {
+    //Given
+    const block = [...Array(81).keys()].map((x) => x + 10);
+
+    //When
+    const W = service['blockify'](block, [57, 58, 59, 66, 67, 68, 75, 76, 77]);
+
+    //Then
+    expect(W).toStrictEqual([67, 68, 69, 76, 77, 78, 85, 86, 87]);
+  });
 });

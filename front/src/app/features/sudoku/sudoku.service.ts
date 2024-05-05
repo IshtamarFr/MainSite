@@ -134,6 +134,7 @@ export class SudokuService {
     let N: (number | null)[] = [...Array(81)].map((_) => null);
     let P = this.setCellPossibilities(grid);
 
+    //This part only deals with cells (with 0-1 possibilities to fill in)
     P.forEach((item, index) => {
       if (grid[index] == null) {
         if (item[0] === 1) {
@@ -143,6 +144,14 @@ export class SudokuService {
         }
       }
     });
+
+    //This part only deals with lines/columns/sectors (with 0-1 possibilities to fill in)
+    //We throw an error if there's conflict with N filling (with multiple different values)
+    let actions: [number, number][] = [];
+    for (let comp = 0; comp < 9; comp++) {
+      //TODO: add actions for lines, cells, sectors
+    }
+
     return N; //It just returns unset cells which have only 1 cell candidates in them
   }
 
@@ -160,7 +169,7 @@ export class SudokuService {
     pBlock: number[][]
   ): [number, number][] {
     //From a list of 9 values from grid and P, we return array of [index (in pBlock, not rank yet),value]
-    //Error can be thrown (if a value should be set but has no room, if 2 different values overlap)
+    //Error can be thrown if a value should be set but has no room
     let answer: [number, number][] = [];
 
     for (let value of this.valuesFor1Candidates(block)) {
@@ -179,6 +188,14 @@ export class SudokuService {
       }
     }
 
+    return answer;
+  }
+
+  private blockify(array: any[], indexes: number[]): any[] {
+    let answer: any[] = [];
+    for (let i of indexes) {
+      answer.push(array[i]);
+    }
     return answer;
   }
 }
