@@ -154,4 +154,31 @@ export class SudokuService {
     });
     return Array.from(answer).sort((a, b) => a - b);
   }
+
+  private coreFor1Candidates(
+    block: (number | null)[],
+    pBlock: number[][]
+  ): [number, number][] {
+    //From a list of 9 values from grid and P, we return array of [index (in pBlock, not rank yet),value]
+    //Error can be thrown (if a value should be set but has no room, if 2 different values overlap)
+    let answer: [number, number][] = [];
+
+    for (let value of this.valuesFor1Candidates(block)) {
+      let candidates: number[] = [];
+
+      for (let index of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+        if (pBlock[index][value] === 1) candidates.push(index);
+      }
+
+      if (candidates.length === 0) {
+        throw new Error(
+          `value ${value} is not set in block ${block.toString}, but has no room for that`
+        );
+      } else if (candidates.length === 1) {
+        answer.push([candidates[0], value]);
+      }
+    }
+
+    return answer;
+  }
 }
