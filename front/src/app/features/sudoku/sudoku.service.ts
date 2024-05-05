@@ -145,20 +145,20 @@ export class SudokuService {
       }
     });
 
-    //This part only deals with lines/columns/sectors (with 0-1 possibilities to fill in)
-    //We throw an error if there's conflict with N filling (with multiple different values)
-    let actions: [number, number][] = [];
-    let indexes: number[];
-
-    for (let comp = 0; comp < 9; comp++) {
-      indexes = this.getAllRanksInLine(comp);
-      this.coreFor1Candidates(
-        this.blockify(grid, indexes),
-        this.blockify(P, indexes)
-      );
+    //Now we try to apply all actions
+    for (let action of this.findAll1CandidatesActions(grid)) {
+      if (N[action[0]] === null) {
+        N[action[0]] = action[1];
+      } else if (N[action[0]] !== action[1]) {
+        throw new Error(
+          `cell ${action[0]} can reaceive both only a ${N[action[0]]} and a ${
+            action[1]
+          } from different methods`
+        );
+      }
     }
 
-    return N; //It just returns unset cells which have only 1 cell candidates in them
+    return N;
   }
 
   private valuesFor1Candidates(block: (number | null)[]): number[] {
@@ -204,5 +204,41 @@ export class SudokuService {
       answer.push(array[i]);
     }
     return answer;
+  }
+
+  private findAll1CandidatesActions(
+    grid: (number | null)[]
+  ): [number, number][] {
+    let actions: [number, number][] = [];
+    let P = this.setCellPossibilities(grid);
+    let indexes: number[];
+
+    for (let comp = 0; comp < 9; comp++) {
+      indexes = this.getAllRanksInLine(comp);
+      actions.push(
+        ...this.coreFor1Candidates(
+          this.blockify(grid, indexes),
+          this.blockify(P, indexes),
+          indexes
+        )
+      );
+      indexes = this.getAllRanksInColumn(comp);
+      actions.push(
+        ...this.coreFor1Candidates(
+          this.blockify(grid, indexes),
+          this.blockify(P, indexes),
+          indexes
+        )
+      );
+      indexes = this.getAllRanksInSector(comp);
+      actions.push(
+        ...this.coreFor1Candidates(
+          this.blockify(grid, indexes),
+          this.blockify(P, indexes),
+          indexes
+        )
+      );
+    }
+    return actions;
   }
 }

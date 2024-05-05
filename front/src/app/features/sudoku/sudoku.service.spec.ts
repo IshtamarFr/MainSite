@@ -297,4 +297,24 @@ describe('SudokuService', () => {
     //Then
     expect(W).toStrictEqual([67, 68, 69, 76, 77, 78, 85, 86, 87]);
   });
+
+  it('findAll1Candidates work', () => {
+    //Given
+    let S = Array(81).fill(null);
+    S[0] = 1;
+    S[12] = 1;
+    S[51] = 1;
+    S[79] = 1;
+
+    //When
+    const actions = service['findAll1CandidatesActions'](S);
+
+    //Then
+    //Line, column and Sector makes it for 1 to be there only, so it is thriced
+    expect(actions).toStrictEqual([
+      [26, 1],
+      [26, 1],
+      [26, 1],
+    ]);
+  });
 });
