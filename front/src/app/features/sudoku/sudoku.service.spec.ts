@@ -200,4 +200,78 @@ describe('SudokuService', () => {
       27, 28, 29, 36, 37, 38, 45, 46, 47,
     ]);
   });
+
+  it('coreFor1Candidates work when there is no error', () => {
+    //Given
+    //I try a cycle 3-4-7 within 3 cells, plus a 9 with only one cell possible
+    const block = [null, null, null, 1, 6, 2, null, 5, 8];
+    const pBlock = [
+      [2, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+      [2, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+      [2, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [2, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    //When
+    const answers = service['coreFor1Candidates'](block, pBlock);
+
+    //Then
+    expect(answers).toStrictEqual([[0, 9]]);
+  });
+
+  it('coreFor1Candidates work when there is no error (2)', () => {
+    //Given
+    //I try a cycle 3-4-7-9 within 4 cells
+    const block = [null, null, null, 1, 6, 2, null, 5, 8];
+    const pBlock = [
+      [2, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+      [2, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+      [3, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [2, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    //When
+    const answers = service['coreFor1Candidates'](block, pBlock);
+
+    //Then
+    expect(answers).toStrictEqual([]);
+  });
+
+  it('coreFor1Candidates work when there is no error (2)', () => {
+    //Given
+    //I try a cycle 3-4-7 within 4 cells, 9 has no room
+    const block = [null, null, null, 1, 6, 2, null, 5, 8];
+    const pBlock = [
+      [2, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+      [2, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+      [2, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [2, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    //When
+    try {
+      service['coreFor1Candidates'](block, pBlock);
+    } catch (error: any) {
+      //Then
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe(
+        'value 9 is not set in block ,,,1,6,2,,5,8, but has no room for that'
+      );
+    }
+  });
 });

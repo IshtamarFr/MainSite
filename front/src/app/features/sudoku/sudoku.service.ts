@@ -62,7 +62,7 @@ export class SudokuService {
     return answer;
   }
 
-  private getAllRanksinColumn(co: number): number[] {
+  private getAllRanksInColumn(co: number): number[] {
     let answer: number[] = [];
     for (var comp = 0; comp < 9; comp++) {
       answer.push(9 * comp + co);
@@ -70,7 +70,7 @@ export class SudokuService {
     return answer;
   }
 
-  private getAllRanksinSector(sector: number): number[] {
+  private getAllRanksInSector(sector: number): number[] {
     let answer: number[] = [];
 
     const baseCell = 27 * Math.floor(sector / 3) + 3 * (sector % 3);
@@ -166,13 +166,13 @@ export class SudokuService {
     for (let value of this.valuesFor1Candidates(block)) {
       let candidates: number[] = [];
 
-      for (let index of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      for (let index of [0, 1, 2, 3, 4, 5, 6, 7, 8]) {
         if (pBlock[index][value] === 1) candidates.push(index);
       }
 
       if (candidates.length === 0) {
         throw new Error(
-          `value ${value} is not set in block ${block.toString}, but has no room for that`
+          `value ${value} is not set in block ${block.toString()}, but has no room for that`
         );
       } else if (candidates.length === 1) {
         answer.push([candidates[0], value]);
