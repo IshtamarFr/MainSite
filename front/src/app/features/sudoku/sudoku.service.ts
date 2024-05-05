@@ -148,8 +148,14 @@ export class SudokuService {
     //This part only deals with lines/columns/sectors (with 0-1 possibilities to fill in)
     //We throw an error if there's conflict with N filling (with multiple different values)
     let actions: [number, number][] = [];
+    let indexes: number[];
+
     for (let comp = 0; comp < 9; comp++) {
-      //TODO: add actions for lines, cells, sectors
+      indexes = this.getAllRanksInLine(comp);
+      this.coreFor1Candidates(
+        this.blockify(grid, indexes),
+        this.blockify(P, indexes)
+      );
     }
 
     return N; //It just returns unset cells which have only 1 cell candidates in them
@@ -166,9 +172,10 @@ export class SudokuService {
 
   private coreFor1Candidates(
     block: (number | null)[],
-    pBlock: number[][]
+    pBlock: number[][],
+    indexes: number[]
   ): [number, number][] {
-    //From a list of 9 values from grid and P, we return array of [index (in pBlock, not rank yet),value]
+    //From a list of 9 values from grid and P, we return array of [rank (in real table),value]
     //Error can be thrown if a value should be set but has no room
     let answer: [number, number][] = [];
 
@@ -184,7 +191,7 @@ export class SudokuService {
           `value ${value} is not set in block ${block.toString()}, but has no room for that`
         );
       } else if (candidates.length === 1) {
-        answer.push([candidates[0], value]);
+        answer.push([indexes[candidates[0]], value]);
       }
     }
 

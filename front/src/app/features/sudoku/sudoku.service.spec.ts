@@ -218,10 +218,14 @@ describe('SudokuService', () => {
     ];
 
     //When
-    const answers = service['coreFor1Candidates'](block, pBlock);
+    const answers = service['coreFor1Candidates'](
+      block,
+      pBlock,
+      [7, 16, 25, 34, 43, 52, 61, 70, 79]
+    );
 
     //Then
-    expect(answers).toStrictEqual([[0, 9]]);
+    expect(answers).toStrictEqual([[7, 9]]);
   });
 
   it('coreFor1Candidates work when there is no error (2)', () => {
@@ -241,7 +245,11 @@ describe('SudokuService', () => {
     ];
 
     //When
-    const answers = service['coreFor1Candidates'](block, pBlock);
+    const answers = service['coreFor1Candidates'](
+      block,
+      pBlock,
+      [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    );
 
     //Then
     expect(answers).toStrictEqual([]);
@@ -265,7 +273,11 @@ describe('SudokuService', () => {
 
     //When
     try {
-      service['coreFor1Candidates'](block, pBlock);
+      service['coreFor1Candidates'](
+        block,
+        pBlock,
+        [3, 4, 5, 12, 13, 14, 21, 22, 23]
+      );
     } catch (error: any) {
       //Then
       expect(error).toBeInstanceOf(Error);
@@ -275,7 +287,7 @@ describe('SudokuService', () => {
     }
   });
 
-  it('blockify a sector works', () => {
+  it('blockify works', () => {
     //Given
     const block = [...Array(81).keys()].map((x) => x + 10);
 
