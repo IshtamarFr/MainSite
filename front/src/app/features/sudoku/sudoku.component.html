@@ -27,6 +27,20 @@
   <div class="actions">
     <button mat-raised-button (click)="validate()">Valider</button>
     <button mat-raised-button (click)="showPossible()">Montrer cases</button>
+    <button mat-raised-button (click)="showValues()">Montrer valeurs</button>
+  </div>
+
+  <div class="possibilities" [ngClass]="{ visible: isValuesShowed }">
+    <table>
+      <tr>
+        <td
+          *ngFor="let value of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+          [ngClass]="{ nextMove: nextValues.has(value) }"
+        >
+          {{ value }}
+        </td>
+      </tr>
+    </table>
   </div>
 
   <div class="error" *ngIf="error != ''">Erreur : {{ error }}</div>

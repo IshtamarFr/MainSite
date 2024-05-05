@@ -31,13 +31,6 @@
     .column {
       border-left: 3px solid black;
     }
-
-    .nextMove {
-      background-color: yellow;
-      input {
-        background-color: yellow;
-      }
-    }
   }
 
   .actions {
@@ -50,10 +43,35 @@
     }
   }
 
+  .possibilities {
+    margin-top: 10px;
+    margin-left: 10px;
+    visibility: hidden;
+
+    table {
+      border-collapse: collapse;
+
+      td {
+        font-weight: bold;
+      }
+    }
+  }
+
   .error {
     background-color: orangered;
     padding: 5px;
     margin-top: 10px;
     border-radius: 5px;
+  }
+
+  .visible {
+    visibility: visible;
+  }
+
+  .nextMove {
+    background-color: yellow;
+    input {
+      background-color: yellow;
+    }
   }
 }

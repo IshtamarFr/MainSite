@@ -16,8 +16,10 @@ export class SudokuComponent {
   S: (number | null)[]; //Sudoku grid as it's already known
   T: (number | null)[] = [...Array(81)].map((_) => null); //Temporary grid as it's filled
   N: (number | null)[] = [...Array(81)].map((_) => null); //Next moves possible
+  nextValues: Set<number> = new Set();
 
   isModified: boolean = false;
+  isValuesShowed: boolean = false;
   error: string = '';
 
   constructor(private sudokuService: SudokuService) {
@@ -34,6 +36,10 @@ export class SudokuComponent {
   }
 
   validate(): void {
+    this.N = [...Array(81)].map((_) => null);
+    this.nextValues = new Set();
+    this.isValuesShowed = false;
+
     this.sudokuService.S.forEach((item, index) => {
       if (!item && this.T[index]) this.sudokuService.S[index] = this.T[index];
     });
@@ -48,5 +54,13 @@ export class SudokuComponent {
     } catch (error: any) {
       this.error = error.message;
     }
+  }
+
+  showValues(): void {
+    this.nextValues = new Set();
+    this.N.forEach((x) => {
+      if (x !== null) this.nextValues.add(x);
+    });
+    this.isValuesShowed = !this.isValuesShowed;
   }
 }
