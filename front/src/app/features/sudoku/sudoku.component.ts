@@ -63,4 +63,8 @@ export class SudokuComponent {
     });
     this.isValuesShowed = !this.isValuesShowed;
   }
+
+  fillValues(): void {
+    this.T = this.sudokuService.nextMovesGrid(this.S);
+  }
 }
