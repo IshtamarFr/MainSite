@@ -307,7 +307,10 @@ describe('SudokuService', () => {
     S[79] = 1;
 
     //When
-    const actions = service['findAll1CandidatesActions'](S);
+    const actions = service['findAll1CandidatesActions'](
+      S,
+      service['setCellPossibilities'](S)
+    );
 
     //Then
     //Line, column and Sector makes it for 1 to be there only, so it is thriced

@@ -146,7 +146,8 @@ export class SudokuService {
     });
 
     //Now we try to apply all actions
-    for (let action of this.findAll1CandidatesActions(grid)) {
+    console.log(this.findAll1CandidatesActions(grid, P));
+    for (let action of this.findAll1CandidatesActions(grid, P)) {
       if (N[action[0]] === null) {
         N[action[0]] = action[1];
       } else if (N[action[0]] !== action[1]) {
@@ -157,7 +158,7 @@ export class SudokuService {
         );
       }
     }
-
+    console.log(N);
     return N;
   }
 
@@ -207,10 +208,10 @@ export class SudokuService {
   }
 
   private findAll1CandidatesActions(
-    grid: (number | null)[]
+    grid: (number | null)[],
+    P: number[][]
   ): [number, number][] {
     let actions: [number, number][] = [];
-    let P = this.setCellPossibilities(grid);
     let indexes: number[];
 
     for (let comp = 0; comp < 9; comp++) {
