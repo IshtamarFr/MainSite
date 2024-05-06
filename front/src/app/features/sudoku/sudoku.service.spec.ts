@@ -320,4 +320,31 @@ describe('SudokuService', () => {
       [26, 1],
     ]);
   });
+
+  it('concatGrid works', () => {
+    //Given
+    const A = [1, 7, null, null];
+    const B = [null, 7, 3, null];
+
+    //When
+    const C = service['concatGrid'](A, B);
+
+    //Then
+    expect(C).toStrictEqual([1, 7, 3, null]);
+  });
+
+  it('concatGrid throws error on conflict', () => {
+    //Given
+    const A = [1, 7, null, null];
+    const B = [null, 5, 3, null];
+
+    //When
+    try {
+      service['concatGrid'](A, B);
+    } catch (error: any) {
+      //Then
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe('cannot concat 1,7,, and ,5,3, (index: 1)');
+    }
+  });
 });

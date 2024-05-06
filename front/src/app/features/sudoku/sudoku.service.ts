@@ -246,6 +246,26 @@ export class SudokuService {
   /*
   Functions dealing with filling (simple, complex, montecarlo)
   */
+  private concatGrid(
+    grid1: (number | null)[],
+    grid2: (number | null)[]
+  ): (number | null)[] {
+    let answer = [...grid1];
+
+    answer.forEach((value, index) => {
+      if (grid2[index] != null) {
+        if (value == null) {
+          answer[index] = grid2[index];
+        } else if (grid2[index] !== value) {
+          throw new Error(
+            `cannot concat ${grid1.toString()} and ${grid2.toString()} (index: ${index})`
+          );
+        }
+      }
+    });
+    return answer;
+  }
+
   public simpleFill(grid: (number | null)[]): (number | null)[] {
     let F1: (number | null)[] = [...grid];
     let oldGridLength: number = F1.filter((x) => x !== null).length;
@@ -253,7 +273,7 @@ export class SudokuService {
     let toBeContinued: boolean = oldGridLength < 81;
 
     while (toBeContinued) {
-      //TODO: New F must be old F1 plus old F1
+      F1 = this.concatGrid(F1, this.nextMovesGrid(F1));
 
       newGridLength = F1.filter((x) => x !== null).length;
       toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
