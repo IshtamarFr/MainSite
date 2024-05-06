@@ -146,7 +146,6 @@ export class SudokuService {
     });
 
     //Now we try to apply all actions
-    console.log(this.findAll1CandidatesActions(grid, P));
     for (let action of this.findAll1CandidatesActions(grid, P)) {
       if (N[action[0]] === null) {
         N[action[0]] = action[1];
@@ -279,8 +278,6 @@ export class SudokuService {
       toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
       oldGridLength = newGridLength;
     }
-
-    console.log(F1);
     return F1;
   }
 }
