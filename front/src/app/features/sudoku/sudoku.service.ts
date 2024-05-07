@@ -280,4 +280,67 @@ export class SudokuService {
     }
     return F1;
   }
+
+  private find2CandidateCells(P: number[][]): number[][] {
+    let actions: number[][] = [];
+
+    P.forEach((value, index) => {
+      let temp: number[] = [];
+      if (value[0] === 2) {
+        temp.push(index);
+        for (let comp = 1; comp < 10; comp++) {
+          if (value[comp] === 1) temp.push(comp);
+        }
+        if (temp.length === 3) actions.push(temp);
+      }
+    });
+    return actions;
+  }
+
+  private complexFillCore(grid: (number | null)[]): (number | null)[] {
+    let temp1: (number | null)[] = [];
+
+    for (let action of this.find2CandidateCells(
+      this.setCellPossibilities(grid)
+    )) {
+      //I try to set grid to solution number 1. If it's error, I return solution number 2
+      grid[action[0]] = action[1];
+      try {
+        temp1 = this.simpleFill(grid);
+      } catch (error: any) {
+        grid[action[0]] = action[2];
+        return this.simpleFill(grid);
+      }
+
+      //I try to set grid to solution number 2. If it's error, I return solution number 1
+      grid[action[0]] = action[2];
+      try {
+        this.simpleFill(grid);
+      } catch (error: any) {
+        return temp1; //No need to recalculate temp1, already done before
+      }
+
+      //Neither temp1 nor temp2 are are errors, I reset grid to null and I keep up
+      grid[action[0]] = null;
+    }
+    //No progress has been made, I return initial grid
+    return grid;
+  }
+
+  public complexFill(grid: (number | null)[]): (number | null)[] {
+    let F1: (number | null)[] = this.simpleFill(grid);
+
+    let oldGridLength: number = F1.filter((x) => x !== null).length;
+    let newGridLength: number;
+    let toBeContinued: boolean = oldGridLength < 81;
+
+    while (toBeContinued) {
+      F1 = this.complexFillCore(F1);
+
+      newGridLength = F1.filter((x) => x !== null).length;
+      toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
+      oldGridLength = newGridLength;
+    }
+    return F1;
+  }
 }

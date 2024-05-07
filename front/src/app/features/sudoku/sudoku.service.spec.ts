@@ -445,4 +445,19 @@ describe('SudokuService', () => {
       9, 8, 1, 3, 5, 4,
     ]);
   });
+
+  it('find2CandidateCells works', () => {
+    //Given
+    const P: number[][] = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [2, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+      [3, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    ];
+
+    //When
+    const W = service['find2CandidateCells'](P);
+
+    //Then
+    expect(W).toStrictEqual([[1, 2, 8]]);
+  });
 });
