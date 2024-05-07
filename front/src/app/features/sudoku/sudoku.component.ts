@@ -89,4 +89,16 @@ export class SudokuComponent {
       this.error = error.message;
     }
   }
+
+  complexFill(): void {
+    this.error = '';
+    this.N = [...Array(81)].map((_) => null);
+    this.nextValues = new Set();
+
+    try {
+      this.T = this.sudokuService.complexFill(this.sudokuService.S);
+    } catch (error: any) {
+      this.error = error.message;
+    }
+  }
 }
