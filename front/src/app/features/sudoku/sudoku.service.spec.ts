@@ -558,4 +558,102 @@ describe('SudokuService', () => {
       4, 9, 6, 2, 1, 5,
     ]);
   });
+
+  it('findMontecarloCandidate should work (random values)', () => {
+    //Given
+    const S = [
+      null,
+      2,
+      9,
+      null,
+      null,
+      null,
+      4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      5,
+      null,
+      null,
+      1,
+      null,
+      null,
+      null,
+      4,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      4,
+      2,
+      null,
+      null,
+      null,
+      6,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      7,
+      null,
+      5,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      7,
+      null,
+      null,
+      3,
+      null,
+      null,
+      null,
+      null,
+      5,
+      null,
+      1,
+      null,
+      null,
+      9,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      6,
+      null,
+    ];
+
+    const P = service['setCellPossibilities'](S);
+
+    //When (tries on 30 different values)
+    for (let comp = 0; comp < 30; comp++) {
+      const action = service['findMontecarloCandidate'](S);
+
+      //Then
+      expect(S[action[0]]).toBeNull();
+      expect(P[action[0]][action[1]]).toBe(1);
+    }
+  });
 });

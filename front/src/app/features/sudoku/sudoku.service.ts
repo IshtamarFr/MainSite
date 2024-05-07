@@ -92,7 +92,7 @@ export class SudokuService {
   }
 
   /*
-  Functions dealing with logics
+  Functions dealing with CORE logics
   */
   private setCellPossibilities(grid: (number | null)[]): number[][] {
     let P: number[][] = [...Array(81)].map((_) => [
@@ -268,13 +268,12 @@ export class SudokuService {
   public simpleFill(grid: (number | null)[]): (number | null)[] {
     let F1: (number | null)[] = [...grid];
     let oldGridLength: number = F1.filter((x) => x !== null).length;
-    let newGridLength: number;
     let toBeContinued: boolean = oldGridLength < 81;
 
     while (toBeContinued) {
       F1 = this.concatGrid(F1, this.nextMovesGrid(F1));
 
-      newGridLength = F1.filter((x) => x !== null).length;
+      const newGridLength = F1.filter((x) => x !== null).length;
       toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
       oldGridLength = newGridLength;
     }
@@ -331,16 +330,36 @@ export class SudokuService {
     let F1: (number | null)[] = this.simpleFill(grid);
 
     let oldGridLength: number = F1.filter((x) => x !== null).length;
-    let newGridLength: number;
     let toBeContinued: boolean = oldGridLength < 81;
 
     while (toBeContinued) {
       F1 = this.complexFillCore(F1);
 
-      newGridLength = F1.filter((x) => x !== null).length;
+      const newGridLength = F1.filter((x) => x !== null).length;
       toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
       oldGridLength = newGridLength;
     }
     return F1;
   }
+
+  private findMontecarloCandidate(grid: (number | null)[]): [number, number] {
+    //First, find all empty cells in grid and select a random index
+    let indexes: number[] = [];
+    grid.forEach((value, index) => {
+      if (value == null) indexes.push(index);
+    });
+    const index = indexes[Math.floor(Math.random() * indexes.length)];
+
+    //Then, find all possible valuees for that cell and select a random one
+    let values: number[] = [];
+    this.setCellPossibilities(grid)[index].forEach((value, index) => {
+      if (index > 0 && value == 1) values.push(index);
+    });
+
+    return [index, values[Math.floor(Math.random() * values.length)]];
+  }
+
+  //TODO: need to add a montecarlo subfunction trying to montecarlo-complex-montecarlo-complex... until its done (OK) or error,nomore (discard)
+
+  //TODO: need to add a main montecarlo function trying this montecarlo subfunction `iteration` times before stopping
 }
