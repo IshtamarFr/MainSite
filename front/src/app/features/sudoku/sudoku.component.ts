@@ -101,4 +101,22 @@ export class SudokuComponent {
       this.error = error.message;
     }
   }
+
+  montecarloFill(iterations: number): void {
+    this.error = '';
+    this.N = [...Array(81)].map((_) => null);
+    this.nextValues = new Set();
+
+    if (this.sudokuService.S.length > 16) {
+      //If grid is under 17 cells, it cannot be completed
+      try {
+        this.T = this.sudokuService.montecarloFill(
+          this.sudokuService.S,
+          iterations
+        );
+      } catch (error: any) {
+        this.error = error.message;
+      }
+    }
+  }
 }

@@ -157,7 +157,6 @@ export class SudokuService {
         );
       }
     }
-    console.log(N);
     return N;
   }
 
@@ -379,7 +378,7 @@ export class SudokuService {
   }
 
   //TODO: need to add a main montecarlo function trying this montecarlo subfunction `iteration` times before stopping
-  public montecarlo(
+  public montecarloFill(
     grid: (number | null)[],
     iterations: number
   ): (number | null)[] {

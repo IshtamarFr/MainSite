@@ -33,6 +33,9 @@
     <button mat-raised-button (click)="complexFill()">
       Remplissage complexe
     </button>
+    <button mat-raised-button (click)="montecarloFill(100)">
+      Remplissage MonteCarlo
+    </button>
   </div>
 
   <div class="possibilities" [ngClass]="{ visible: isValuesShowed }">
