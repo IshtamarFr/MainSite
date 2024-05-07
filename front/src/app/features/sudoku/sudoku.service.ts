@@ -359,7 +359,41 @@ export class SudokuService {
     return [index, values[Math.floor(Math.random() * values.length)]];
   }
 
-  //TODO: need to add a montecarlo subfunction trying to montecarlo-complex-montecarlo-complex... until its done (OK) or error,nomore (discard)
+  private montecarloCore(grid: (number | null)[]): (number | null)[] {
+    let F1: (number | null)[] = this.complexFill(grid);
+
+    let oldGridLength: number = F1.filter((x) => x !== null).length;
+    let toBeContinued: boolean = oldGridLength < 81;
+
+    while (toBeContinued) {
+      const action = this.findMontecarloCandidate(F1);
+      F1[action[0]] = action[1];
+      F1 = this.complexFillCore(F1); //This can throw an error, caught in main function
+
+      const newGridLength = F1.filter((x) => x !== null).length;
+      toBeContinued = newGridLength < 81 && newGridLength > oldGridLength;
+      oldGridLength = newGridLength;
+    }
+    if (F1.length === 81) return F1;
+    else throw new Error('This Montecarlo try failed');
+  }
 
   //TODO: need to add a main montecarlo function trying this montecarlo subfunction `iteration` times before stopping
+  public montecarlo(
+    grid: (number | null)[],
+    iterations: number
+  ): (number | null)[] {
+    let iteration: number = 1;
+
+    while (iteration <= iterations) {
+      try {
+        const F1 = this.montecarloCore(grid);
+        if (F1.length === 81) return F1;
+        else iteration++;
+      } catch (error: any) {
+        iteration++;
+      }
+    }
+    throw new Error('This Montecarlo run failed');
+  }
 }
