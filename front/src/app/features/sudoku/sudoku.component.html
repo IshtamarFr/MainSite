@@ -25,17 +25,27 @@
   </table>
 
   <div class="actions">
-    <button mat-raised-button (click)="validate()">Valider</button>
-    <button mat-raised-button (click)="showPossible()">Montrer cases</button>
-    <button mat-raised-button (click)="showValues()">Montrer valeurs</button>
-    <button mat-raised-button (click)="fillValues()">Remplir cases</button>
-    <button mat-raised-button (click)="simpleFill()">Remplissage simple</button>
-    <button mat-raised-button (click)="complexFill()">
-      Remplissage complexe
-    </button>
-    <button mat-raised-button (click)="montecarloFill(100)">
-      Remplissage MonteCarlo
-    </button>
+    <div>
+      <button mat-raised-button (click)="validate()">Valider</button>
+    </div>
+    <div>
+      <button mat-raised-button (click)="showPossible()">Montrer cases</button>
+      <button mat-raised-button (click)="showValues()">Montrer valeurs</button>
+      <button mat-raised-button (click)="fillValues()">Remplir cases</button>
+    </div>
+    <div>
+      <button mat-raised-button (click)="simpleFill()">
+        Remplissage simple
+      </button>
+      <button mat-raised-button (click)="complexFill()">
+        Remplissage complexe
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button (click)="montecarloFill(100)">
+        Remplissage MonteCarlo
+      </button>
+    </div>
   </div>
 
   <div class="possibilities" [ngClass]="{ visible: isValuesShowed }">
