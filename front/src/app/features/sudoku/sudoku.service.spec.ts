@@ -72,11 +72,11 @@ describe('SudokuService', () => {
 
   it('setCellPossibilities work for cell 23', () => {
     //Given
-    service.S = Array(81).fill(null);
-    service.S[23] = 7;
+    let S = Array(81).fill(null);
+    S[23] = 7;
 
     //When
-    const P = service['setCellPossibilities'](service.S);
+    const P = service['setCellPossibilities'](S);
 
     //Then
     expect(P[21][7]).toBe(0);
@@ -94,13 +94,13 @@ describe('SudokuService', () => {
 
   it('setCellPossibilities throw error for duplicates', () => {
     //Given
-    service.S = Array(81).fill(null);
-    service.S[41] = 2;
-    service.S[36] = 2;
+    let S = Array(81).fill(null);
+    S[41] = 2;
+    S[36] = 2;
 
     //When
     try {
-      service['setCellPossibilities'](service.S);
+      service['setCellPossibilities'](S);
     } catch (error: any) {
       //Then
       expect(error).toBeInstanceOf(Error);
@@ -110,28 +110,28 @@ describe('SudokuService', () => {
 
   it('setCellPossibilities throw error for 0 possibilities', () => {
     //Given
-    service.S = Array(81).fill(null);
-    service.S[0] = 1;
-    service.S[1] = 2;
-    service.S[2] = 3;
-    service.S[3] = 4;
-    service.S[4] = 5;
-    service.S[5] = 6;
-    service.S[6] = 7;
-    service.S[7] = 8;
+    let S = Array(81).fill(null);
+    S[0] = 1;
+    S[1] = 2;
+    S[2] = 3;
+    S[3] = 4;
+    S[4] = 5;
+    S[5] = 6;
+    S[6] = 7;
+    S[7] = 8;
 
     //When
-    const P = service['setCellPossibilities'](service.S);
+    const P = service['setCellPossibilities'](S);
 
     //Then
     expect(P[8]).toStrictEqual([1, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
 
     //And Given
-    service.S[25] = 9;
+    S[25] = 9;
 
     //When
     try {
-      service['setCellPossibilities'](service.S);
+      service['setCellPossibilities'](S);
     } catch (error: any) {
       //Then
       expect(error).toBeInstanceOf(Error);
@@ -143,18 +143,18 @@ describe('SudokuService', () => {
 
   it('nextMoveGrid works for cell where there is one candidate only (line)', () => {
     //Given
-    service.S = Array(81).fill(null);
-    service.S[0] = 1;
-    service.S[1] = 2;
-    service.S[2] = 3;
-    service.S[3] = 4;
-    service.S[4] = 5;
-    service.S[5] = 6;
-    service.S[6] = 7;
-    service.S[7] = 8;
+    let S = Array(81).fill(null);
+    S[0] = 1;
+    S[1] = 2;
+    S[2] = 3;
+    S[3] = 4;
+    S[4] = 5;
+    S[5] = 6;
+    S[6] = 7;
+    S[7] = 8;
 
     //When
-    const N = service.nextMovesGrid(service.S);
+    const N = service.nextMovesGrid(S);
 
     //Then
     expect(N[8]).toBe(9);
@@ -162,18 +162,18 @@ describe('SudokuService', () => {
 
   it('nextMoveGrid works for cell where there is one candidate only (sector)', () => {
     //Given
-    service.S = Array(81).fill(null);
-    service.S[30] = 1;
-    service.S[31] = 2;
-    service.S[32] = 3;
-    service.S[39] = 4;
-    service.S[40] = 5;
-    service.S[48] = 7;
-    service.S[49] = 8;
-    service.S[50] = 9;
+    let S = Array(81).fill(null);
+    S[30] = 1;
+    S[31] = 2;
+    S[32] = 3;
+    S[39] = 4;
+    S[40] = 5;
+    S[48] = 7;
+    S[49] = 8;
+    S[50] = 9;
 
     //When
-    const N = service.nextMovesGrid(service.S);
+    const N = service.nextMovesGrid(S);
 
     //Then
     expect(N[41]).toBe(6);

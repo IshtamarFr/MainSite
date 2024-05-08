@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SudokuService {
-  public S: (number | null)[] = [...Array(81)].map((_) => null); //Sudoku grid as it's used in service
-
   /*
   Functions dealing with Lines, Colums, and Sectors (LCS)
   */

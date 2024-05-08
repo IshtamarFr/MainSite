@@ -13,7 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: './sudoku.component.scss',
 })
 export class SudokuComponent {
-  S: (number | null)[]; //Sudoku grid as it's already known
+  S: (number | null)[] = [...Array(81)].map((_) => null); //Grid
   T: (number | null)[] = [...Array(81)].map((_) => null); //Temporary grid as it's filled
   N: (number | null)[] = [...Array(81)].map((_) => null); //Next moves possible
   nextValues: Set<number> = new Set();
@@ -22,9 +22,7 @@ export class SudokuComponent {
   isValuesShowed: boolean = false;
   error: string = '';
 
-  constructor(private sudokuService: SudokuService) {
-    this.S = sudokuService.S;
-  }
+  constructor(private sudokuService: SudokuService) {}
 
   test(): void {
     window.alert(this.T.toString());
@@ -40,8 +38,8 @@ export class SudokuComponent {
     this.nextValues = new Set();
     this.isValuesShowed = false;
 
-    this.sudokuService.S.forEach((item, index) => {
-      if (!item && this.T[index]) this.sudokuService.S[index] = this.T[index];
+    this.S.forEach((item, index) => {
+      if (!item && this.T[index]) this.S[index] = this.T[index];
     });
   }
 
@@ -50,7 +48,7 @@ export class SudokuComponent {
     this.N = [...Array(81)].map((_) => null);
 
     try {
-      this.N = this.sudokuService.nextMovesGrid(this.sudokuService.S);
+      this.N = this.sudokuService.nextMovesGrid(this.S);
     } catch (error: any) {
       this.error = error.message;
     }
@@ -70,7 +68,7 @@ export class SudokuComponent {
     this.nextValues = new Set();
 
     try {
-      const temp = this.sudokuService.nextMovesGrid(this.sudokuService.S);
+      const temp = this.sudokuService.nextMovesGrid(this.S);
       this.N = temp;
       this.T = temp;
     } catch (error: any) {
@@ -84,7 +82,7 @@ export class SudokuComponent {
     this.nextValues = new Set();
 
     try {
-      this.T = this.sudokuService.simpleFill(this.sudokuService.S);
+      this.T = this.sudokuService.simpleFill(this.S);
     } catch (error: any) {
       this.error = error.message;
     }
@@ -96,7 +94,7 @@ export class SudokuComponent {
     this.nextValues = new Set();
 
     try {
-      this.T = this.sudokuService.complexFill(this.sudokuService.S);
+      this.T = this.sudokuService.complexFill(this.S);
     } catch (error: any) {
       this.error = error.message;
     }
@@ -107,13 +105,10 @@ export class SudokuComponent {
     this.N = [...Array(81)].map((_) => null);
     this.nextValues = new Set();
 
-    if (this.sudokuService.S.length > 16) {
+    if (this.S.length > 16) {
       //If grid is under 17 cells, it cannot be completed
       try {
-        this.T = this.sudokuService.montecarloFill(
-          this.sudokuService.S,
-          iterations
-        );
+        this.T = this.sudokuService.montecarloFill(this.S, iterations);
       } catch (error: any) {
         this.error = error.message;
       }
