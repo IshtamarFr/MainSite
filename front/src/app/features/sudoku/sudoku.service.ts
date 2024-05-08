@@ -375,7 +375,6 @@ export class SudokuService {
     else throw new Error('This Montecarlo try failed');
   }
 
-  //TODO: need to add a main montecarlo function trying this montecarlo subfunction `iteration` times before stopping
   public montecarloFill(
     grid: (number | null)[],
     iterations: number
