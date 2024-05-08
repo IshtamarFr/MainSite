@@ -1,22 +1,24 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../services/session.service';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { User } from '../../interfaces/user.interface';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [
+    CommonModule,
     RouterLink,
-    NgIf,
     MatIconModule,
     MatSidenavModule,
     MatDividerModule,
     NgTemplateOutlet,
+    MatTooltipModule,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
