@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.truc;
+package fr.ishtamar.starter.password;
 
 import fr.ishtamar.starter.user.UserInfo;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Truc {
+public class Password {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

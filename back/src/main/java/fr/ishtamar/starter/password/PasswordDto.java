@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.truc;
+package fr.ishtamar.starter.password;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TrucDto {
+public class PasswordDto {
     private Long id;
 
     @NotNull

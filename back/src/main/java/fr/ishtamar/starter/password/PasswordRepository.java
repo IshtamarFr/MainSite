@@ -1,8 +1,8 @@
-package fr.ishtamar.starter.truc;
+package fr.ishtamar.starter.password;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TrucRepository extends JpaRepository<Truc, Long> {
+public interface PasswordRepository extends JpaRepository<Password, Long> {
 }

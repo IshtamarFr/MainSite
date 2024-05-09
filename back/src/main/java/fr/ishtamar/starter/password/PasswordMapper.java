@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.truc;
+package fr.ishtamar.starter.password;
 
 import fr.ishtamar.starter.util.EntityMapper;
 import fr.ishtamar.starter.user.UserInfoServiceImpl;
@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "Spring")
-public abstract class TrucMapper implements EntityMapper<TrucDto, Truc> {
+public abstract class PasswordMapper implements EntityMapper<PasswordDto, Password> {
 
     @Autowired
     UserInfoServiceImpl userInfoService;
 
     @Mappings({
-            @Mapping(target="user", expression="java(this.userInfoService.getUserById(trucDto.getUser_id()))")
+            @Mapping(target="user", expression="java(this.userInfoService.getUserById(passwordDto.getUser_id()))")
     })
-    public abstract Truc toEntity(TrucDto trucDto);
+    public abstract Password toEntity(PasswordDto passwordDto);
 
     @Mappings({
-            @Mapping(source= "truc.user.id",target="user_id")
+            @Mapping(source= "password.user.id",target="user_id")
     })
-    public abstract TrucDto toDto(Truc truc);
+    public abstract PasswordDto toDto(Password password);
 }
