@@ -21,7 +21,28 @@ public class Password {
 
     @NotNull
     @Size(max=63)
-    private String name;
+    private String siteName;
+
+    @Size(max=255)
+    private String siteAddress;
+
+    @Size(max=127)
+    private String siteLogin;
+
+    @NotNull
+    private String passwordKey;
+
+    @NotNull
+    @Size(min=4,max=6)
+    private String passwordPrefix;
+
+    @NotNull
+    private Long passwordLength;
+
+    @Size(max=500)
+    private String description;
+
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name="user_id",referencedColumnName = "id")
