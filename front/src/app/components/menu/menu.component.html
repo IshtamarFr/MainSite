@@ -1,5 +1,6 @@
 <!--List of all items to show-->
 <ng-template #menuTemplate>
+  <a class="link" href="https://dixsite.ishtamar.fr">Dixsite</a>
   <div
     *ngIf="user?.roles?.includes('ADMIN')"
     routerLink="ishta"
@@ -16,7 +17,7 @@
     <ng-container *ngTemplateOutlet="menuTemplate" />
   </div>
   <div id="items" *ngIf="isLogged">
-    <span routerLink="me" class="link">Mon compte</span>
+    <span routerLink="main/me" class="link">Mon compte</span>
     <span (click)="logout()" class="link">Déconnexion</span>
   </div>
   <div id="items" *ngIf="!isLogged">
