@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngularMatStarter": {
+    "Ishtamar": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "AngularMatStarter:build:production"
+              "buildTarget": "Ishtamar:build:production"
             },
             "development": {
-              "buildTarget": "AngularMatStarter:build:development"
+              "buildTarget": "Ishtamar:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,17 +72,17 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "AngularMatStarter:build"
+            "buildTarget": "Ishtamar:build"
           }
         },
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "AngularMatStarter:serve"
+            "devServerTarget": "Ishtamar:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AngularMatStarter:serve:production"
+              "devServerTarget": "Ishtamar:serve:production"
             }
           }
         },
@@ -96,13 +96,13 @@
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "AngularMatStarter:serve",
+            "devServerTarget": "Ishtamar:serve",
             "watch": true,
             "headless": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AngularMatStarter:serve:production"
+              "devServerTarget": "Ishtamar:serve:production"
             }
           }
         },
@@ -110,13 +110,13 @@
           "builder": "@cypress/schematic:cypress",
           "options": {
             "browser": "chrome",
-            "devServerTarget": "AngularMatStarter:serve",
+            "devServerTarget": "Ishtamar:serve",
             "headless": true,
             "watch": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AngularMatStarter:serve:production"
+              "devServerTarget": "Ishtamar:serve:production"
             }
           }
         }

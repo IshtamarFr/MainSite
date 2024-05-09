@@ -16,7 +16,7 @@ import { MenuComponent } from './components/menu/menu.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'AngularMatStarter';
+  title = 'Ishtamar';
 
   constructor(
     private authService: AuthService,

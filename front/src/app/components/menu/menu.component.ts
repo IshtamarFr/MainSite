@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SessionService } from '../../services/session.service';
 import { CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
+    RouterModule,
     MatIconModule,
     MatSidenavModule,
     MatDividerModule,

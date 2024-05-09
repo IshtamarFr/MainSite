@@ -17,16 +17,29 @@
     <ng-container *ngTemplateOutlet="menuTemplate" />
   </div>
   <div id="items" *ngIf="isLogged">
-    <span routerLink="main/me" class="link">Mon compte</span>
+    <span routerLink="main/me" class="link" routerLinkActive="active"
+      >Mon compte</span
+    >
     <span (click)="logout()" class="link">Déconnexion</span>
   </div>
   <div id="items" *ngIf="!isLogged">
-    <span routerLink="login" class="link">Se connecter</span>
-    <span routerLink="register" class="link">S'inscrire</span>
+    <span routerLink="login" class="link" routerLinkActive="active"
+      >Se connecter</span
+    >
+    <span routerLink="register" class="link" routerLinkActive="active"
+      >S'inscrire</span
+    >
   </div>
 </div>
 <hr />
 <div id="submenu">
-  <div routerLink="sudoku" class="link" matTooltip="Solveur Sudoku">Sudoku</div>
+  <div
+    routerLink="sudoku"
+    class="link"
+    matTooltip="Solveur Sudoku"
+    routerLinkActive="active"
+  >
+    Sudoku
+  </div>
 </div>
 <hr />
