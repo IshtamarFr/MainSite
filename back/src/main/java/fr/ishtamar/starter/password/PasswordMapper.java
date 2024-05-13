@@ -10,18 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "Spring")
-public abstract class PasswordMapper implements EntityMapper<PasswordDto, Password> {
-
-    @Autowired
-    UserInfoServiceImpl userInfoService;
+public interface PasswordMapper extends EntityMapper<PasswordDto, Password> {
 
     @Mappings({
-            @Mapping(target="user", expression="java(this.userInfoService.getUserById(passwordDto.getUser_id()))")
+            @Mapping(source= "password.category.id",target="category_id"),
+            @Mapping(source= "password.category.user.id",target="user_id")
     })
-    public abstract Password toEntity(PasswordDto passwordDto);
-
-    @Mappings({
-            @Mapping(source= "password.user.id",target="user_id")
-    })
-    public abstract PasswordDto toDto(Password password);
+    PasswordDto toDto(Password password);
 }

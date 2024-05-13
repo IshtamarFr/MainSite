@@ -1,7 +1,5 @@
 package fr.ishtamar.starter.password;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PasswordDto {
     private Long id;
-
-    @NotNull
-    @Size(max=63)
-    private String name;
-
-    @NotNull
+    private String siteName;
+    private String siteAddress;
+    private String siteLogin;
+    private String description;
+    private boolean isActive;
+    private Long category_id;
     private Long user_id;
 }

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.ishtamar.security</groupId>
-	<artifactId>restStarter</artifactId>
+	<artifactId>mainSite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jwt</name>
 	<description>Starter for security6 and jwt</description>

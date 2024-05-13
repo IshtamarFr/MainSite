@@ -18,7 +18,7 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public Password getTrucById(final Long id) throws EntityNotFoundException {
+    public Password getPasswordById(final Long id) throws EntityNotFoundException {
         return repository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException(Password.class,"id",id.toString()));
     }

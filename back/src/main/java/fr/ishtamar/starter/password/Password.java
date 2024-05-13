@@ -1,5 +1,6 @@
 package fr.ishtamar.starter.password;
 
+import fr.ishtamar.starter.category.Category;
 import fr.ishtamar.starter.user.UserInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +46,6 @@ public class Password {
     private boolean isActive;
 
     @ManyToOne
-    @JoinColumn(name="user_id",referencedColumnName = "id")
-    private UserInfo user;
+    @JoinColumn(name="category_id",referencedColumnName = "id")
+    private Category category;
 }
