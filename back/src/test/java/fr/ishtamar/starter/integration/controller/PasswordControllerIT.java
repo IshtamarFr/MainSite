@@ -7,6 +7,7 @@ import fr.ishtamar.starter.category.CategoryServiceImpl;
 import fr.ishtamar.starter.security.JwtService;
 import fr.ishtamar.starter.user.UserInfo;
 import fr.ishtamar.starter.user.UserInfoRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -54,6 +58,16 @@ public class PasswordControllerIT {
     final Category initialCategory=Category.builder()
             .name("Loisirs")
             .user(initialUser)
+            .build();
+
+    final Category initialCategory2=Category.builder()
+            .name("Maison")
+            .user(initialUser)
+            .build();
+
+    final Category initialCategory3=Category.builder()
+            .name("Jeux")
+            .user(initialUser2)
             .build();
 
     @BeforeEach
@@ -123,5 +137,26 @@ public class PasswordControllerIT {
                 .andExpect(status().isOk());
 
         assertThat(repository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("When I try to get all categories by user, it works")
+    @WithMockUser(roles="USER")
+    void getAllCategoriesByUserWorks() throws Exception {
+        //Given
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser.getEmail());
+
+        //When
+        mockMvc.perform(get("/password/category")
+                .header("Authorization","Bearer "+jwt))
+
+        //Then
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().string(containsString("Loisirs")))
+                .andExpect(content().string(containsString("Maison")))
+                .andExpect(content().string(Matchers.not(containsString("\"user_id\":2"))));
     }
 }

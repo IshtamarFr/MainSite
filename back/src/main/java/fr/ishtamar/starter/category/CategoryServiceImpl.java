@@ -1,6 +1,8 @@
 package fr.ishtamar.starter.category;
 
+import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
+import fr.ishtamar.starter.user.UserInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,5 +22,21 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             throw new GenericException("This category already exists for this user");
         }
+    }
+
+    @Override
+    public List<Category> getCategoriesForUser(UserInfo user) {
+        return repository.findByUser(user);
+    }
+
+    @Override
+    public Category getCategoryById(Long id) throws EntityNotFoundException {
+        return repository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException(UserInfo.class,"id",id.toString()));
+    }
+
+    @Override
+    public void deleteCategory(Category category) {
+        repository.delete(category);
     }
 }
