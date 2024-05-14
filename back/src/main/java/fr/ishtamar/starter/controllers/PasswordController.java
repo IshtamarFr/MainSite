@@ -73,4 +73,21 @@ public class PasswordController {
             throw new GenericException("You are not allowed to delete this resource");
         }
     }
+
+    @PutMapping("/category/{id}")
+    @Secured("ROLE_USER")
+    public void modifyCategory(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable Long id,
+            @RequestParam @NotNull @Size(max=63) String name
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Category category=categoryService.getCategoryById(id);
+
+        if (Objects.equals(category.getUser(),user)) {
+            categoryService.modifyCategory(category,name);
+        } else {
+            throw new GenericException("You are not allowed to modify this resource");
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface CategoryService {
     List<Category> getCategoriesForUser(UserInfo user);
     Category getCategoryById(Long id) throws EntityNotFoundException;
     void deleteCategory(Category category);
+    Category modifyCategory(Category category,String name) throws GenericException;
 }

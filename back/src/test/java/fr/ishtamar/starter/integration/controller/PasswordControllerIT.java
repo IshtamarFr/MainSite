@@ -22,7 +22,6 @@ import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -76,7 +75,6 @@ public class PasswordControllerIT {
         repository.deleteAll();
         userRepository.save(initialUser);
         userRepository.save(initialUser2);
-        repository.save(initialCategory);
     }
 
     @AfterEach
@@ -90,6 +88,7 @@ public class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWorks() throws Exception {
         //Given
+        repository.save(initialCategory);
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
@@ -108,6 +107,7 @@ public class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWithAlreadyUsedName() throws Exception {
         //Given
+        repository.save(initialCategory);
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
@@ -126,6 +126,7 @@ public class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWorksWithSameNameFromOtherUser() throws Exception {
         //Given
+        repository.save(initialCategory);
         String jwt= jwtService.generateToken(initialUser2.getEmail());
 
         //When
@@ -144,6 +145,7 @@ public class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void getAllCategoriesByUserWorks() throws Exception {
         //Given
+        repository.save(initialCategory);
         repository.save(initialCategory2);
         repository.save(initialCategory3);
         String jwt= jwtService.generateToken(initialUser.getEmail());
@@ -154,9 +156,115 @@ public class PasswordControllerIT {
 
         //Then
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(content().string(containsString("Loisirs")))
                 .andExpect(content().string(containsString("Maison")))
                 .andExpect(content().string(Matchers.not(containsString("\"user_id\":2"))));
+    }
+
+    @Test
+    @DisplayName("When I try to delete my category, it works")
+    @WithMockUser(roles="USER")
+    void deleteCategoryWorks() throws Exception {
+        //Given
+        long id=repository.save(initialCategory).getId();
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser.getEmail());
+
+        //When
+        mockMvc.perform(delete("/password/category/"+id)
+                        .header("Authorization","Bearer "+jwt))
+
+                //Then
+                .andExpect(status().isOk());
+
+        assertThat(repository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("When I try to delete other's category, it is bad request")
+    @WithMockUser(roles="USER")
+    void deleteOthersCategoryThrowsError() throws Exception {
+        //Given
+        long id=repository.save(initialCategory).getId();
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser2.getEmail());
+
+        //When
+        mockMvc.perform(delete("/password/category/"+id)
+                        .header("Authorization","Bearer "+jwt))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        assertThat(repository.findAll().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("When I try to update my category, it works")
+    @WithMockUser(roles="USER")
+    void modifyCategoryWorks() throws Exception {
+        //Given
+        long id=repository.save(initialCategory).getId();
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser.getEmail());
+
+        //When
+        mockMvc.perform(put("/password/category/"+id)
+                        .header("Authorization","Bearer "+jwt)
+                        .param("name","Saucisson"))
+
+                //Then
+                .andExpect(status().isOk());
+
+        assertThat(repository.findByNameAndUser("Saucisson",initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("When I try to update other's category, it is bad request")
+    @WithMockUser(roles="USER")
+    void modifyOthersCategoryThrowsError() throws Exception {
+        //Given
+        long id=repository.save(initialCategory).getId();
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser2.getEmail());
+
+        //When
+        mockMvc.perform(put("/password/category/"+id)
+                        .header("Authorization","Bearer "+jwt)
+                        .param("name","Saucisson"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        assertThat(repository.findByNameAndUser("Saucisson",initialUser).size()).isEqualTo(0);
+        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Saucisson",initialUser2).size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("When I try to update my category with name already taken, it is bad request")
+    @WithMockUser(roles="USER")
+    void modifyCategoryWithTakenNameThrowsError() throws Exception {
+        //Given
+        long id=repository.save(initialCategory).getId();
+        repository.save(initialCategory2);
+        repository.save(initialCategory3);
+        String jwt= jwtService.generateToken(initialUser.getEmail());
+
+        //When
+        mockMvc.perform(put("/password/category/"+id)
+                        .header("Authorization","Bearer "+jwt)
+                        .param("name","Maison"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        assertThat(repository.findByNameAndUser("Maison",initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(1);
     }
 }

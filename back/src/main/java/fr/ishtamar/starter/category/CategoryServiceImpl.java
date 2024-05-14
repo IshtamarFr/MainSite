@@ -39,4 +39,16 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Category category) {
         repository.delete(category);
     }
+
+    @Override
+    public Category modifyCategory(Category category, String name) throws GenericException {
+        List<Category> candidate=repository.findByNameAndUser(name,category.getUser());
+
+        if (candidate.isEmpty()) {
+            category.setName(name);
+            return repository.save(category);
+        } else {
+            throw new GenericException("This category already exists for this user");
+        }
+    }
 }
