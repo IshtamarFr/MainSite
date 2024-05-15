@@ -1,8 +1,8 @@
 package fr.ishtamar.starter.password;
 
 import fr.ishtamar.starter.category.Category;
-import fr.ishtamar.starter.user.UserInfo;
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,16 +10,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Password {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class CreatePasswordRequest {
     @NotNull
     @Size(max=63)
     private String siteName;
@@ -30,23 +25,11 @@ public class Password {
     @Size(max=127)
     private String siteLogin;
 
-    @NotNull
-    private String passwordKey;
+    @Size(min=4,max=4)
+    private String passwordPrefix; //Auto set up if empty
 
-    @NotNull
-    @Size(min=4,max=6)
-    private String passwordPrefix;
-
-    @NotNull
-    private Long passwordLength;
+    private Long passwordLength; //Auto set up if empty
 
     @Size(max=500)
     private String description;
-
-    private boolean isActive;
-
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name="category_id",referencedColumnName = "id")
-    private Category category;
 }

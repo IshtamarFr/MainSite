@@ -92,7 +92,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(post("/password/category")
+        mockMvc.perform(post("/gestmdp/category")
                 .header("Authorization","Bearer "+jwt)
                         .param("name","Administratif"))
 
@@ -111,7 +111,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(post("/password/category")
+        mockMvc.perform(post("/gestmdp/category")
                         .header("Authorization","Bearer "+jwt)
                         .param("name","Loisirs"))
 
@@ -130,7 +130,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser2.getEmail());
 
         //When
-        mockMvc.perform(post("/password/category")
+        mockMvc.perform(post("/gestmdp/category")
                         .header("Authorization","Bearer "+jwt)
                         .param("name","Loisirs"))
 
@@ -151,7 +151,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(get("/password/category")
+        mockMvc.perform(get("/gestmdp/category")
                 .header("Authorization","Bearer "+jwt))
 
         //Then
@@ -172,7 +172,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(delete("/password/category/"+id)
+        mockMvc.perform(delete("/gestmdp/category/"+id)
                         .header("Authorization","Bearer "+jwt))
 
                 //Then
@@ -192,7 +192,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser2.getEmail());
 
         //When
-        mockMvc.perform(delete("/password/category/"+id)
+        mockMvc.perform(delete("/gestmdp/category/"+id)
                         .header("Authorization","Bearer "+jwt))
 
                 //Then
@@ -212,7 +212,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(put("/password/category/"+id)
+        mockMvc.perform(put("/gestmdp/category/"+id)
                         .header("Authorization","Bearer "+jwt)
                         .param("name","Saucisson"))
 
@@ -234,7 +234,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser2.getEmail());
 
         //When
-        mockMvc.perform(put("/password/category/"+id)
+        mockMvc.perform(put("/gestmdp/category/"+id)
                         .header("Authorization","Bearer "+jwt)
                         .param("name","Saucisson"))
 
@@ -257,7 +257,7 @@ public class CategoryControllerIT {
         String jwt= jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(put("/password/category/"+id)
+        mockMvc.perform(put("/gestmdp/category/"+id)
                         .header("Authorization","Bearer "+jwt)
                         .param("name","Maison"))
 

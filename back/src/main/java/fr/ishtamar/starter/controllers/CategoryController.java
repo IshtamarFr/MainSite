@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/password/category")
+@RequestMapping("/gestmdp/category")
 public class CategoryController {
     private final JwtService jwtService;
     private final UserInfoService userInfoService;
