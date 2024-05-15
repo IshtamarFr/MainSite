@@ -1,12 +1,14 @@
 package fr.ishtamar.starter.unit;
 
-import fr.ishtamar.starter.category.Category;
 import fr.ishtamar.starter.password.Password;
 import fr.ishtamar.starter.password.PasswordServiceImpl;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class PasswordServiceImplTest {
@@ -22,15 +24,25 @@ class PasswordServiceImplTest {
                 .siteName("test")
                 .siteAddress("test@test.com")
                 .siteLogin("Pikachu")
-                .category(new Category())
-                .passwordKey("b1-C3WmbrPTNQXvGlBCEz3FJVjtxPzGIU1eE85Ph#pYkQdKeI-WJ_g*lVZ1S9I7aGZ7DQBbr9*IbjuZs73t@n3u2FY7TID2zlk*BcBfX8O7-jsOF5#gyAltkbqsrZp+e8ex*ZfGHw_svCN_Nm7LhaZh3ni0u4nJQTADuTixVVnEVVTU1jdgI1N#mfV2ELspRX2N66FhpGGfD")
+                .passwordKey("z4-=%6H2Uzz^HT0]VX0jv9bzUE4lWEG8M??A|20r9M(%AuP<8}[nO(VrzT|A1>0?")
                 .passwordPrefix("c7_P")
-                .passwordLength(31L)
+                .passwordLength(128L)
                 .build();
 
+        String secretKey="ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02";
+
         //When
-        String realPassword=passwordService.calculatePassword(password,"Aa123456");
+        String realPassword=passwordService.calculatePassword(password,secretKey);
 
         //Then
+        assertThat(realPassword)
+                .isEqualTo("c7_Pos3/LwR9bak54IgxkBF1aCV7H/2zI25Q8AEaJW0qk3cva43sue3C/LeRb6JNrONzvGeOHK8e4eotdaRNF46vEw==");
+    }
+
+    @Test
+    @Disabled
+    void manualTestForGeneratePassword() {
+        System.out.println(PasswordServiceImpl.generatePassword());
+        System.out.println(PasswordServiceImpl.generatePrefix());
     }
 }
