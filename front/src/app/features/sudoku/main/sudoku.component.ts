@@ -4,11 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { SudokuService } from '../sudoku.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sudoku',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatSlideToggleModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    RouterModule,
+  ],
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.scss',
 })
