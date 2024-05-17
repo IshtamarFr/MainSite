@@ -31,8 +31,6 @@ public class CategoryControllerIT {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    CategoryServiceImpl service;
-    @Autowired
     CategoryRepository repository;
     @Autowired
     UserInfoRepository userRepository;
@@ -40,6 +38,7 @@ public class CategoryControllerIT {
     JwtService jwtService;
 
     ObjectMapper mapper=new ObjectMapper();
+
     final UserInfo initialUser=UserInfo.builder()
             .name("Ishta")
             .email("test@test.com")

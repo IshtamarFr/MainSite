@@ -52,7 +52,7 @@ public class PasswordController {
         Category category=categoryService.getCategoryById(id);
 
         if (Objects.equals(category.getUser(),user)) {
-            return null;
+            return passwordMapper.toDto(passwordService.createPassword(request,user,category));
         }else {
             throw new GenericException("You are not allowed to add a password for this category");
         }
