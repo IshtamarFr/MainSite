@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.user;
+package fr.ishtamar.starter.model.user;
 
 import fr.ishtamar.starter.util.EntityMapper;
 import org.mapstruct.Mapper;

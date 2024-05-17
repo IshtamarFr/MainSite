@@ -1,10 +1,10 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
+import fr.ishtamar.starter.model.category.Category;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import fr.ishtamar.starter.exceptionhandler.GenericException;
+import fr.ishtamar.starter.model.user.UserInfo;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -90,5 +90,22 @@ public class PasswordServiceImpl implements PasswordService {
             sb.setCharAt(i, sb.charAt(swapIndex));
             sb.setCharAt(swapIndex, temp);
         }
+    }
+
+    @Override
+    public Password createPassword(CreatePasswordRequest request, UserInfo user, Category category) {
+        Password password= Password.builder()
+                .passwordKey(generatePassword())
+                .siteName(request.getSiteName())
+                .category(category)
+                .build();
+
+        if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
+        if (request.getSiteAddress()!=null ) password.setSiteAddress(request.getSiteAddress());
+        if (request.getDescription()!=null ) password.setDescription(request.getDescription());
+        password.setPasswordLength(request.getPasswordLength()==null ? 64L: request.getPasswordLength());
+        password.setPasswordPrefix(request.getPasswordPrefix()==null ? generatePrefix(): request.getPasswordPrefix());
+
+        return repository.save(password);
     }
 }

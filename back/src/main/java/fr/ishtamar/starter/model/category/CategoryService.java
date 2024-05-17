@@ -1,8 +1,8 @@
-package fr.ishtamar.starter.category;
+package fr.ishtamar.starter.model.category;
 
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfo;
 
 import java.util.List;
 

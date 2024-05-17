@@ -1,7 +1,6 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
-import fr.ishtamar.starter.category.Category;
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.category.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

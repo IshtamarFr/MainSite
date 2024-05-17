@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

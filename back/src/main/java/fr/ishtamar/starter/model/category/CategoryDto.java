@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.category;
+package fr.ishtamar.starter.model.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

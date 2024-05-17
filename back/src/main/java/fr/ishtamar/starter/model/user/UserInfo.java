@@ -1,16 +1,25 @@
-package fr.ishtamar.starter.user;
+package fr.ishtamar.starter.model.user;
 
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+@Builder
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"name"}),
+        @UniqueConstraint(columnNames = {"email"})
+})
+public class UserInfo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -19,8 +28,11 @@ public class UserDto {
 
     @NotNull
     @Size(max=63)
-    @Email
     private String email;
+
+    @NotNull
+    @Size(max=60)
+    private String password;
 
     @NotNull
     private String roles;

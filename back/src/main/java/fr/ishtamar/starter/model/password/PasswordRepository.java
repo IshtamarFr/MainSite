@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

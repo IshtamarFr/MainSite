@@ -1,16 +1,16 @@
 package fr.ishtamar.starter.controllers;
 
-import fr.ishtamar.starter.auth.AuthRequest;
-import fr.ishtamar.starter.auth.CreateUserRequest;
-import fr.ishtamar.starter.auth.ModifyUserRequest;
-import fr.ishtamar.starter.user.UserDto;
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.auth.AuthRequest;
+import fr.ishtamar.starter.model.auth.CreateUserRequest;
+import fr.ishtamar.starter.model.auth.ModifyUserRequest;
+import fr.ishtamar.starter.model.user.UserDto;
+import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.exceptionhandler.BadCredentialsException;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
-import fr.ishtamar.starter.user.UserMapper;
+import fr.ishtamar.starter.model.user.UserMapper;
 import fr.ishtamar.starter.security.JwtService;
-import fr.ishtamar.starter.user.UserInfoService;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.user.UserInfoService;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.ConstraintViolationException;

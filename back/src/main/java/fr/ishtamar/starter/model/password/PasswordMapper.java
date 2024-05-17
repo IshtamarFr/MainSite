@@ -1,11 +1,9 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
 import fr.ishtamar.starter.util.EntityMapper;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

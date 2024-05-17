@@ -1,6 +1,6 @@
 package fr.ishtamar.starter.security;
 
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

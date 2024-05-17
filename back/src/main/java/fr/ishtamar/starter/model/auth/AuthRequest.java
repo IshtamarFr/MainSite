@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.auth;
+package fr.ishtamar.starter.model.auth;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

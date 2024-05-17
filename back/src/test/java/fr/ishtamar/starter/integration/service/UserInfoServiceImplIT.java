@@ -1,9 +1,9 @@
 package fr.ishtamar.starter.integration.service;
 
-import fr.ishtamar.starter.auth.ModifyUserRequest;
-import fr.ishtamar.starter.user.UserInfo;
-import fr.ishtamar.starter.user.UserInfoRepository;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.auth.ModifyUserRequest;
+import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfoRepository;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

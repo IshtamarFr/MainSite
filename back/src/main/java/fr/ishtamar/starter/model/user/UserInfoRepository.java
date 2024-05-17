@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.user;
+package fr.ishtamar.starter.model.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

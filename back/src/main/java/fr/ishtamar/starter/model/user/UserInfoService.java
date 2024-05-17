@@ -1,8 +1,8 @@
-package fr.ishtamar.starter.user;
+package fr.ishtamar.starter.model.user;
 
 import fr.ishtamar.starter.exceptionhandler.BadCredentialsException;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
-import fr.ishtamar.starter.auth.ModifyUserRequest;
+import fr.ishtamar.starter.model.auth.ModifyUserRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

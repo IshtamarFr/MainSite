@@ -1,12 +1,12 @@
 package fr.ishtamar.starter.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.ishtamar.starter.category.Category;
-import fr.ishtamar.starter.category.CategoryRepository;
-import fr.ishtamar.starter.category.CategoryServiceImpl;
+import fr.ishtamar.starter.model.category.Category;
+import fr.ishtamar.starter.model.category.CategoryRepository;
+import fr.ishtamar.starter.model.category.CategoryServiceImpl;
 import fr.ishtamar.starter.security.JwtService;
-import fr.ishtamar.starter.user.UserInfo;
-import fr.ishtamar.starter.user.UserInfoRepository;
+import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfoRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

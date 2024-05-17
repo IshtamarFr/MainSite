@@ -1,6 +1,6 @@
-package fr.ishtamar.starter.category;
+package fr.ishtamar.starter.model.category;
 
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

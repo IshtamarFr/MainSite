@@ -1,10 +1,10 @@
 package fr.ishtamar.starter.controllers;
 
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
-import fr.ishtamar.starter.user.UserDto;
-import fr.ishtamar.starter.user.UserInfoService;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
-import fr.ishtamar.starter.user.UserMapper;
+import fr.ishtamar.starter.model.user.UserDto;
+import fr.ishtamar.starter.model.user.UserInfoService;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.user.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.security.access.annotation.Secured;

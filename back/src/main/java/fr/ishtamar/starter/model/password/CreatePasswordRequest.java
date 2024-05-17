@@ -1,8 +1,5 @@
-package fr.ishtamar.starter.password;
+package fr.ishtamar.starter.model.password;
 
-import fr.ishtamar.starter.category.Category;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

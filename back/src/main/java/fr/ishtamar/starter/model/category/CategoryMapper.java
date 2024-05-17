@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.category;
+package fr.ishtamar.starter.model.category;
 
 import fr.ishtamar.starter.util.EntityMapper;
 import org.mapstruct.Mapper;

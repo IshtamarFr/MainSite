@@ -1,7 +1,7 @@
 package fr.ishtamar.starter.security;
 
-import fr.ishtamar.starter.user.UserInfoRepository;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.user.UserInfoRepository;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

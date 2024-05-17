@@ -1,10 +1,10 @@
 package fr.ishtamar.starter.unit;
 
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.exceptionhandler.BadCredentialsException;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
-import fr.ishtamar.starter.user.UserInfoRepository;
-import fr.ishtamar.starter.user.UserInfoServiceImpl;
+import fr.ishtamar.starter.model.user.UserInfoRepository;
+import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

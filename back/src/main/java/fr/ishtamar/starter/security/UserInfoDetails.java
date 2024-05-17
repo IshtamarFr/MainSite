@@ -1,6 +1,6 @@
 package fr.ishtamar.starter.security;
 
-import fr.ishtamar.starter.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.auth;
+package fr.ishtamar.starter.model.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -13,17 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ModifyUserRequest {
+public class CreateUserRequest {
     @Size(max=30)
+    @NotNull
     private String name;
 
-    @NotNull
-    private String oldPassword;
-
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,60}$|null|")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,60}$")
     private String password;
 
     @Size(max=63)
+    @NotNull
     @Email
     private String email;
 }
