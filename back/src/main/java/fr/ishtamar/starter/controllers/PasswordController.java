@@ -17,9 +17,11 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/gestmdp")
 public class PasswordController {
     private final JwtService jwtService;
     private final UserInfoService userInfoService;
@@ -41,7 +43,7 @@ public class PasswordController {
         this.categoryService=categoryService;
     }
 
-    @PostMapping("/gestmdp/category/{id}/password")
+    @PostMapping("/category/{id}/password")
     @Secured("ROLE_USER")
     public PasswordDto createPassword(
             @RequestHeader(value="Authorization",required=false) String jwt,
@@ -56,5 +58,14 @@ public class PasswordController {
         }else {
             throw new GenericException("You are not allowed to add a password for this category");
         }
+    }
+
+    @GetMapping("/password")
+    @Secured("ROLE_USER")
+    public List<PasswordDto> getPasswords(
+            @RequestHeader(value="Authorization",required=false) String jwt
+    ) throws EntityNotFoundException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        return passwordMapper.toDto(passwordService.getPasswordsByUser(user));
     }
 }

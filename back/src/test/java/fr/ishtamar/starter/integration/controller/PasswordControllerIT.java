@@ -1,24 +1,48 @@
 package fr.ishtamar.starter.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ishtamar.starter.model.category.Category;
 import fr.ishtamar.starter.model.category.CategoryRepository;
 import fr.ishtamar.starter.model.category.CategoryServiceImpl;
+import fr.ishtamar.starter.model.password.CreatePasswordRequest;
+import fr.ishtamar.starter.model.password.Password;
+import fr.ishtamar.starter.model.password.PasswordRepository;
+import fr.ishtamar.starter.model.password.PasswordServiceImpl;
+import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
 import fr.ishtamar.starter.security.JwtService;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PasswordControllerIT {
+class PasswordControllerIT {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    CategoryServiceImpl service;
+    CategoryServiceImpl categoryService;
     @Autowired
-    CategoryRepository repository;
+    CategoryRepository categoryRepository;
+    @Autowired
+    PasswordServiceImpl service;
+    @Autowired
+    PasswordRepository repository;
     @Autowired
     UserInfoRepository userRepository;
     @Autowired
@@ -26,5 +50,160 @@ public class PasswordControllerIT {
 
     ObjectMapper mapper=new ObjectMapper();
 
+    final UserInfo initialUser=UserInfo.builder()
+            .name("Ishta")
+            .email("test@test.com")
+            .password(passwordEncoder().encode("123456"))
+            .roles("ROLE_USER")
+            .build();
 
+    final UserInfo initialUser2=UserInfo.builder()
+            .name("Pal")
+            .email("test17@test.com")
+            .password(passwordEncoder().encode("654321"))
+            .roles("ROLE_USER")
+            .build();
+
+    final Category initialCategory=Category.builder()
+            .name("Loisirs")
+            .user(initialUser)
+            .build();
+
+    final Category initialCategory2=Category.builder()
+            .name("Maison")
+            .user(initialUser)
+            .build();
+
+    final Category initialCategory3=Category.builder()
+            .name("Maison")
+            .user(initialUser2)
+            .build();
+
+    final Password initialPassword= Password.builder()
+            .passwordKey("abcdefgh")
+            .passwordPrefix("a1_A")
+            .passwordLength(64L)
+            .siteName("saumon@test.te")
+            .category(initialCategory)
+            .isActive(true)
+            .build();
+
+    final Password initialPassword2= Password.builder()
+            .passwordKey("abcdefgh")
+            .passwordPrefix("a1_A")
+            .passwordLength(64L)
+            .siteName("truite@test.te")
+            .category(initialCategory)
+            .isActive(true)
+            .build();
+
+    final Password initialPassword3= Password.builder()
+            .passwordKey("abcdefgh")
+            .passwordPrefix("a1_A")
+            .passwordLength(64L)
+            .siteName("cabillaud@test.te")
+            .category(initialCategory3)
+            .isActive(true)
+            .build();
+
+    final Password initialPassword4= Password.builder()
+            .passwordKey("abcdefgh")
+            .passwordPrefix("a1_A")
+            .passwordLength(64L)
+            .siteName("thon@test.te")
+            .category(initialCategory)
+            .isActive(true)
+            .build();
+
+    @BeforeEach
+    void init() {
+        clean();
+        userRepository.save(initialUser);
+        userRepository.save(initialUser2);
+    }
+
+    @AfterEach
+    void clean() {
+        repository.deleteAll();
+        categoryRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
+    @Test
+    @DisplayName("When I try to add a password to category, it works")
+    @Secured("USER")
+    void testAddPasswordWorks() throws Exception {
+        //Given
+        Long id=categoryRepository.save(initialCategory).getId();
+        String jwt= jwtService.generateToken(initialUser.getEmail());
+
+        CreatePasswordRequest request= CreatePasswordRequest.builder()
+                .siteName("Site de test")
+                .siteAddress("https://test.testing.te")
+                .build();
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/category/"+id+"/password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization","Bearer "+jwt)
+                .content(mapper.writeValueAsString(request)))
+
+        //Then
+                .andExpect(status().isOk());
+
+        assertThat(repository.findAll().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("When I try to add a password to other's category, it is bad request")
+    @Secured("USER")
+    void testAddPasswordToOtherThrowsError() throws Exception {
+        //Given
+        Long id=categoryRepository.save(initialCategory).getId();
+        String jwt= jwtService.generateToken(initialUser2.getEmail());
+
+        CreatePasswordRequest request= CreatePasswordRequest.builder()
+                .siteName("Site de test")
+                .siteAddress("https://test.testing.te")
+                .build();
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/category/"+id+"/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization","Bearer "+jwt)
+                        .content(mapper.writeValueAsString(request)))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        assertThat(repository.findAll().size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("When I try to get all my passwords, it works")
+    @Secured("USER")
+    void testGetAllPasswordsWorks() throws Exception {
+        //Given
+        categoryRepository.save(initialCategory);
+        categoryRepository.save(initialCategory2);
+        categoryRepository.save(initialCategory3);
+
+        repository.save(initialPassword);
+        repository.save(initialPassword2);
+        repository.save(initialPassword3);
+        repository.save(initialPassword4);
+
+        String jwt = jwtService.generateToken(initialUser.getEmail());
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password")
+                        .header("Authorization", "Bearer " + jwt))
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("saumon")))
+                .andExpect(content().string(containsString("thon")))
+                .andExpect(content().string(containsString("truite")))
+                .andExpect(content().string(Matchers.not(containsString("cabillaud"))));
+    }
 }

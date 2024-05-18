@@ -11,6 +11,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class PasswordServiceImpl implements PasswordService {
@@ -27,10 +29,6 @@ public class PasswordServiceImpl implements PasswordService {
 
     public PasswordServiceImpl(PasswordRepository repository){
         this.repository = repository;
-    }
-
-    public List<Password> getAllTrucs() {
-        return repository.findAll();
     }
 
     @Override
@@ -98,6 +96,7 @@ public class PasswordServiceImpl implements PasswordService {
                 .passwordKey(generatePassword())
                 .siteName(request.getSiteName())
                 .category(category)
+                .isActive(true)
                 .build();
 
         if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
@@ -107,5 +106,13 @@ public class PasswordServiceImpl implements PasswordService {
         password.setPasswordPrefix(request.getPasswordPrefix()==null ? generatePrefix(): request.getPasswordPrefix());
 
         return repository.save(password);
+    }
+
+    @Override
+    public List<Password> getPasswordsByUser(UserInfo user) {
+        return repository.findAll()
+                .stream()
+                .filter(password-> Objects.equals(password.getCategory().getUser(),user))
+                .toList();
     }
 }

@@ -2,6 +2,8 @@ package fr.ishtamar.starter.model.password;
 
 import fr.ishtamar.starter.model.category.Category;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -37,6 +39,8 @@ public class Password {
     private String passwordPrefix;
 
     @NotNull
+    @Min(8)
+    @Max(64)
     private Long passwordLength;
 
     @Size(max=500)
