@@ -120,4 +120,25 @@ public class PasswordServiceImpl implements PasswordService {
     public void deletePassword(Password password) {
         repository.delete(password);
     }
+
+    @Override
+    public Password modifyPassword(Password oldPassword, CreatePasswordRequest request, Category category) {
+        Password password= Password.builder()
+                .id(oldPassword.getId())
+                .passwordKey(oldPassword.getPasswordKey())
+                .siteName(request.getSiteName())
+                .category(category)
+                .isActive(oldPassword.isActive())
+                .build();
+
+        if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
+        if (request.getSiteAddress()!=null ) password.setSiteAddress(request.getSiteAddress());
+        if (request.getDescription()!=null ) password.setDescription(request.getDescription());
+        password.setPasswordLength(
+                request.getPasswordLength()==null ? oldPassword.getPasswordLength(): request.getPasswordLength());
+        password.setPasswordPrefix(
+                request.getPasswordPrefix()==null ? oldPassword.getPasswordPrefix(): request.getPasswordPrefix());
+
+        return repository.save(password);
+    }
 }

@@ -14,4 +14,5 @@ public interface PasswordService {
     Password createPassword(CreatePasswordRequest request, UserInfo user, Category category);
     List<Password> getPasswordsByUser(UserInfo user);
     void deletePassword(Password password);
+    Password modifyPassword(Password oldPassword,CreatePasswordRequest request, Category category);
 }

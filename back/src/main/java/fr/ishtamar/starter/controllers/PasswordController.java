@@ -100,4 +100,23 @@ public class PasswordController {
             throw new GenericException("You are not allowed to delete this password");
         }
     }
+
+    @PutMapping("/password/{id}")
+    @Secured("ROLE_USER")
+    public PasswordDto modifyPassword(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable final Long id,
+            @RequestBody @Valid CreatePasswordRequest request,
+            @RequestParam Long category_id
+    ) throws GenericException, EntityNotFoundException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Category category=categoryService.getCategoryById(category_id);
+        Password password=passwordService.getPasswordById(id);
+
+        if (Objects.equals(password.getCategory().getUser(),user) && Objects.equals(category.getUser(),user)) {
+            return passwordMapper.toDto(passwordService.modifyPassword(password, request, category));
+        }else {
+            throw new GenericException("You are not allowed to modify this password");
+        }
+    }
 }
