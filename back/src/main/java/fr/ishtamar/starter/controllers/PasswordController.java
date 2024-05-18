@@ -5,10 +5,7 @@ import fr.ishtamar.starter.model.category.CategoryService;
 import fr.ishtamar.starter.model.category.CategoryServiceImpl;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
-import fr.ishtamar.starter.model.password.CreatePasswordRequest;
-import fr.ishtamar.starter.model.password.PasswordDto;
-import fr.ishtamar.starter.model.password.PasswordMapper;
-import fr.ishtamar.starter.model.password.PasswordService;
+import fr.ishtamar.starter.model.password.*;
 import fr.ishtamar.starter.security.JwtService;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoService;
@@ -17,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,5 +65,22 @@ public class PasswordController {
     ) throws EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
         return passwordMapper.toDto(passwordService.getPasswordsByUser(user));
+    }
+
+    @GetMapping("/password/{id}")
+    @Secured("ROLE_USER")
+    public String getPasswords(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable final Long id,
+            @RequestBody String secretKey
+    ) throws EntityNotFoundException, GenericException, NoSuchAlgorithmException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Password password=passwordService.getPasswordById(id);
+
+        if (Objects.equals(password.getCategory().getUser(),user)) {
+            return passwordService.calculatePassword(password,secretKey);
+        } else {
+            throw new GenericException("You are not allowed to require this real password");
+        }
     }
 }

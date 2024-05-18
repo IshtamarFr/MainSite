@@ -206,4 +206,6 @@ class PasswordControllerIT {
                 .andExpect(content().string(containsString("truite")))
                 .andExpect(content().string(Matchers.not(containsString("cabillaud"))));
     }
+
+
 }
