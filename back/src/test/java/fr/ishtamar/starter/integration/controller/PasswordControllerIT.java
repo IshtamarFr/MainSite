@@ -25,6 +25,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -246,5 +248,37 @@ class PasswordControllerIT {
 
                 //Then
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("When I try to modify a password, it works")
+    @WithMockUser(roles="USER")
+    void testModifyMyPasswordWorks() throws Exception {
+        //Given
+        Long categoryId = categoryRepository.save(initialCategory).getId();
+        Long id = repository.save(initialPassword).getId();
+        String jwt = jwtService.generateToken(initialUser.getEmail());
+
+        CreatePasswordRequest request = CreatePasswordRequest.builder()
+                .siteName("Site de test")
+                .siteAddress("https://test.testing.te")
+                .build();
+
+        assertThat(repository.findAll().toString()).contains("saumon@test.te");
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.put("/gestmdp/password/" + id)
+                        .header("Authorization", "Bearer " + jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request))
+                        .param("category_id", categoryId.toString()))
+
+                //Then
+                .andExpect(status().isOk());
+
+        List<Password> passwords = repository.findAll();
+        assertThat(passwords.size()).isEqualTo(1);
+        assertThat(passwords.toString()).contains("test.testing.te");
+        assertThat(passwords.toString()).doesNotContain("saumon@test.te");
     }
 }
