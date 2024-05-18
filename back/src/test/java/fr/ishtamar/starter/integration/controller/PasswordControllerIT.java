@@ -281,4 +281,69 @@ class PasswordControllerIT {
         assertThat(passwords.toString()).contains("test.testing.te");
         assertThat(passwords.toString()).doesNotContain("saumon@test.te");
     }
+
+    @Test
+    @DisplayName("When I try to modify another's password, it is bad request")
+    @WithMockUser(roles="USER")
+    void testModifyOthersPasswordThrowsError() throws Exception {
+        //Given
+        Long categoryId = categoryRepository.save(initialCategory).getId();
+        Long id = repository.save(initialPassword).getId();
+        String jwt = jwtService.generateToken(initialUser2.getEmail());
+
+        CreatePasswordRequest request = CreatePasswordRequest.builder()
+                .siteName("Site de test")
+                .siteAddress("https://test.testing.te")
+                .build();
+
+        assertThat(repository.findAll().toString()).contains("saumon@test.te");
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.put("/gestmdp/password/" + id)
+                        .header("Authorization", "Bearer " + jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request))
+                        .param("category_id", categoryId.toString()))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        List<Password> passwords = repository.findAll();
+        assertThat(passwords.size()).isEqualTo(1);
+        assertThat(passwords.toString()).contains("saumon@test.te");
+        assertThat(passwords.toString()).doesNotContain("test@testing.te");
+    }
+
+    @Test
+    @DisplayName("When I try to modify my password to match someone else's category, it is bad request")
+    @WithMockUser(roles="USER")
+    void testModifyMyPasswordWithOthersCategoryThrowsError() throws Exception {
+        //Given
+        categoryRepository.save(initialCategory);
+        Long categoryId = categoryRepository.save(initialCategory3).getId();
+        Long id = repository.save(initialPassword).getId();
+        String jwt = jwtService.generateToken(initialUser.getEmail());
+
+        CreatePasswordRequest request = CreatePasswordRequest.builder()
+                .siteName("Site de test")
+                .siteAddress("https://test.testing.te")
+                .build();
+
+        assertThat(repository.findAll().toString()).contains("saumon@test.te");
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.put("/gestmdp/password/" + id)
+                        .header("Authorization", "Bearer " + jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request))
+                        .param("category_id", categoryId.toString()))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        List<Password> passwords = repository.findAll();
+        assertThat(passwords.size()).isEqualTo(1);
+        assertThat(passwords.toString()).contains("saumon@test.te");
+        assertThat(passwords.toString()).doesNotContain("test@testing.te");
+    }
 }
