@@ -115,4 +115,9 @@ public class PasswordServiceImpl implements PasswordService {
                 .filter(password-> Objects.equals(password.getCategory().getUser(),user))
                 .toList();
     }
+
+    @Override
+    public void deletePassword(Password password) {
+        repository.delete(password);
+    }
 }

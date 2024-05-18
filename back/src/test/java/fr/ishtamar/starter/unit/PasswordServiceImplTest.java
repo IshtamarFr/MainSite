@@ -26,7 +26,7 @@ class PasswordServiceImplTest {
                 .siteLogin("Pikachu")
                 .passwordKey("z4-=%6H2Uzz^HT0]VX0jv9bzUE4lWEG8M??A|20r9M(%AuP<8}[nO(VrzT|A1>0?")
                 .passwordPrefix("c7_P")
-                .passwordLength(128L)
+                .passwordLength(64L)
                 .build();
 
         String secretKey="ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02";
@@ -36,7 +36,7 @@ class PasswordServiceImplTest {
 
         //Then
         assertThat(realPassword)
-                .isEqualTo("c7_Pos3/LwR9bak54IgxkBF1aCV7H/2zI25Q8AEaJW0qk3cva43sue3C/LeRb6JNrONzvGeOHK8e4eotdaRNF46vEw==");
+                .isEqualTo("c7_Pos3/LwR9bak54IgxkBF1aCV7H/2zI25Q8AEaJW0qk3cva43sue3C/LeRb6JN");
     }
 
     @Test

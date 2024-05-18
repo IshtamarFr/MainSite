@@ -59,13 +59,14 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_USER")
-    public void deleteCategory(@RequestHeader(value="Authorization",required=false) String jwt,@PathVariable Long id)
+    public String deleteCategory(@RequestHeader(value="Authorization",required=false) String jwt,@PathVariable Long id)
             throws EntityNotFoundException, GenericException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
         Category category=categoryService.getCategoryById(id);
 
         if (Objects.equals(category.getUser(),user)) {
             categoryService.deleteCategory(category);
+            return "This category was successfully deleted";
         } else {
             throw new GenericException("You are not allowed to delete this resource");
         }

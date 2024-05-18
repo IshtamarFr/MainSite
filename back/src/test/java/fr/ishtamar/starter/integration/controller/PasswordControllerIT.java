@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -80,8 +81,8 @@ class PasswordControllerIT {
             .build();
 
     final Password initialPassword= Password.builder()
-            .passwordKey("abcdefgh")
-            .passwordPrefix("a1_A")
+            .passwordKey("z4-=%6H2Uzz^HT0]VX0jv9bzUE4lWEG8M??A|20r9M(%AuP<8}[nO(VrzT|A1>0?")
+            .passwordPrefix("c7_P")
             .passwordLength(64L)
             .siteName("saumon@test.te")
             .category(initialCategory)
@@ -207,5 +208,43 @@ class PasswordControllerIT {
                 .andExpect(content().string(Matchers.not(containsString("cabillaud"))));
     }
 
+    @Test
+    @DisplayName("When I try to calculate my password, it works")
+    @WithMockUser(roles="USER")
+    void testCalculatePasswordWorks() throws Exception {
+        //Given
+        categoryRepository.save(initialCategory);
+        Long id=repository.save(initialPassword).getId();
+        repository.save(initialPassword2);
+        String jwt = jwtService.generateToken(initialUser.getEmail());
 
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password/"+id)
+                .header("Authorization", "Bearer " + jwt)
+                .content("ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02"))
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(
+                        "c7_Pos3/LwR9bak54IgxkBF1aCV7H/2zI25Q8AEaJW0qk3cva43sue3C/LeRb6JN")));
+    }
+
+    @Test
+    @DisplayName("When I try to calculate other's password, it is bad request")
+    @WithMockUser(roles="USER")
+    void testCalculateOthersPasswordThrowsError() throws Exception {
+        //Given
+        categoryRepository.save(initialCategory);
+        Long id=repository.save(initialPassword).getId();
+        repository.save(initialPassword2);
+        String jwt = jwtService.generateToken(initialUser2.getEmail());
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password/"+id)
+                        .header("Authorization", "Bearer " + jwt)
+                        .content("ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02"))
+
+                //Then
+                .andExpect(status().isBadRequest());
+    }
 }

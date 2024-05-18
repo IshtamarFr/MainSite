@@ -83,4 +83,21 @@ public class PasswordController {
             throw new GenericException("You are not allowed to require this real password");
         }
     }
+
+    @DeleteMapping("/password/{id}")
+    @Secured("ROLE_USER")
+    public String deletePassword(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable final Long id
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Password password=passwordService.getPasswordById(id);
+
+        if (Objects.equals(password.getCategory().getUser(),user)) {
+            passwordService.deletePassword(password);
+            return "This password was successfully deleted";
+        } else {
+            throw new GenericException("You are not allowed to delete this password");
+        }
+    }
 }

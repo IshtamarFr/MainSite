@@ -13,4 +13,5 @@ public interface PasswordService {
     String calculatePassword(Password password, String secretKey) throws NoSuchAlgorithmException;
     Password createPassword(CreatePasswordRequest request, UserInfo user, Category category);
     List<Password> getPasswordsByUser(UserInfo user);
+    void deletePassword(Password password);
 }
