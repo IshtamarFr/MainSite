@@ -23,7 +23,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/sudoku/sudoku.routes').then((r) => r.SUDOKU_ROUTES),
   },
-  { path: 'gestmdp', canActivate: [AuthGuard], component: GestmdpComponent },
+  {
+    path: 'gestmdp',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/gestmdp/gestmdp.routes').then((r) => r.GESTMDP_ROUTES),
+  },
   { path: '404', component: NotFoundComponent },
   { path: 'ishta', component: IshtaComponent },
 

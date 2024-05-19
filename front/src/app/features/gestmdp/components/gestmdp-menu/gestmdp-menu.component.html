@@ -13,4 +13,12 @@
       <mat-icon>add</mat-icon>
     </button>
   </form>
+  <div
+    class="link"
+    *ngFor="let category of categories"
+    [routerLink]="'/gestmdp/' + category.id"
+    routerLinkActive="active"
+  >
+    {{ category.name }}
+  </div>
 </div>

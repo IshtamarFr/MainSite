@@ -2,6 +2,8 @@ import { RouterModule } from '@angular/router';
 import { GestmdpMenuComponent } from './gestmdp-menu.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryService } from '../../services/category.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('GestmdpMenuComponent', () => {
   let component: GestmdpMenuComponent;
@@ -13,7 +15,9 @@ describe('GestmdpMenuComponent', () => {
         GestmdpMenuComponent,
         RouterModule.forRoot([]),
         NoopAnimationsModule,
+        HttpClientTestingModule,
       ],
+      providers: [CategoryService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GestmdpMenuComponent);
