@@ -1,6 +1,13 @@
 <div class="mainContainer">
   <h2>Catégories</h2>
-  <div class="link" routerLink="/gestmdp" routerLinkActive="active">Tous</div>
+  <a
+    class="link"
+    routerLink="/gestmdp"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Tous
+  </a>
   <form [formGroup]="form" (ngSubmit)="newCategory()">
     <mat-form-field>
       <input
