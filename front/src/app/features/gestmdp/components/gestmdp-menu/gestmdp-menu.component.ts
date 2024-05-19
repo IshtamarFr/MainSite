@@ -43,7 +43,7 @@ export class GestmdpMenuComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (resp) => {
-          this.categories = resp;
+          this.categories = resp.sort((a, b) => a.name.localeCompare(b.name));
         },
       });
   }
