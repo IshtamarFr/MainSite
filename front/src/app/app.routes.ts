@@ -3,7 +3,7 @@ import { UnauthGuard } from './guards/unauth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { IshtaComponent } from './features/dev/ishta/ishta.component';
-import { GestmdpComponent } from './features/gestmdp/gestmdp.component';
+import { GestmdpComponent } from './features/gestmdp/components/main/gestmdp.component';
 
 export const routes: Routes = [
   {
