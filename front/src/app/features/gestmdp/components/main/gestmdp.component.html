@@ -2,11 +2,16 @@
   <app-gestmdp-menu class="div-gauche" />
   <div class="div-droit">
     <h2>Mots de passe</h2>
-    <div *ngIf="category">
-      <p>Pour la catégorie : {{ category.name }}</p>
-    </div>
-    <div *ngIf="!category">
-      <p>Pour toutes les catégories</p>
+    <p *ngIf="category">Pour la catégorie : {{ category.name }}</p>
+    <p *ngIf="!category">Pour toutes les catégories</p>
+    <div class="passwords">
+      <div *ngFor="let password of passwords">
+        <mat-card
+          *ngIf="category == undefined || password.category_id == category.id"
+        >
+          <mat-card-title>{{ password.siteName }}</mat-card-title>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

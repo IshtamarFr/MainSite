@@ -17,4 +17,21 @@
       text-align: center;
     }
   }
+
+  .passwords {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    mat-card {
+      padding: 5px;
+      width: 400px;
+      margin: 10px;
+
+      mat-card-title {
+        margin: auto;
+        text-align: center;
+      }
+    }
+  }
 }
