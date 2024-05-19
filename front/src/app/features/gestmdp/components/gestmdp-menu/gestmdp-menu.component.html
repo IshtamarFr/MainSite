@@ -1,3 +1,16 @@
 <div class="mainContainer">
   <h2>Catégories</h2>
+  <div class="link" routerLink="/gestmdp" routerLinkActive="active">Tous</div>
+  <form [formGroup]="form" (ngSubmit)="newCategory()">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Nouv. catégorie"
+        formControlName="category"
+      />
+    </mat-form-field>
+    <button type="submit" mat-mini-fab class="addCategory">
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
 </div>
