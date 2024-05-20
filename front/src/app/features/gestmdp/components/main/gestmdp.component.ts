@@ -31,32 +31,26 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.categoryService
-      .getAll()
-      .pipe(take(1))
-      .subscribe({
-        next: (resp) => {
-          this.categories = resp;
-          this.categoriesSubscription$ = this.activatedRoute.params.subscribe(
-            (params) => {
-              this.category = this.categories.find(
-                (x) => x.id == params['categoryId']
-              );
-            }
-          );
-        },
-      });
+    this.categoryService.categories$.subscribe({
+      next: (resp) => {
+        this.categories = resp;
+        this.categoriesSubscription$ = this.activatedRoute.params.subscribe(
+          (params) => {
+            this.category = this.categories.find(
+              (x) => x.id == params['categoryId']
+            );
+          }
+        );
+      },
+    });
 
-    this.passwordsSubscription$ = this.passwordService
-      .getAll()
-      .pipe(take(1))
-      .subscribe({
-        next: (resp) => {
-          this.passwords = resp.sort((a, b) =>
-            a.siteName.localeCompare(b.siteName)
-          );
-        },
-      });
+    this.passwordsSubscription$ = this.passwordService.getAll().subscribe({
+      next: (resp) => {
+        this.passwords = resp.sort((a, b) =>
+          a.siteName.localeCompare(b.siteName)
+        );
+      },
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,17 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable, catchError, shareReplay } from 'rxjs';
 import { Category } from '../interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  private pathService = 'api/gestmdp/category';
+  private readonly pathService = 'api/gestmdp/category';
+  public categories$: Observable<Category[]>;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.categories$ = this.fetchData().pipe(shareReplay());
+  }
 
-  public getAll(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(this.pathService);
+  fetchData(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(this.pathService).pipe(
+      catchError((error) => {
+        console.error('Error fetching categories:', error);
+        return [];
+      })
+    );
   }
 }
