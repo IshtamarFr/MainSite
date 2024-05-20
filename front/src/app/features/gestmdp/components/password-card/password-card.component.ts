@@ -5,6 +5,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-password-card',
@@ -15,6 +18,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    FormsModule,
   ],
   templateUrl: './password-card.component.html',
   styleUrl: './password-card.component.scss',
@@ -23,4 +29,8 @@ export class PasswordCardComponent {
   @Input() public password!: Password;
 
   public constructor() {}
+
+  changeStatus(): void {
+    this.password.active = !this.password.active;
+  }
 }

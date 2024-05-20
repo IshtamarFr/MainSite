@@ -1,6 +1,8 @@
 <div class="mainContainer">
   <app-gestmdp-menu class="div-gauche" />
   <div class="div-droit">
+    <mat-slide-toggle [(ngModel)]="isInactiveShown" />
+    {{ isInactiveShown ? "Masquer" : "Afficher" }} les désactivés
     <h2>Mots de passe</h2>
     <p *ngIf="category">Pour la catégorie : {{ category.name }}</p>
     <p *ngIf="!category">Pour toutes les catégories</p>
@@ -8,7 +10,7 @@
       <div *ngFor="let password of passwords">
         <app-password-card
           *ngIf="
-            password.active &&
+            (password.active || isInactiveShown) &&
             (category == undefined || password.category_id == category.id)
           "
           [password]="password"

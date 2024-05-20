@@ -8,6 +8,8 @@ import { Category } from '../../interfaces/category.interface';
 import { Password } from '../../interfaces/password.interface';
 import { PasswordService } from '../../services/password.service';
 import { PasswordCardComponent } from '../password-card/password-card.component';
+import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-gestmdp',
@@ -17,6 +19,8 @@ import { PasswordCardComponent } from '../password-card/password-card.component'
     CommonModule,
     RouterModule,
     PasswordCardComponent,
+    FormsModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',
@@ -28,6 +32,8 @@ export class GestmdpComponent implements OnInit, OnDestroy {
 
   public categoriesSubscription$!: Subscription;
   public passwordsSubscription$!: Subscription;
+
+  public isInactiveShown: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
