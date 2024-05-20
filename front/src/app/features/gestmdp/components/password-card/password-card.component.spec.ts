@@ -3,10 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { PasswordCardComponent } from './password-card.component';
+import { Password } from '../../interfaces/password.interface';
 
 describe('PasswordCardComponent', () => {
   let component: PasswordCardComponent;
   let fixture: ComponentFixture<PasswordCardComponent>;
+
+  const mockPassword: Password = {
+    id: 40,
+    siteName: 'Amadron',
+    active: true,
+    category_id: 2,
+    user_id: 1,
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,6 +30,7 @@ describe('PasswordCardComponent', () => {
 
     fixture = TestBed.createComponent(PasswordCardComponent);
     component = fixture.componentInstance;
+    component.password = mockPassword;
     fixture.detectChanges();
   });
 
