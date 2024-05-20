@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-password-card',
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatTooltipModule,
     FormsModule,
+    MatSnackBarModule,
   ],
   templateUrl: './password-card.component.html',
   styleUrl: './password-card.component.scss',
@@ -28,9 +30,16 @@ import { FormsModule } from '@angular/forms';
 export class PasswordCardComponent {
   @Input() public password!: Password;
 
-  public constructor() {}
+  public constructor(private _snackBar: MatSnackBar) {}
 
   changeStatus(): void {
     this.password.active = !this.password.active;
+  }
+
+  async copySiteLogin(password: Password): Promise<void> {
+    await navigator.clipboard.writeText(password.siteLogin!);
+    this._snackBar.open('Login copié dans le presse-papiers', 'fermer', {
+      duration: 2500,
+    });
   }
 }
