@@ -16,10 +16,17 @@
 
   .link {
     font-size: large;
-    cursor: pointer;
     text-decoration: none;
-    margin-bottom: 5px;
-    margin-top: 5px;
+  }
+
+  mat-card {
+    margin: 5px;
+    cursor: pointer;
+
+    mat-card-title {
+      margin: auto;
+      padding: 5px;
+    }
   }
 }
 

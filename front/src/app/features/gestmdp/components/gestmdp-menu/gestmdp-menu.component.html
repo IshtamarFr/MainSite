@@ -1,13 +1,16 @@
 <div class="mainContainer">
   <h2>Catégories</h2>
-  <a
-    class="link"
-    routerLink="/gestmdp"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
-    Tous
-  </a>
+  <mat-card routerLink="/gestmdp">
+    <mat-card-title>
+      <a
+        class="link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Tous
+      </a>
+    </mat-card-title>
+  </mat-card>
   <form [formGroup]="form" (ngSubmit)="newCategory()">
     <mat-form-field>
       <input
@@ -20,12 +23,14 @@
       <mat-icon>add</mat-icon>
     </button>
   </form>
-  <div
-    class="link"
+  <mat-card
     *ngFor="let category of categories"
     [routerLink]="'/gestmdp/' + category.id"
-    routerLinkActive="active"
   >
-    {{ category.name }}
-  </div>
+    <mat-card-title>
+      <a class="link" routerLinkActive="active">
+        {{ category.name }}
+      </a>
+    </mat-card-title>
+  </mat-card>
 </div>
