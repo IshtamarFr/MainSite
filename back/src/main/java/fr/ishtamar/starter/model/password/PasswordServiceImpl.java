@@ -96,7 +96,7 @@ public class PasswordServiceImpl implements PasswordService {
                 .passwordKey(generatePassword())
                 .siteName(request.getSiteName())
                 .category(category)
-                .isActive(true)
+                .active(true)
                 .build();
 
         if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
@@ -128,7 +128,7 @@ public class PasswordServiceImpl implements PasswordService {
                 .passwordKey(oldPassword.getPasswordKey())
                 .siteName(request.getSiteName())
                 .category(category)
-                .isActive(oldPassword.isActive())
+                .active(oldPassword.isActive())
                 .build();
 
         if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());

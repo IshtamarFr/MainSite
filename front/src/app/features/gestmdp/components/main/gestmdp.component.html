@@ -6,11 +6,13 @@
     <p *ngIf="!category">Pour toutes les catégories</p>
     <div class="passwords">
       <div *ngFor="let password of passwords">
-        <mat-card
-          *ngIf="category == undefined || password.category_id == category.id"
-        >
-          <mat-card-title>{{ password.siteName }}</mat-card-title>
-        </mat-card>
+        <app-password-card
+          *ngIf="
+            password.active &&
+            (category == undefined || password.category_id == category.id)
+          "
+          [password]="password"
+        />
       </div>
     </div>
   </div>

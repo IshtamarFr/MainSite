@@ -1,18 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GestmdpMenuComponent } from '../gestmdp-menu/gestmdp-menu.component';
-import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subscription, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category.interface';
 import { Password } from '../../interfaces/password.interface';
 import { PasswordService } from '../../services/password.service';
+import { PasswordCardComponent } from '../password-card/password-card.component';
 
 @Component({
   selector: 'app-gestmdp',
   standalone: true,
-  imports: [GestmdpMenuComponent, MatCardModule, CommonModule, RouterModule],
+  imports: [
+    GestmdpMenuComponent,
+    CommonModule,
+    RouterModule,
+    PasswordCardComponent,
+  ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',
 })

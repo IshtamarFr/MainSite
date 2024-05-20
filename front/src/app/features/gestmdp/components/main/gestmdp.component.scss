@@ -23,15 +23,9 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    mat-card {
+    app-password-card {
       padding: 5px;
       width: 400px;
-      margin: 10px;
-
-      mat-card-title {
-        margin: auto;
-        text-align: center;
-      }
     }
   }
 }

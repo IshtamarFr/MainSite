@@ -46,7 +46,7 @@ public class Password {
     @Size(max=500)
     private String description;
 
-    private boolean isActive;
+    private boolean active;
 
     @ManyToOne
     @NotNull

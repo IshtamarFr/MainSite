@@ -88,7 +88,7 @@ class PasswordControllerIT {
             .passwordLength(64L)
             .siteName("saumon@test.te")
             .category(initialCategory)
-            .isActive(true)
+            .active(true)
             .build();
 
     final Password initialPassword2= Password.builder()
@@ -97,7 +97,7 @@ class PasswordControllerIT {
             .passwordLength(64L)
             .siteName("truite@test.te")
             .category(initialCategory)
-            .isActive(true)
+            .active(true)
             .build();
 
     final Password initialPassword3= Password.builder()
@@ -106,7 +106,7 @@ class PasswordControllerIT {
             .passwordLength(64L)
             .siteName("cabillaud@test.te")
             .category(initialCategory3)
-            .isActive(true)
+            .active(true)
             .build();
 
     final Password initialPassword4= Password.builder()
@@ -115,7 +115,7 @@ class PasswordControllerIT {
             .passwordLength(64L)
             .siteName("thon@test.te")
             .category(initialCategory)
-            .isActive(true)
+            .active(true)
             .build();
 
     @BeforeEach

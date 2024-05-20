@@ -4,7 +4,7 @@ export interface Password {
   siteAddress?: string;
   siteLogin?: string;
   description?: string;
-  isActive: boolean;
+  active: boolean;
   category_id: number;
   user_id: number;
 }

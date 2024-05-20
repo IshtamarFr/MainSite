@@ -15,7 +15,7 @@ public class PasswordDto {
     private String siteAddress;
     private String siteLogin;
     private String description;
-    private boolean isActive;
+    private boolean active;
     private Long category_id;
     private Long user_id;
 }
