@@ -4,4 +4,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .appContainer {
+    width: 100vw;
+    height: 90vh;
+    overflow: auto;
+  }
 }

@@ -11,18 +11,8 @@
       </a>
     </mat-card-title>
   </mat-card>
-  <form [formGroup]="form" (ngSubmit)="newCategory()">
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Nouv. catégorie"
-        formControlName="category"
-      />
-    </mat-form-field>
-    <button type="submit" mat-mini-fab class="addCategory">
-      <mat-icon>add</mat-icon>
-    </button>
-  </form>
+  <button mat-flat-button><mat-icon>add</mat-icon> Créer</button>
+  <hr />
   <mat-card
     *ngFor="let category of categories"
     [routerLink]="'/gestmdp/' + category.id"

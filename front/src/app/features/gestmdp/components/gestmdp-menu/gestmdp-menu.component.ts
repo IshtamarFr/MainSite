@@ -31,14 +31,7 @@ export class GestmdpMenuComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   categoriesSubscription$!: Subscription;
 
-  public form = this.fb.group({
-    category: ['', [Validators.required, Validators.maxLength(63)]],
-  });
-
-  constructor(
-    private fb: FormBuilder,
-    private categoryService: CategoryService
-  ) {}
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.categoryService.categories$.subscribe({
