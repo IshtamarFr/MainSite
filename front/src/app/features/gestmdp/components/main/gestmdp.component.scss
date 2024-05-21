@@ -4,6 +4,18 @@
   height: 100%;
   align-items: stretch;
 
+  .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      margin: 5px;
+      background-color: #209cee;
+      color: white;
+    }
+  }
+
   .div-gauche {
     width: 200px;
     border-right: 1px solid;

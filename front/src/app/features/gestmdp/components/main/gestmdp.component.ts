@@ -10,6 +10,8 @@ import { PasswordService } from '../../services/password.service';
 import { PasswordCardComponent } from '../password-card/password-card.component';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gestmdp',
@@ -21,6 +23,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     PasswordCardComponent,
     FormsModule,
     MatSlideToggleModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',
