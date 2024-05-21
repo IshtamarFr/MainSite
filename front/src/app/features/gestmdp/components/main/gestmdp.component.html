@@ -1,6 +1,7 @@
 <div class="mainContainer">
   <app-gestmdp-menu class="div-gauche" />
   <div class="div-droit">
+    <h2>Mots de passe</h2>
     <div class="top">
       <div>
         <mat-slide-toggle [(ngModel)]="isInactiveShown" />
@@ -8,9 +9,6 @@
       </div>
       <button mat-flat-button><mat-icon>add</mat-icon> Créer</button>
     </div>
-    <h2>Mots de passe</h2>
-    <p *ngIf="category">Pour la catégorie : {{ category.name }}</p>
-    <p *ngIf="!category">Pour toutes les catégories</p>
     <div class="passwords">
       <div *ngFor="let password of passwords">
         <app-password-card

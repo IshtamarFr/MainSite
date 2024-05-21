@@ -10,6 +10,8 @@ import { Category } from '../../interfaces/category.interface';
 import { CategoryService } from '../../services/category.service';
 import { Subscription, take } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { DialogService } from '../../../../utils/dialog.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gestmdp-menu',
@@ -23,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatSnackBarModule,
   ],
   templateUrl: './gestmdp-menu.component.html',
   styleUrl: './gestmdp-menu.component.scss',
@@ -31,7 +34,10 @@ export class GestmdpMenuComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   categoriesSubscription$!: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
     this.categoryService.categories$.subscribe({
@@ -46,5 +52,14 @@ export class GestmdpMenuComponent implements OnInit, OnDestroy {
       this.categoriesSubscription$.unsubscribe();
   }
 
-  newCategory(): void {}
+  //TODO: Finir ce morceau de code pour créer des catégories
+  newCategory(): void {
+    this.dialogService
+      .openInputDialog('Veuillez nommer la nouvelle catégorie', false)
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {},
+        error: (_) => {},
+      });
+  }
 }

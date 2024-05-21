@@ -11,7 +11,9 @@
       </a>
     </mat-card-title>
   </mat-card>
-  <button mat-flat-button><mat-icon>add</mat-icon> Créer</button>
+  <button mat-flat-button (click)="newCategory()">
+    <mat-icon>add</mat-icon> Créer
+  </button>
   <hr />
   <mat-card
     *ngFor="let category of categories"
