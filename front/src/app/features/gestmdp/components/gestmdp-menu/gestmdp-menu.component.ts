@@ -11,7 +11,7 @@ import { CategoryService } from '../../services/category.service';
 import { Subscription, take } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { DialogService } from '../../../../utils/dialog.service';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gestmdp-menu',
@@ -36,7 +36,8 @@ export class GestmdpMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private categoryService: CategoryService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -52,14 +53,31 @@ export class GestmdpMenuComponent implements OnInit, OnDestroy {
       this.categoriesSubscription$.unsubscribe();
   }
 
-  //TODO: Finir ce morceau de code pour créer des catégories
   newCategory(): void {
     this.dialogService
       .openInputDialog('Veuillez nommer la nouvelle catégorie', false)
       .pipe(take(1))
       .subscribe({
-        next: (resp) => {},
-        error: (_) => {},
+        next: (resp) => {
+          if (resp)
+            this.categoryService
+              .createCategory(resp)
+              .pipe(take(1))
+              .subscribe({
+                next: (newCategory) => {
+                  this.categories.push(newCategory);
+                  this.categories.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error: (_) =>
+                  this._snackBar.open("Une erreur s'est produite", 'fermer', {
+                    duration: 2500,
+                  }),
+              });
+        },
+        error: (_) =>
+          this._snackBar.open("Une erreur s'est produite", 'fermer', {
+            duration: 2500,
+          }),
       });
   }
 }

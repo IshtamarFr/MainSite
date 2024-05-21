@@ -22,4 +22,10 @@ export class CategoryService {
       })
     );
   }
+
+  createCategory(name: string): Observable<Category> {
+    return this.httpClient.post<Category>(this.pathService, null, {
+      params: { name },
+    });
+  }
 }
