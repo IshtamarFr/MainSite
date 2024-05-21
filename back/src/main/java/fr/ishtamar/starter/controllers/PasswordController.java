@@ -67,9 +67,9 @@ public class PasswordController {
         return passwordMapper.toDto(passwordService.getPasswordsByUser(user));
     }
 
-    @GetMapping("/password/{id}")
+    @PostMapping("/password/{id}")
     @Secured("ROLE_USER")
-    public String getPasswords(
+    public String getPassword(
             @RequestHeader(value="Authorization",required=false) String jwt,
             @PathVariable final Long id,
             @RequestBody String secretKey

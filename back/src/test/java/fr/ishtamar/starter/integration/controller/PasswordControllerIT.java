@@ -221,9 +221,9 @@ class PasswordControllerIT {
         String jwt = jwtService.generateToken(initialUser.getEmail());
 
         //When
-        mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password/"+id)
+        mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/password/"+id)
                 .header("Authorization", "Bearer " + jwt)
-                .content("ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02"))
+                        .content("ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02"))
 
                 //Then
                 .andExpect(status().isOk())
@@ -242,7 +242,7 @@ class PasswordControllerIT {
         String jwt = jwtService.generateToken(initialUser2.getEmail());
 
         //When
-        mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password/"+id)
+        mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/password/"+id)
                         .header("Authorization", "Bearer " + jwt)
                         .content("ca77e9310db4628bc3eaafaa62b93ca763ba2091b5f712d0d39f35ae7aee02"))
 

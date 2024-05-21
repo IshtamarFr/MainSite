@@ -9,6 +9,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { DialogService } from '../../../../utils/dialog.service';
+import { PasswordService } from '../../services/password.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-password-card',
@@ -30,7 +33,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class PasswordCardComponent {
   @Input() public password!: Password;
 
-  public constructor(private _snackBar: MatSnackBar) {}
+  public constructor(
+    private _snackBar: MatSnackBar,
+    private dialogService: DialogService,
+    private passwordService: PasswordService
+  ) {}
 
   changeStatus(): void {
     this.password.active = !this.password.active;
@@ -41,5 +48,35 @@ export class PasswordCardComponent {
     this._snackBar.open('Login copié dans le presse-papiers', 'fermer', {
       duration: 2500,
     });
+  }
+
+  calculatePassword(password: Password): void {
+    this.dialogService
+      .openInputDialog('Veuillez entrer votre clé privée')
+      .subscribe({
+        next: (key) => {
+          if (key) {
+            this.passwordService
+              .calculate(password, key)
+              .pipe(take(1))
+              .subscribe({
+                next: async (realPassword) => {
+                  await navigator.clipboard.writeText(realPassword);
+                  this._snackBar.open(
+                    'MdP copié dans le presse-papiers',
+                    'fermer',
+                    {
+                      duration: 2500,
+                    }
+                  );
+                },
+                error: (_) =>
+                  this._snackBar.open("Une erreur s'est produite", 'fermer', {
+                    duration: 2500,
+                  }),
+              });
+          }
+        },
+      });
   }
 }
