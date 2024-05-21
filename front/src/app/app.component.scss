@@ -7,7 +7,8 @@
 
   .appContainer {
     width: 100vw;
-    height: 90vh;
-    overflow: auto;
+    height: 95vh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
