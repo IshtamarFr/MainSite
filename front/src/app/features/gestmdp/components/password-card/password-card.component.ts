@@ -52,7 +52,7 @@ export class PasswordCardComponent {
 
   calculatePassword(password: Password): void {
     this.dialogService
-      .openInputDialog('Veuillez entrer votre clé privée')
+      .openInputDialog('Veuillez entrer votre clé privée', true)
       .subscribe({
         next: (key) => {
           if (key) {

@@ -21,10 +21,14 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  openInputDialog(message: string): Observable<string | undefined> {
+  openInputDialog(
+    message: string,
+    hide?: boolean
+  ): Observable<string | undefined> {
     const dialogRef = this.dialog.open(InputDialogComponent, {
       data: {
         message,
+        hide,
       },
     });
 

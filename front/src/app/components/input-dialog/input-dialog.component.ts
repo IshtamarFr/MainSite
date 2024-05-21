@@ -31,6 +31,7 @@ export class InputDialogComponent implements OnInit {
     'missing message, please contact us at ' + AppSettings.CONTACT_EMAIL;
   showCancel: boolean = true;
   public form!: FormGroup;
+  public hide: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmDialogComponent>,
@@ -44,6 +45,8 @@ export class InputDialogComponent implements OnInit {
     this.form = this.fb.group({
       content: ['', [Validators.required, Validators.maxLength(512)]],
     });
+
+    if (this.data.hide) this.hide = this.data.hide;
   }
 
   onConfirm(): void {
