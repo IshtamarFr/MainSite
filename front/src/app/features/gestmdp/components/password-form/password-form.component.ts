@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-password-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatButtonModule],
   templateUrl: './password-form.component.html',
   styleUrl: './password-form.component.scss',
 })
-export class PasswordFormComponent {
+export class PasswordFormComponent implements OnInit {
+  public action: string = 'Création';
+
   public form = this.fb.group({
     siteName: [
       '',
@@ -23,4 +28,9 @@ export class PasswordFormComponent {
   });
 
   public constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    if (window.location.href.includes('password/'))
+      this.action = 'Modification';
+  }
 }
