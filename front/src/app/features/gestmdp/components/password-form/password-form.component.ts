@@ -1,14 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-password-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './password-form.component.html',
   styleUrl: './password-form.component.scss',
 })
@@ -32,5 +48,9 @@ export class PasswordFormComponent implements OnInit {
   ngOnInit(): void {
     if (window.location.href.includes('password/'))
       this.action = 'Modification';
+  }
+
+  submit(): void {
+    window.alert('WIP');
   }
 }
