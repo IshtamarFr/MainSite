@@ -1,7 +1,7 @@
 <div class="mainContainer">
   <h2>Catégories</h2>
   <mat-card routerLink="/gestmdp">
-    <mat-card-title>
+    <mat-card-title class="link">
       <a
         class="link"
         routerLinkActive="active"
@@ -19,7 +19,7 @@
     *ngFor="let category of categories"
     [routerLink]="'/gestmdp/' + category.id"
   >
-    <mat-card-title>
+    <mat-card-title class="link">
       <a class="link" routerLinkActive="active">
         {{ category.name }}
       </a>

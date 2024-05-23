@@ -72,3 +72,8 @@ mat-sidenav {
 .active {
   font-weight: bold;
 }
+
+.link:hover {
+  font-weight: bold;
+  transform: translateX(2px) translateY(-2px);
+}

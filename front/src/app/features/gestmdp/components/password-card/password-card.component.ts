@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { DialogService } from '../../../../utils/dialog.service';
 import { PasswordService } from '../../services/password.service';
 import { take } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-password-card',
@@ -26,6 +27,7 @@ import { take } from 'rxjs';
     MatTooltipModule,
     FormsModule,
     MatSnackBarModule,
+    RouterModule,
   ],
   templateUrl: './password-card.component.html',
   styleUrl: './password-card.component.scss',

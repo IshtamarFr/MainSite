@@ -7,7 +7,9 @@
         <mat-slide-toggle [(ngModel)]="isInactiveShown" />
         {{ isInactiveShown ? "Masquer" : "Afficher" }} les désactivés
       </div>
-      <button mat-flat-button><mat-icon>add</mat-icon> Créer</button>
+      <button mat-flat-button routerLink="/gestmdp/password">
+        <mat-icon>add</mat-icon> Créer
+      </button>
     </div>
     <div class="passwords">
       <div *ngFor="let password of passwords">

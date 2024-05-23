@@ -31,3 +31,8 @@
   font-weight: bold;
   text-decoration: none;
 }
+
+.link:hover {
+  font-weight: bold;
+  transform: translateX(2px) translateY(-2px);
+}
