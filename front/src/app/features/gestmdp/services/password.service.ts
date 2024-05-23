@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Password } from '../interfaces/password.interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { PasswordRequest } from '../interfaces/password-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,10 @@ export class PasswordService {
       `${this.pathService}/password/${password.id}`,
       { responseType: 'text' }
     );
+  }
+
+  public create(request: PasswordRequest): Observable<Password | null> {
+    //TODO: Add this, with category in HTML
+    return of(null);
   }
 }
