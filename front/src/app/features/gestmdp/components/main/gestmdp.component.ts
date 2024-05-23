@@ -73,4 +73,10 @@ export class GestmdpComponent implements OnInit, OnDestroy {
       this.categoriesSubscription$.unsubscribe();
     if (this.passwordsSubscription$) this.passwordsSubscription$.unsubscribe();
   }
+
+  removePassword(password: Password): void {
+    this.passwords = this.passwords.filter((x) => {
+      x.id != password.id;
+    });
+  }
 }

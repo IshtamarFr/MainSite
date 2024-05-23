@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Password } from '../../interfaces/password.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -34,6 +34,7 @@ import { RouterModule } from '@angular/router';
 })
 export class PasswordCardComponent {
   @Input() public password!: Password;
+  @Output() public deletedPassword = new EventEmitter<Password>();
 
   public constructor(
     private _snackBar: MatSnackBar,
@@ -78,6 +79,32 @@ export class PasswordCardComponent {
                   }),
               });
           }
+        },
+      });
+  }
+
+  deletePassword(password: Password): void {
+    this.dialogService
+      .openConfirmDialog(
+        'Etes-vous sûr de vouloir supprimer ce mot de passe ?',
+        true
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp)
+            this.passwordService
+              .delete(password)
+              .pipe(take(1))
+              .subscribe({
+                next: (resp) => {
+                  this.deletedPassword.emit(password);
+                },
+                error: (_) => {
+                  this._snackBar.open("Une erreur s'est produite", 'fermer', {
+                    duration: 2500,
+                  });
+                },
+              });
         },
       });
   }

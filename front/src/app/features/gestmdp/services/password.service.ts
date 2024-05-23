@@ -22,4 +22,11 @@ export class PasswordService {
       { responseType: 'text' }
     );
   }
+
+  public delete(password: Password): Observable<string> {
+    return this.httpClient.delete(
+      `${this.pathService}/password/${password.id}`,
+      { responseType: 'text' }
+    );
+  }
 }
