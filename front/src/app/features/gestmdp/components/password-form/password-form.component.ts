@@ -118,6 +118,18 @@ export class PasswordFormComponent implements OnInit {
             duration: 2500,
           }),
       });
+    } else if (this.action === 'Modification') {
+      this.passwordService
+        .modify(this.passwordId!, formData, category!)
+        .subscribe({
+          next: (_) => {
+            this.back();
+          },
+          error: (_) =>
+            this._snackBar.open("Une erreur s'est produite", 'fermer', {
+              duration: 2500,
+            }),
+        });
     }
   }
 

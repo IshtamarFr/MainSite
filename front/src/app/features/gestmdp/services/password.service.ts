@@ -44,4 +44,16 @@ export class PasswordService {
       request
     );
   }
+
+  public modify(
+    passwordId: number,
+    request: PasswordRequest,
+    category_id: string | number
+  ): Observable<Password> {
+    return this.httpClient.put<Password>(
+      `${this.pathService}/password/${passwordId}`,
+      request,
+      { params: { category_id } }
+    );
+  }
 }
