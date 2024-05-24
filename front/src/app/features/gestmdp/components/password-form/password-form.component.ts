@@ -26,7 +26,6 @@ import { PasswordRequest } from '../../interfaces/password-request.interface';
 import { PasswordService } from '../../services/password.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Password } from '../../interfaces/password.interface';
 
 @Component({
   selector: 'app-password-form',
