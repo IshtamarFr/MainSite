@@ -16,6 +16,10 @@ export class PasswordService {
     return this.httpClient.get<Password[]>(`${this.pathService}/password`);
   }
 
+  public getById(id: number | string): Observable<Password> {
+    return this.httpClient.get<Password>(`${this.pathService}/password/${id}`);
+  }
+
   public calculate(password: Password, key: string): Observable<string> {
     return this.httpClient.post(
       `${this.pathService}/password/${password.id}`,

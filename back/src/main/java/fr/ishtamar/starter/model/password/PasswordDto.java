@@ -18,4 +18,6 @@ public class PasswordDto {
     private boolean active;
     private Long category_id;
     private Long user_id;
+    private String passwordPrefix;
+    private Long passwordLength;
 }

@@ -67,9 +67,25 @@ public class PasswordController {
         return passwordMapper.toDto(passwordService.getPasswordsByUser(user));
     }
 
+    @GetMapping("/password/{id}")
+    @Secured("ROLE_USER")
+    public PasswordDto getPasswordById(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable final Long id
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Password password=passwordService.getPasswordById(id);
+
+        if (Objects.equals(password.getCategory().getUser(),user)) {
+            return passwordMapper.toDto(password);
+        } else {
+            throw new GenericException("You are not allowed to get this password");
+        }
+    }
+
     @PostMapping("/password/{id}")
     @Secured("ROLE_USER")
-    public String getPassword(
+    public String calculatePassword(
             @RequestHeader(value="Authorization",required=false) String jwt,
             @PathVariable final Long id,
             @RequestBody String secretKey

@@ -7,4 +7,6 @@ export interface Password {
   active: boolean;
   category_id: number;
   user_id: number;
+  passwordPrefix?: string;
+  passwordLength?: number;
 }

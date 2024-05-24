@@ -25,6 +25,8 @@ import { take } from 'rxjs';
 import { PasswordRequest } from '../../interfaces/password-request.interface';
 import { PasswordService } from '../../services/password.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { Password } from '../../interfaces/password.interface';
 
 @Component({
   selector: 'app-password-form',
@@ -47,6 +49,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class PasswordFormComponent implements OnInit {
   public action: string = 'Création';
   public categories!: Category[];
+  public passwordId?: number;
+  public category_id?: number;
 
   public form = this.fb.group({
     siteName: [
@@ -65,12 +69,33 @@ export class PasswordFormComponent implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private passwordService: PasswordService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    if (window.location.href.includes('password/'))
+    if (window.location.href.includes('password/')) {
       this.action = 'Modification';
+      this.passwordId = this.activatedRoute.snapshot.params['passwordId'];
+      this.passwordService
+        .getById(this.passwordId!)
+        .pipe(take(1))
+        .subscribe({
+          next: (resp) => {
+            this.form.get('siteName')?.setValue(resp.siteName);
+            this.form.get('siteAddress')?.setValue(resp.siteAddress!);
+            this.form.get('siteLogin')?.setValue(resp.siteLogin!);
+            this.form.get('passwordPrefix')?.setValue(resp.passwordPrefix!);
+            this.form
+              .get('passwordLength')
+              ?.setValue(resp.passwordLength!.toString());
+            this.form.get('description')?.setValue(resp.description!);
+            this.form.get('category')?.setValue(resp.category_id.toString());
+          },
+          error: () => this.back(),
+        });
+    }
+
     this.categoryService
       .fetchData()
       .pipe(take(1))
