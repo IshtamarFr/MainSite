@@ -31,8 +31,13 @@ export class PasswordService {
     );
   }
 
-  public create(request: PasswordRequest): Observable<Password | null> {
-    //TODO: Add this, with category in HTML
-    return of(null);
+  public create(
+    request: PasswordRequest,
+    category: string | number
+  ): Observable<Password> {
+    return this.httpClient.post<Password>(
+      `${this.pathService}/category/${category}/password`,
+      request
+    );
   }
 }
