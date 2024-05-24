@@ -14,18 +14,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         enable_lazy_load_no_trans: true
-  #email settings
-  mail:
-    host: mail.ishtamar.fr
-    port: 587
-    username: fake@ishtamar.fr
-    password: Aa123456
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
 
 #JWT Security
 fr.ishtamar.starter:
