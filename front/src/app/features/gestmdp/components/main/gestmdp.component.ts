@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GestmdpMenuComponent } from '../gestmdp-menu/gestmdp-menu.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subscription, take } from 'rxjs';
@@ -12,12 +11,14 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { DialogService } from '../../../../utils/dialog.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gestmdp',
   standalone: true,
   imports: [
-    GestmdpMenuComponent,
     CommonModule,
     RouterModule,
     PasswordCardComponent,
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSlideToggleModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',
@@ -42,7 +44,9 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoryService,
-    private passwordService: PasswordService
+    private passwordService: PasswordService,
+    private dialogService: DialogService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +81,34 @@ export class GestmdpComponent implements OnInit, OnDestroy {
             a.siteName.localeCompare(b.siteName)
           );
         },
+      });
+  }
+
+  newCategory(): void {
+    this.dialogService
+      .openInputDialog('Veuillez nommer la nouvelle catégorie', false)
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {
+          if (resp)
+            this.categoryService
+              .createCategory(resp)
+              .pipe(take(1))
+              .subscribe({
+                next: (newCategory) => {
+                  this.categories.push(newCategory);
+                  this.categories.sort((a, b) => a.name.localeCompare(b.name));
+                },
+                error: (_) =>
+                  this._snackBar.open("Une erreur s'est produite", 'fermer', {
+                    duration: 2500,
+                  }),
+              });
+        },
+        error: (_) =>
+          this._snackBar.open("Une erreur s'est produite", 'fermer', {
+            duration: 2500,
+          }),
       });
   }
 }
