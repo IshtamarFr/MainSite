@@ -50,7 +50,7 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.categoryService.categories$.subscribe({
+    this.categoryService.fetchData().subscribe({
       next: (resp) => {
         this.categories = resp;
         this.categoriesSubscription$ = this.activatedRoute.params.subscribe(

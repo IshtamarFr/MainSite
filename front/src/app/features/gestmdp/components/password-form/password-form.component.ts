@@ -71,7 +71,8 @@ export class PasswordFormComponent implements OnInit {
   ngOnInit(): void {
     if (window.location.href.includes('password/'))
       this.action = 'Modification';
-    this.categoryService.categories$
+    this.categoryService
+      .fetchData()
       .pipe(take(1))
       .subscribe({ next: (resp) => (this.categories = resp) });
   }

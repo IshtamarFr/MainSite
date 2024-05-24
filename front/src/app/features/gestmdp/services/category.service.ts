@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, shareReplay } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Category } from '../interfaces/category.interface';
 
 @Injectable({
@@ -8,11 +8,8 @@ import { Category } from '../interfaces/category.interface';
 })
 export class CategoryService {
   private readonly pathService = 'api/gestmdp/category';
-  public categories$: Observable<Category[]>;
 
-  constructor(private httpClient: HttpClient) {
-    this.categories$ = this.fetchData().pipe(shareReplay());
-  }
+  constructor(private httpClient: HttpClient) {}
 
   fetchData(): Observable<Category[]> {
     return this.httpClient.get<Category[]>(this.pathService).pipe(
