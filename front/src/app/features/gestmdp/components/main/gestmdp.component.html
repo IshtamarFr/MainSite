@@ -19,7 +19,7 @@
             (category == undefined || password.category_id == category.id)
           "
           [password]="password"
-          (deletedPassword)="removePassword(password)"
+          (deletedPassword)="refreshPasswords()"
         />
       </div>
     </div>

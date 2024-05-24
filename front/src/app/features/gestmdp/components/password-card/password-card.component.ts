@@ -34,7 +34,7 @@ import { RouterModule } from '@angular/router';
 })
 export class PasswordCardComponent {
   @Input() public password!: Password;
-  @Output() public deletedPassword = new EventEmitter<Password>();
+  @Output() public deletedPassword = new EventEmitter<void>();
 
   public constructor(
     private _snackBar: MatSnackBar,
@@ -96,8 +96,8 @@ export class PasswordCardComponent {
               .delete(password)
               .pipe(take(1))
               .subscribe({
-                next: (resp) => {
-                  this.deletedPassword.emit(password);
+                next: (_) => {
+                  this.deletedPassword.emit();
                 },
                 error: (_) => {
                   this._snackBar.open("Une erreur s'est produite", 'fermer', {

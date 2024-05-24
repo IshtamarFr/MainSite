@@ -24,12 +24,11 @@ public class CreatePasswordRequest {
     @Size(max=127)
     private String siteLogin;
 
-    @Size(min=4,max=4)
+    @Size(max=4)
     private String passwordPrefix; //Auto set up if empty
 
-    @Min(8)
-    @Max(64)
-    private Long passwordLength; //Auto set up if empty
+    @Size(max=2)
+    private String passwordLength; //Auto set up if empty
 
     @Size(max=500)
     private String description;

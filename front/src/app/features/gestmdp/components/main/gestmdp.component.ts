@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GestmdpMenuComponent } from '../gestmdp-menu/gestmdp-menu.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category.interface';
 import { Password } from '../../interfaces/password.interface';
@@ -59,24 +59,24 @@ export class GestmdpComponent implements OnInit, OnDestroy {
       },
     });
 
-    this.passwordsSubscription$ = this.passwordService.getAll().subscribe({
-      next: (resp) => {
-        this.passwords = resp.sort((a, b) =>
-          a.siteName.localeCompare(b.siteName)
-        );
-      },
-    });
+    this.refreshPasswords();
   }
 
   ngOnDestroy(): void {
     if (this.categoriesSubscription$)
       this.categoriesSubscription$.unsubscribe();
-    if (this.passwordsSubscription$) this.passwordsSubscription$.unsubscribe();
   }
 
-  removePassword(password: Password): void {
-    this.passwords = this.passwords.filter((x) => {
-      x.id != password.id;
-    });
+  refreshPasswords(): void {
+    this.passwordService
+      .getAll()
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {
+          this.passwords = resp.sort((a, b) =>
+            a.siteName.localeCompare(b.siteName)
+          );
+        },
+      });
   }
 }

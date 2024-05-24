@@ -35,7 +35,7 @@ public class Password {
     private String passwordKey;
 
     @NotNull
-    @Size(min=4,max=6)
+    @Size(min=4,max=4)
     private String passwordPrefix;
 
     @NotNull

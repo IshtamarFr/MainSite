@@ -99,11 +99,15 @@ public class PasswordServiceImpl implements PasswordService {
                 .active(true)
                 .build();
 
-        if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
-        if (request.getSiteAddress()!=null ) password.setSiteAddress(request.getSiteAddress());
-        if (request.getDescription()!=null ) password.setDescription(request.getDescription());
-        password.setPasswordLength(request.getPasswordLength()==null ? 64L: request.getPasswordLength());
-        password.setPasswordPrefix(request.getPasswordPrefix()==null ? generatePrefix(): request.getPasswordPrefix());
+        if (request.getSiteLogin()!=null && !request.getSiteLogin().isEmpty() ) password.setSiteLogin(request.getSiteLogin());
+        if (request.getSiteAddress()!=null && !request.getSiteAddress().isEmpty() ) password.setSiteAddress(request.getSiteAddress());
+        if (request.getDescription()!=null && !request.getDescription().isEmpty() ) password.setDescription(request.getDescription());
+        password.setPasswordLength(
+                request.getPasswordLength()==null || request.getPasswordLength().isEmpty() ?
+                        64L: Long.parseLong(request.getPasswordLength()));
+        password.setPasswordPrefix(
+                request.getPasswordPrefix()==null || request.getPasswordPrefix().isEmpty() ?
+                        generatePrefix(): request.getPasswordPrefix());
 
         return repository.save(password);
     }
@@ -131,13 +135,15 @@ public class PasswordServiceImpl implements PasswordService {
                 .active(oldPassword.isActive())
                 .build();
 
-        if (request.getSiteLogin()!=null ) password.setSiteLogin(request.getSiteLogin());
-        if (request.getSiteAddress()!=null ) password.setSiteAddress(request.getSiteAddress());
-        if (request.getDescription()!=null ) password.setDescription(request.getDescription());
+        if (request.getSiteLogin()!=null && !request.getSiteLogin().isEmpty() ) password.setSiteLogin(request.getSiteLogin());
+        if (request.getSiteAddress()!=null && !request.getSiteAddress().isEmpty() ) password.setSiteAddress(request.getSiteAddress());
+        if (request.getDescription()!=null && !request.getDescription().isEmpty() ) password.setDescription(request.getDescription());
         password.setPasswordLength(
-                request.getPasswordLength()==null ? oldPassword.getPasswordLength(): request.getPasswordLength());
+                request.getPasswordLength()==null || request.getPasswordLength().isEmpty() ?
+                        oldPassword.getPasswordLength(): Long.parseLong(request.getPasswordLength()));
         password.setPasswordPrefix(
-                request.getPasswordPrefix()==null ? oldPassword.getPasswordPrefix(): request.getPasswordPrefix());
+                request.getPasswordPrefix()==null || request.getPasswordPrefix().isEmpty() ?
+                        oldPassword.getPasswordPrefix(): request.getPasswordPrefix());
 
         return repository.save(password);
     }
