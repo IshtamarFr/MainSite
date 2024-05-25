@@ -31,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
+    MatIconModule,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',

@@ -35,11 +35,12 @@
         <mat-slide-toggle [(ngModel)]="isInactiveShown" />
         {{ isInactiveShown ? "Masquer" : "Afficher" }} les désactivés
       </div>
-      <div>
+      <div class="block">
+        <mat-icon>search</mat-icon>
         <mat-form-field>
-          <mat-label>Recherche</mat-label>
           <input matInput [(ngModel)]="search" />
         </mat-form-field>
+        <mat-icon (click)="search = ''" class="link">cancel</mat-icon>
       </div>
       <button
         mat-flat-button
