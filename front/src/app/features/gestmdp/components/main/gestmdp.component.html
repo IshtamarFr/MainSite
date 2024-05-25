@@ -24,6 +24,7 @@
       *ngFor="let category of categories"
       [category]="category"
       [isModified]="isModified"
+      (deletedCategory)="deletedCategory(category)"
     />
   </div>
 

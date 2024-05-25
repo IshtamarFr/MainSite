@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../interfaces/category.interface';
@@ -55,24 +55,21 @@ export class GestmdpComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private passwordService: PasswordService,
     private dialogService: DialogService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.categoryService.fetchData().subscribe({
-      next: (resp) => {
-        this.categories = resp.sort((a, b) => a.name.localeCompare(b.name));
-        this.categoriesSubscription$ = this.activatedRoute.params.subscribe(
-          (params) => {
-            this.category = this.categories.find(
-              (x) => x.id == params['categoryId']
-            );
-          }
-        );
-      },
-    });
-
+    this.refreshCategories();
     this.refreshPasswords();
+    this.categoriesSubscription$ = this.activatedRoute.params.subscribe(
+      (params) => {
+        this.category = this.categories.find(
+          (x) => x.id == params['categoryId']
+        );
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -89,6 +86,17 @@ export class GestmdpComponent implements OnInit, OnDestroy {
           this.passwords = resp.sort((a, b) =>
             a.siteName.localeCompare(b.siteName)
           );
+        },
+      });
+  }
+
+  refreshCategories(): void {
+    this.categoryService
+      .fetchData()
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {
+          this.categories = resp.sort((a, b) => a.name.localeCompare(b.name));
         },
       });
   }
@@ -119,5 +127,13 @@ export class GestmdpComponent implements OnInit, OnDestroy {
             duration: 2500,
           }),
       });
+  }
+
+  deletedCategory(category: Category): void {
+    if (category == this.category)
+      this.ngZone.run(() => {
+        this.router.navigate(['/gestmdp', 0]);
+      });
+    this.refreshCategories();
   }
 }
