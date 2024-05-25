@@ -57,7 +57,7 @@
         *ngIf="
           (password.active || isInactiveShown) &&
           (category == undefined || password.category_id == category.id) &&
-          password.siteName.includes(search)
+          password.siteName.toLowerCase().includes(search.toLowerCase())
         "
         [password]="password"
         (deletedPassword)="refreshPasswords()"
