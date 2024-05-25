@@ -98,7 +98,10 @@ export class PasswordFormComponent implements OnInit {
     this.categoryService
       .fetchData()
       .pipe(take(1))
-      .subscribe({ next: (resp) => (this.categories = resp) });
+      .subscribe({
+        next: (resp) =>
+          (this.categories = resp.sort((a, b) => a.name.localeCompare(b.name))),
+      });
   }
 
   submit(): void {

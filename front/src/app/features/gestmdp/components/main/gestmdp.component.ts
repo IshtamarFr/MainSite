@@ -52,7 +52,7 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.categoryService.fetchData().subscribe({
       next: (resp) => {
-        this.categories = resp;
+        this.categories = resp.sort((a, b) => a.name.localeCompare(b.name));
         this.categoriesSubscription$ = this.activatedRoute.params.subscribe(
           (params) => {
             this.category = this.categories.find(
