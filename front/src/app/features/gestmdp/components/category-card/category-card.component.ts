@@ -26,8 +26,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class CategoryCardComponent {
   @Input() public category!: Category;
-  @Input() public isModified!: Boolean;
+  @Input() public isModified!: boolean;
   @Output() public deletedCategory = new EventEmitter<void>();
+  @Output() public modifiedCategory = new EventEmitter<void>();
 
   public constructor(
     private dialogService: DialogService,
@@ -48,6 +49,30 @@ export class CategoryCardComponent {
               .subscribe({
                 next: (_) => {
                   this.deletedCategory.emit();
+                },
+                error: (_) => {
+                  this._snackBar.open("Une erreur s'est produite", 'fermer', {
+                    duration: 2500,
+                  });
+                },
+              });
+        },
+      });
+  }
+
+  modifyCategory(): void {
+    this.dialogService
+      .openInputDialog('Veuillez renommer cette catégorie', false)
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {
+          if (resp)
+            this.categoryService
+              .modifyCategory(this.category, resp)
+              .pipe(take(1))
+              .subscribe({
+                next: (_) => {
+                  this.modifiedCategory.emit();
                 },
                 error: (_) => {
                   this._snackBar.open("Une erreur s'est produite", 'fermer', {

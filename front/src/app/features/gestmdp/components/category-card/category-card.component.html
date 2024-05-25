@@ -5,7 +5,12 @@
     </a>
   </mat-card-content>
   <mat-card-actions *ngIf="isModified">
-    <button mat-flat-button (click)="$event.stopPropagation()">Modif.</button>
+    <button
+      mat-flat-button
+      (click)="modifyCategory(); $event.stopPropagation()"
+    >
+      Modif.
+    </button>
     <button
       mat-flat-button
       (click)="deleteCategory(); $event.stopPropagation()"

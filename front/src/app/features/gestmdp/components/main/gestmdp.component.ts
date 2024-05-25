@@ -136,4 +136,8 @@ export class GestmdpComponent implements OnInit, OnDestroy {
       });
     this.refreshCategories();
   }
+
+  modifiedCategory(): void {
+    this.refreshCategories();
+  }
 }

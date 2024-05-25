@@ -31,4 +31,14 @@ export class CategoryService {
       responseType: 'text',
     });
   }
+
+  modifyCategory(category: Category, name: string): Observable<Category> {
+    return this.httpClient.put<Category>(
+      `${this.pathService}/${category.id}`,
+      null,
+      {
+        params: { name },
+      }
+    );
+  }
 }
