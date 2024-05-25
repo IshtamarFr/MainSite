@@ -35,21 +35,25 @@
         <mat-slide-toggle [(ngModel)]="isInactiveShown" />
         {{ isInactiveShown ? "Masquer" : "Afficher" }} les désactivés
       </div>
-      <button mat-flat-button routerLink="/gestmdp/password">
+      <button
+        mat-flat-button
+        routerLink="/gestmdp/password"
+        [disabled]="categories.length == 0"
+      >
         <mat-icon>add</mat-icon> Créer
       </button>
     </div>
     <div class="passwords">
-      <div *ngFor="let password of passwords">
-        <app-password-card
-          *ngIf="
-            (password.active || isInactiveShown) &&
-            (category == undefined || password.category_id == category.id)
-          "
-          [password]="password"
-          (deletedPassword)="refreshPasswords()"
-        />
-      </div>
+      @for (password of passwords;track password;) {
+      <app-password-card
+        *ngIf="
+          (password.active || isInactiveShown) &&
+          (category == undefined || password.category_id == category.id)
+        "
+        [password]="password"
+        (deletedPassword)="refreshPasswords()"
+      />
+      }
     </div>
   </div>
 </div>
