@@ -25,4 +25,10 @@ export class CategoryService {
       params: { name },
     });
   }
+
+  deleteCategory(category: Category): Observable<string> {
+    return this.httpClient.delete(`${this.pathService}/${category.id}`, {
+      responseType: 'text',
+    });
+  }
 }
