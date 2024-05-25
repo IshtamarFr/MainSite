@@ -48,6 +48,7 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   public passwordsSubscription$!: Subscription;
 
   public isInactiveShown: boolean = false;
+  public isModified: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,

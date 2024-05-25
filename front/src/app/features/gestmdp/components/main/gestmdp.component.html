@@ -1,6 +1,10 @@
 <div class="mainContainer">
   <div class="menu">
     <h2>Catégories</h2>
+    <div class="toggle">
+      <mat-slide-toggle [(ngModel)]="isModified" />
+      Gestion
+    </div>
     <mat-card routerLink="/gestmdp">
       <mat-card-title class="link">
         <a
@@ -19,6 +23,7 @@
     <app-category-card
       *ngFor="let category of categories"
       [category]="category"
+      [isModified]="isModified"
     />
   </div>
 

@@ -11,6 +11,18 @@ mat-card {
     margin: auto;
     padding: 10px;
   }
+
+  mat-card-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    justify-content: space-between;
+
+    button {
+      height: 25px;
+    }
+  }
 }
 
 .link:hover {

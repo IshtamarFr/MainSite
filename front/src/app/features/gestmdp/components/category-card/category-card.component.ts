@@ -21,4 +21,9 @@ import { RouterModule } from '@angular/router';
 })
 export class CategoryCardComponent {
   @Input() public category!: Category;
+  @Input() public isModified!: Boolean;
+
+  deleteCategory(): void {
+    console.log('WIP');
+  }
 }
