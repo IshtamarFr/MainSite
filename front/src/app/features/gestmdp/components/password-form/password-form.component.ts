@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -26,6 +19,7 @@ import { PasswordRequest } from '../../interfaces/password-request.interface';
 import { PasswordService } from '../../services/password.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-password-form',
@@ -41,6 +35,7 @@ import { ActivatedRoute } from '@angular/router';
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
   templateUrl: './password-form.component.html',
   styleUrl: './password-form.component.scss',
