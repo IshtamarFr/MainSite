@@ -16,6 +16,7 @@ import { DialogService } from '../../../../utils/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CategoryCardComponent } from '../category-card/category-card.component';
 
 @Component({
   selector: 'app-gestmdp',
@@ -32,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
+    CategoryCardComponent,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',

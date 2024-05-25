@@ -1,0 +1,22 @@
+.link {
+  text-decoration: none;
+}
+
+mat-card {
+  margin: 5px;
+  cursor: pointer;
+  background-color: rgb(236, 236, 236);
+
+  mat-card-content {
+    margin: auto;
+    padding: 10px;
+  }
+}
+
+.link:hover {
+  transform: translateX(2px) translateY(-2px);
+}
+
+.active {
+  font-weight: bold;
+}

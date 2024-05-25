@@ -16,16 +16,10 @@
       <mat-icon>add</mat-icon> Créer
     </button>
     <hr />
-    <mat-card
+    <app-category-card
       *ngFor="let category of categories"
-      [routerLink]="'/gestmdp/' + category.id"
-    >
-      <mat-card-title class="link">
-        <a class="link" routerLinkActive="active">
-          {{ category.name }}
-        </a>
-      </mat-card-title>
-    </mat-card>
+      [category]="category"
+    />
   </div>
 
   <div class="div-droit">
