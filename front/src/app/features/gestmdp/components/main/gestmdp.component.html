@@ -35,6 +35,12 @@
         <mat-slide-toggle [(ngModel)]="isInactiveShown" />
         {{ isInactiveShown ? "Masquer" : "Afficher" }} les désactivés
       </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Recherche</mat-label>
+          <input matInput [(ngModel)]="search" />
+        </mat-form-field>
+      </div>
       <button
         mat-flat-button
         routerLink="/gestmdp/password"
@@ -48,7 +54,8 @@
       <app-password-card
         *ngIf="
           (password.active || isInactiveShown) &&
-          (category == undefined || password.category_id == category.id)
+          (category == undefined || password.category_id == category.id) &&
+          password.siteName.includes(search)
         "
         [password]="password"
         (deletedPassword)="refreshPasswords()"

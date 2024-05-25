@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { DialogService } from '../../../../utils/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-gestmdp',
@@ -27,6 +29,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   templateUrl: './gestmdp.component.html',
   styleUrl: './gestmdp.component.scss',
@@ -35,6 +39,7 @@ export class GestmdpComponent implements OnInit, OnDestroy {
   public category: Category | undefined = undefined;
   public categories: Category[] = [];
   public passwords: Password[] = [];
+  public search: string = '';
 
   public categoriesSubscription$!: Subscription;
   public passwordsSubscription$!: Subscription;
