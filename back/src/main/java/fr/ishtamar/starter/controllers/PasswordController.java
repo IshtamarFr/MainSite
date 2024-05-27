@@ -135,4 +135,21 @@ public class PasswordController {
             throw new GenericException("You are not allowed to modify this password");
         }
     }
+
+    @PutMapping("/password/{id}/status")
+    @Secured("ROLE_USER")
+    public PasswordDto togglePasswordStatus(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable final Long id,
+            @PathVariable boolean status
+    ) throws GenericException, EntityNotFoundException {
+        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        Password password=passwordService.getPasswordById(id);
+
+        if (Objects.equals(password.getCategory().getUser(),user)) {
+            return passwordMapper.toDto(passwordService.togglePasswordStatus(password, status));
+        }else {
+            throw new GenericException("You are not allowed to modify this password");
+        }
+    }
 }

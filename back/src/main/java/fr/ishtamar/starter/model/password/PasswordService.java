@@ -15,4 +15,5 @@ public interface PasswordService {
     List<Password> getPasswordsByUser(UserInfo user);
     void deletePassword(Password password);
     Password modifyPassword(Password oldPassword,CreatePasswordRequest request, Category category);
+    Password togglePasswordStatus(Password password, boolean status);
 }

@@ -43,7 +43,18 @@ export class PasswordCardComponent {
   ) {}
 
   changeStatus(): void {
-    this.password.active = !this.password.active;
+    this.passwordService
+      .toggleStatus(this.password.id, !this.password.active)
+      .pipe(take(1))
+      .subscribe({
+        next: (_) => {
+          this.password.active = !this.password.active;
+        },
+        error: (_) =>
+          this._snackBar.open("Une erreur s'est produite", 'fermer', {
+            duration: 2500,
+          }),
+      });
   }
 
   async copySiteLogin(password: Password): Promise<void> {

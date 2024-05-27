@@ -56,4 +56,15 @@ export class PasswordService {
       { params: { category_id } }
     );
   }
+
+  public toggleStatus(
+    passwordId: number,
+    status: boolean
+  ): Observable<Password> {
+    return this.httpClient.put<Password>(
+      `${this.pathService}/password/${passwordId}/status`,
+      null,
+      { params: { status } }
+    );
+  }
 }

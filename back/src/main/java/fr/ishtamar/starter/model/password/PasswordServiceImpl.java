@@ -147,4 +147,10 @@ public class PasswordServiceImpl implements PasswordService {
 
         return repository.save(password);
     }
+
+    @Override
+    public Password togglePasswordStatus(Password password, boolean status) {
+        password.setActive(status);
+        return repository.save(password);
+    }
 }
