@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatInputModule, MatLabel } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import CryptoJS from 'crypto-js';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-hashs',
@@ -13,6 +15,8 @@ import CryptoJS from 'crypto-js';
     CommonModule,
     RouterModule,
     MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     MatCheckboxModule,
@@ -37,6 +41,7 @@ export class HashsComponent {
     uppercases: [true],
     digits: [true],
     symbols: [true],
+    length: [64],
   });
 
   constructor(private fb: FormBuilder) {}
@@ -85,6 +90,7 @@ export class HashsComponent {
   }
 
   generatePassword(): string {
+    console.log(this.form.controls['lowercases'].value);
     return 'WIP';
   }
 }
