@@ -1,6 +1,9 @@
 <div class="mainContainer">
   <h2>Mot de passe aléatoire</h2>
+  <form [formGroup]="form" (ngSubmit)="generatePassword()">
+    <mat-checkbox></mat-checkbox>
+  </form>
 
   <h2>Calculs cryptographiques</h2>
-  <input type="file" #fileInput (change)="fileChange($event)" />
+  <input type="file" #fileInput (change)="onFileDropped($event)" />
 </div>
