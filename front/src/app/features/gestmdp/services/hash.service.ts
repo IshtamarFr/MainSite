@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,6 @@ export class HashService {
       const sha512 = CryptoJS.SHA512(normalizedContent).toString(
         CryptoJS.enc.Base64
       );
-
       return { md5, sha1, sha256, sha512 };
     } else {
       return { md5: '', sha1: '', sha256: '', sha512: '' };

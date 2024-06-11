@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -9,10 +9,11 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import CryptoJS from 'crypto-js';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HashService } from '../../services/hash.service';
+import { DragSingleDirective } from '../../../../directives/drag-single.directive';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-hashs',
@@ -25,12 +26,14 @@ import { HashService } from '../../services/hash.service';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
     MatCheckboxModule,
+    DragSingleDirective,
   ],
   templateUrl: './hashs.component.html',
   styleUrl: './hashs.component.scss',
 })
-export class HashsComponent implements OnInit {
+export class HashsComponent {
   public randomPassword: string = '';
 
   LOWERCASES: string = 'abcdefghijklmnopqrstuvwxyz';
@@ -60,16 +63,12 @@ export class HashsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private hashService: HashService) {}
 
-  ngOnInit(): void {
-    this.generatePassword();
-  }
-
   onFileDropped(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       const fileReader = new FileReader();
 
-      fileReader.onload = this.hashService.calculateJS;
+      fileReader.onload = (event: any) => this.hashService.calculateJS(event);
       fileReader.readAsText(file, 'utf-8');
     }
   }

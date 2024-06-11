@@ -1,0 +1,45 @@
+.mainContainer {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.dropzone {
+  min-height: 170px;
+  max-width: 170px;
+  display: table;
+  margin-bottom: 30px;
+  width: 100%;
+  background-color: #eee;
+  border: dotted 1px #aaa;
+  border-radius: 15px;
+
+  .text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .centered {
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: bold;
+    width: 60%;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: thin;
+    background-color: coral;
+    padding: 3px;
+  }
+}

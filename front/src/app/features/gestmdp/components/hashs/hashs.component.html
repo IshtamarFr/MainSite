@@ -17,5 +17,17 @@
   </form>
 
   <h2>Calculs cryptographiques</h2>
-  <input type="file" #fileInput (change)="onFileDropped($event)" />
+  <div appDragSingle class="dropzone">
+    <div class="text-wrapper">
+      <div class="centered">Glissez-déposez votre fichier ici</div>
+      <h2>ou</h2>
+      <label for="uploadPicture">Choisissez-le</label>
+    </div>
+    <input
+      type="file"
+      id="uploadPicture"
+      (change)="onFileDropped($event)"
+      style="display: none"
+    />
+  </div>
 </div>
