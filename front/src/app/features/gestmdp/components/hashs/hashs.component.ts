@@ -1,12 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatLabel } from '@angular/material/input';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import CryptoJS from 'crypto-js';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HashService } from '../../services/hash.service';
 
 @Component({
   selector: 'app-hashs',
@@ -24,8 +30,8 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './hashs.component.html',
   styleUrl: './hashs.component.scss',
 })
-export class HashsComponent {
-  public fileHash: string = '';
+export class HashsComponent implements OnInit {
+  public randomPassword: string = '';
 
   LOWERCASES: string = 'abcdefghijklmnopqrstuvwxyz';
   UPPERCASES: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -41,56 +47,34 @@ export class HashsComponent {
     uppercases: [true],
     digits: [true],
     symbols: [true],
-    length: [64],
+    length: [
+      64,
+      [
+        Validators.required,
+        Validators.min(8),
+        Validators.max(128),
+        Validators.pattern('^[0-9]*$'),
+      ],
+    ],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private hashService: HashService) {}
+
+  ngOnInit(): void {
+    this.generatePassword();
+  }
 
   onFileDropped(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       const fileReader = new FileReader();
 
-      fileReader.onload = (event: any) => {
-        if (event.target && event.target.result) {
-          const content = event.target.result.toString();
-          const normalizedContent = this.normalizeContent(content);
-
-          const md5 = CryptoJS.MD5(normalizedContent).toString(
-            CryptoJS.enc.Base64
-          );
-          const sha1 = CryptoJS.SHA1(normalizedContent).toString(
-            CryptoJS.enc.Base64
-          );
-          const sha256 = CryptoJS.SHA256(normalizedContent).toString(
-            CryptoJS.enc.Base64
-          );
-          const sha512 = CryptoJS.SHA512(normalizedContent).toString(
-            CryptoJS.enc.Base64
-          );
-
-          this.fileHash = `Hash MD5: ${md5}\nHash SHA-1: ${sha1}\nHash SHA-256: ${sha256}\nHash SHA-512: ${sha512}`;
-          console.log(this.fileHash);
-        }
-      };
-
+      fileReader.onload = this.hashService.calculateJS;
       fileReader.readAsText(file, 'utf-8');
     }
   }
 
-  private normalizeContent(content: string): string {
-    content = content.replace(/&/g, '&amp;');
-    content = content.replace(/</g, '&lt;');
-    content = content.replace(/>/g, '&gt;');
-
-    content = content.replace(/\r\n/g, '\n');
-    content = content.replace(/\n/g, '\r\n');
-
-    return content;
-  }
-
-  generatePassword(): string {
+  generatePassword(): void {
     console.log(this.form.controls['lowercases'].value);
-    return 'WIP';
   }
 }

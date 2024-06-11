@@ -1,22 +1,19 @@
 <div class="mainContainer">
   <h2>Mot de passe aléatoire</h2>
   <form [formGroup]="form" (ngSubmit)="generatePassword()">
-    <mat-checkbox formControlName="uppercases">minuscule</mat-checkbox>
-    <mat-checkbox formControlName="lowercases">majuscule</mat-checkbox>
+    <button mat-mini-fab [disabled]="form.invalid">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <br />
+    <mat-checkbox formControlName="lowercases">minuscule</mat-checkbox>
+    <mat-checkbox formControlName="uppercases">majuscule</mat-checkbox>
     <mat-checkbox formControlName="digits">chiffre</mat-checkbox>
     <mat-checkbox formControlName="symbols">carac. spécial</mat-checkbox>
     <br />
     <mat-form-field>
       <mat-label>Longueur : </mat-label>
-      <input
-        matInput
-        formControlName="length"
-        type="number"
-        min="8"
-        max="128"
-      />
+      <input matInput formControlName="length" type="number" />
     </mat-form-field>
-    <button mat-mini-fab><mat-icon>refresh</mat-icon></button>
   </form>
 
   <h2>Calculs cryptographiques</h2>
