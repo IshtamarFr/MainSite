@@ -4,6 +4,12 @@
     <button mat-mini-fab [disabled]="form.invalid">
       <mat-icon>refresh</mat-icon>
     </button>
+    <mat-form-field>
+      <input matInput [value]="randomPassword" />
+    </mat-form-field>
+    <button mat-mini-fab type="button">
+      <mat-icon>content_copy</mat-icon>
+    </button>
     <br />
     <mat-checkbox formControlName="lowercases">minuscule</mat-checkbox>
     <mat-checkbox formControlName="uppercases">majuscule</mat-checkbox>

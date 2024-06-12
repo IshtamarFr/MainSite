@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -33,17 +33,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './hashs.component.html',
   styleUrl: './hashs.component.scss',
 })
-export class HashsComponent {
+export class HashsComponent implements OnInit {
   public randomPassword: string = '';
-
-  LOWERCASES: string = 'abcdefghijklmnopqrstuvwxyz';
-  UPPERCASES: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  DIGITS: string = '0123456789';
-  SYMBOLS: string = "!@#$%^&*()-+={}[]|:;',<.>/?_";
-
-  ALL_CHARS = this.DIGITS + this.LOWERCASES + this.UPPERCASES + this.SYMBOLS;
-
-  passwordLength: number = 64;
 
   public form = this.fb.group({
     lowercases: [true],
@@ -63,6 +54,10 @@ export class HashsComponent {
 
   constructor(private fb: FormBuilder, private hashService: HashService) {}
 
+  ngOnInit(): void {
+    this.generatePassword();
+  }
+
   onFileDropped(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -74,6 +69,7 @@ export class HashsComponent {
   }
 
   generatePassword(): void {
-    console.log(this.form.controls['lowercases'].value);
+    this.randomPassword = this.hashService.generatePassword(this.form);
+    console.log(this.randomPassword);
   }
 }
