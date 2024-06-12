@@ -37,6 +37,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class HashsComponent implements OnInit {
   public randomPassword: string = '';
+  public hashs: string[] = [];
 
   public form = this.fb.group({
     lowercases: [true],
@@ -76,7 +77,6 @@ export class HashsComponent implements OnInit {
 
   generatePassword(): void {
     this.randomPassword = this.hashService.generatePassword(this.form);
-    console.log(this.randomPassword);
   }
 
   async copy(): Promise<void> {
@@ -86,4 +86,6 @@ export class HashsComponent implements OnInit {
       duration: 2500,
     });
   }
+
+  calculateHashs(): void {}
 }

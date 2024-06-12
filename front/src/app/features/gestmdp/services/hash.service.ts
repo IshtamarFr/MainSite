@@ -24,21 +24,23 @@ export class HashService {
     if (event.target && event.target.result) {
       const content = event.target.result.toString();
       const normalizedContent = this.normalizeContent(content);
-
-      const md5 = CryptoJS.MD5(normalizedContent).toString(CryptoJS.enc.Base64);
-      const sha1 = CryptoJS.SHA1(normalizedContent).toString(
-        CryptoJS.enc.Base64
-      );
-      const sha256 = CryptoJS.SHA256(normalizedContent).toString(
-        CryptoJS.enc.Base64
-      );
-      const sha512 = CryptoJS.SHA512(normalizedContent).toString(
-        CryptoJS.enc.Base64
-      );
-      return { md5, sha1, sha256, sha512 };
+      return this.hashs(normalizedContent);
     } else {
       return { md5: '', sha1: '', sha256: '', sha512: '' };
     }
+  }
+
+  public hashs(content: string): {
+    md5: string;
+    sha1: string;
+    sha256: string;
+    sha512: string;
+  } {
+    const md5 = CryptoJS.MD5(content).toString(CryptoJS.enc.Base64);
+    const sha1 = CryptoJS.SHA1(content).toString(CryptoJS.enc.Base64);
+    const sha256 = CryptoJS.SHA256(content).toString(CryptoJS.enc.Base64);
+    const sha512 = CryptoJS.SHA512(content).toString(CryptoJS.enc.Base64);
+    return { md5, sha1, sha256, sha512 };
   }
 
   private normalizeContent(content: string): string {
