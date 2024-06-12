@@ -1,6 +1,17 @@
 .mainContainer {
   margin-left: 5px;
   margin-right: 5px;
+
+  .inputPassword {
+    width: 500px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .inputLength {
+    width: 100px;
+    margin-left: 20px;
+  }
 }
 
 .dropzone {

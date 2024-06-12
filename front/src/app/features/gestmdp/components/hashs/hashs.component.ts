@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HashService } from '../../services/hash.service';
 import { DragSingleDirective } from '../../../../directives/drag-single.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-hashs',
@@ -29,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatCheckboxModule,
     DragSingleDirective,
+    MatSnackBarModule,
   ],
   templateUrl: './hashs.component.html',
   styleUrl: './hashs.component.scss',
@@ -52,7 +54,11 @@ export class HashsComponent implements OnInit {
     ],
   });
 
-  constructor(private fb: FormBuilder, private hashService: HashService) {}
+  constructor(
+    private fb: FormBuilder,
+    private hashService: HashService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.generatePassword();
@@ -71,5 +77,13 @@ export class HashsComponent implements OnInit {
   generatePassword(): void {
     this.randomPassword = this.hashService.generatePassword(this.form);
     console.log(this.randomPassword);
+  }
+
+  async copy(): Promise<void> {
+    const el = document.getElementById('inputPassword') as HTMLInputElement;
+    await navigator.clipboard.writeText(el.value);
+    this._snackBar.open('Mot de passe copié dans le presse-papiers', 'fermer', {
+      duration: 2500,
+    });
   }
 }

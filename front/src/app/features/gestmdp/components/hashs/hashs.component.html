@@ -4,10 +4,11 @@
     <button mat-mini-fab [disabled]="form.invalid">
       <mat-icon>refresh</mat-icon>
     </button>
-    <mat-form-field>
-      <input matInput [value]="randomPassword" />
+    <mat-form-field class="inputPassword">
+      <mat-label>Mot de passe : </mat-label>
+      <input matInput [value]="randomPassword" id="inputPassword" />
     </mat-form-field>
-    <button mat-mini-fab type="button">
+    <button mat-mini-fab type="button" (click)="copy()">
       <mat-icon>content_copy</mat-icon>
     </button>
     <br />
@@ -15,8 +16,7 @@
     <mat-checkbox formControlName="uppercases">majuscule</mat-checkbox>
     <mat-checkbox formControlName="digits">chiffre</mat-checkbox>
     <mat-checkbox formControlName="symbols">carac. spécial</mat-checkbox>
-    <br />
-    <mat-form-field>
+    <mat-form-field class="inputLength">
       <mat-label>Longueur : </mat-label>
       <input matInput formControlName="length" type="number" />
     </mat-form-field>
