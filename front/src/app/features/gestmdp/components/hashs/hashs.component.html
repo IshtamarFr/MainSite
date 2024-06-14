@@ -41,5 +41,28 @@
       <mat-label>Texte à calculer : </mat-label>
       <input matInput />
     </mat-form-field>
+    <button mat-mini-fab><mat-icon>send</mat-icon></button>
   </form>
+  <table *ngIf="hashs.length > 0">
+    <tr>
+      <th>Algo.</th>
+      <th>Hash</th>
+    </tr>
+    <tr>
+      <td>MD5</td>
+      <td>{{ hashs[0] }}</td>
+    </tr>
+    <tr>
+      <td>SHA-1</td>
+      <td>{{ hashs[1] }}</td>
+    </tr>
+    <tr>
+      <td>SHA-256</td>
+      <td>{{ hashs[2] }}</td>
+    </tr>
+    <tr>
+      <td>SHA-512</td>
+      <td>{{ hashs[3] }}</td>
+    </tr>
+  </table>
 </div>
