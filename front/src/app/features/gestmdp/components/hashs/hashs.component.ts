@@ -15,6 +15,7 @@ import { HashService } from '../../services/hash.service';
 import { DragSingleDirective } from '../../../../directives/drag-single.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Hashs } from '../../interfaces/hashs.interface';
 
 @Component({
   selector: 'app-hashs',
@@ -37,7 +38,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class HashsComponent implements OnInit {
   public randomPassword: string = '';
-  public hashs: string[] = [];
+  public hashs?: Hashs;
 
   public form = this.fb.group({
     lowercases: [true],
@@ -70,8 +71,11 @@ export class HashsComponent implements OnInit {
       const file = event.target.files[0];
       const fileReader = new FileReader();
 
-      fileReader.onload = (event: any) => this.hashService.calculateJS(event);
+      fileReader.onload = (event: any) =>
+        (this.hashs = this.hashService.calculateJS(event));
       fileReader.readAsText(file, 'utf-8');
+    } else {
+      this.hashs = undefined;
     }
   }
 

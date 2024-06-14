@@ -43,26 +43,26 @@
     </mat-form-field>
     <button mat-mini-fab><mat-icon>send</mat-icon></button>
   </form>
-  <table *ngIf="hashs.length > 0">
+  <table *ngIf="hashs">
     <tr>
       <th>Algo.</th>
       <th>Hash</th>
     </tr>
     <tr>
       <td>MD5</td>
-      <td>{{ hashs[0] }}</td>
+      <td>{{ hashs.md5 }}</td>
     </tr>
     <tr>
       <td>SHA-1</td>
-      <td>{{ hashs[1] }}</td>
+      <td>{{ hashs.sha1 }}</td>
     </tr>
     <tr>
       <td>SHA-256</td>
-      <td>{{ hashs[2] }}</td>
+      <td>{{ hashs.sha256 }}</td>
     </tr>
     <tr>
       <td>SHA-512</td>
-      <td>{{ hashs[3] }}</td>
+      <td>{{ hashs.sha512 }}</td>
     </tr>
   </table>
 </div>

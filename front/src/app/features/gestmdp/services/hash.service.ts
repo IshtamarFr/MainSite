@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import CryptoJS from 'crypto-js';
+import { Hashs } from '../interfaces/hashs.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,7 @@ export class HashService {
 
   constructor() {}
 
-  public calculateJS(event: any): {
-    md5: string;
-    sha1: string;
-    sha256: string;
-    sha512: string;
-  } {
+  public calculateJS(event: any): Hashs {
     if (event.target && event.target.result) {
       const content = event.target.result.toString();
       const normalizedContent = this.normalizeContent(content);
@@ -30,12 +26,7 @@ export class HashService {
     }
   }
 
-  public hashs(content: string): {
-    md5: string;
-    sha1: string;
-    sha256: string;
-    sha512: string;
-  } {
+  public hashs(content: string): Hashs {
     const md5 = CryptoJS.MD5(content).toString(CryptoJS.enc.Base64);
     const sha1 = CryptoJS.SHA1(content).toString(CryptoJS.enc.Base64);
     const sha256 = CryptoJS.SHA256(content).toString(CryptoJS.enc.Base64);
