@@ -27,10 +27,10 @@ export class HashService {
   }
 
   public hashs(content: string): Hashs {
-    const md5 = CryptoJS.MD5(content).toString(CryptoJS.enc.Base64);
-    const sha1 = CryptoJS.SHA1(content).toString(CryptoJS.enc.Base64);
-    const sha256 = CryptoJS.SHA256(content).toString(CryptoJS.enc.Base64);
-    const sha512 = CryptoJS.SHA512(content).toString(CryptoJS.enc.Base64);
+    const md5 = CryptoJS.MD5(content).toString();
+    const sha1 = CryptoJS.SHA1(content).toString();
+    const sha256 = CryptoJS.SHA256(content).toString();
+    const sha512 = CryptoJS.SHA512(content).toString();
     return { md5, sha1, sha256, sha512 };
   }
 

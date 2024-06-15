@@ -36,32 +36,39 @@
       style="display: none"
     />
   </div>
-  <form>
-    <mat-form-field>
+  <form [formGroup]="form2" (ngSubmit)="calculateHashs()">
+    <mat-form-field class="inputWord">
       <mat-label>Texte à calculer : </mat-label>
-      <input matInput />
+      <input matInput formControlName="word" />
     </mat-form-field>
-    <button mat-mini-fab><mat-icon>send</mat-icon></button>
+    <button mat-mini-fab [disabled]="form2.invalid">
+      <mat-icon>send</mat-icon>
+    </button>
   </form>
   <table *ngIf="hashs">
     <tr>
       <th>Algo.</th>
+      <th>:</th>
       <th>Hash</th>
     </tr>
     <tr>
       <td>MD5</td>
+      <td>:</td>
       <td>{{ hashs.md5 }}</td>
     </tr>
     <tr>
       <td>SHA-1</td>
+      <td>:</td>
       <td>{{ hashs.sha1 }}</td>
     </tr>
     <tr>
       <td>SHA-256</td>
+      <td>:</td>
       <td>{{ hashs.sha256 }}</td>
     </tr>
     <tr>
       <td>SHA-512</td>
+      <td>:</td>
       <td>{{ hashs.sha512 }}</td>
     </tr>
   </table>

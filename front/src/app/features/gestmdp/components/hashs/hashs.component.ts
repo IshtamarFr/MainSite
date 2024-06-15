@@ -56,6 +56,10 @@ export class HashsComponent implements OnInit {
     ],
   });
 
+  public form2 = this.fb.group({
+    word: ['', [Validators.required, Validators.max(128)]],
+  });
+
   constructor(
     private fb: FormBuilder,
     private hashService: HashService,
@@ -71,8 +75,10 @@ export class HashsComponent implements OnInit {
       const file = event.target.files[0];
       const fileReader = new FileReader();
 
-      fileReader.onload = (event: any) =>
-        (this.hashs = this.hashService.calculateJS(event));
+      fileReader.onload = (event: any) => {
+        this.hashs = this.hashService.calculateJS(event);
+        this.form2.controls['word'].setValue('');
+      };
       fileReader.readAsText(file, 'utf-8');
     } else {
       this.hashs = undefined;
@@ -91,5 +97,9 @@ export class HashsComponent implements OnInit {
     });
   }
 
-  calculateHashs(): void {}
+  calculateHashs(): void {
+    const el = document.getElementById('uploadPicture') as HTMLInputElement;
+    el.value = '';
+    this.hashs = this.hashService.hashs(this.form2.controls['word']!.value!);
+  }
 }

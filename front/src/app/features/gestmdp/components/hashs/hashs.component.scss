@@ -1,6 +1,5 @@
 .mainContainer {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
 
   .inputPassword {
     width: 500px;
@@ -11,6 +10,10 @@
   .inputLength {
     width: 100px;
     margin-left: 20px;
+  }
+
+  .inputWord {
+    margin-right: 15px;
   }
 }
 
@@ -52,5 +55,9 @@
     border-width: thin;
     background-color: coral;
     padding: 3px;
+  }
+
+  label:hover {
+    cursor: pointer;
   }
 }
