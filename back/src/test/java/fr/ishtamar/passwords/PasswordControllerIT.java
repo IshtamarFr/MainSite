@@ -1,13 +1,13 @@
-package fr.ishtamar.starter.integration.controller;
+package fr.ishtamar.passwords;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.ishtamar.starter.model.category.Category;
-import fr.ishtamar.starter.model.category.CategoryRepository;
-import fr.ishtamar.starter.model.category.CategoryServiceImpl;
-import fr.ishtamar.starter.model.password.CreatePasswordRequest;
-import fr.ishtamar.starter.model.password.Password;
-import fr.ishtamar.starter.model.password.PasswordRepository;
-import fr.ishtamar.starter.model.password.PasswordServiceImpl;
+import fr.ishtamar.passwords.model.category.Category;
+import fr.ishtamar.passwords.model.category.CategoryRepository;
+import fr.ishtamar.passwords.model.category.CategoryServiceImpl;
+import fr.ishtamar.passwords.model.password.CreatePasswordRequest;
+import fr.ishtamar.passwords.model.password.Password;
+import fr.ishtamar.passwords.model.password.PasswordRepository;
+import fr.ishtamar.passwords.model.password.PasswordServiceImpl;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
 import fr.ishtamar.starter.security.JwtService;

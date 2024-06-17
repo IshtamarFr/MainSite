@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.unit;
+package fr.ishtamar.starter;
 
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.exceptionhandler.BadCredentialsException;

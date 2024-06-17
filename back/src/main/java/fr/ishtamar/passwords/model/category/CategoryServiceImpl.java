@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.model.category;
+package fr.ishtamar.passwords.model.category;
 
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;

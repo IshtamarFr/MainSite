@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.model.category;
+package fr.ishtamar.passwords.model.category;
 
 import fr.ishtamar.starter.model.user.UserInfo;
 import jakarta.persistence.*;

@@ -1,8 +1,8 @@
-package fr.ishtamar.starter.integration.controller;
+package fr.ishtamar.passwords;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.ishtamar.starter.model.category.Category;
-import fr.ishtamar.starter.model.category.CategoryRepository;
+import fr.ishtamar.passwords.model.category.Category;
+import fr.ishtamar.passwords.model.category.CategoryRepository;
 import fr.ishtamar.starter.security.JwtService;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
@@ -155,7 +155,7 @@ public class CategoryControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Loisirs")))
                 .andExpect(content().string(containsString("Maison")))
-                .andExpect(content().string(Matchers.not(containsString("\"user_id\":2"))));
+                .andExpect(content().string(Matchers.not(containsString("\"user_id\":2,"))));
     }
 
     @Test

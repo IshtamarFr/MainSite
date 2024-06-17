@@ -1,7 +1,7 @@
-package fr.ishtamar.starter.unit;
+package fr.ishtamar.passwords;
 
-import fr.ishtamar.starter.model.password.Password;
-import fr.ishtamar.starter.model.password.PasswordServiceImpl;
+import fr.ishtamar.passwords.model.password.Password;
+import fr.ishtamar.passwords.model.password.PasswordServiceImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

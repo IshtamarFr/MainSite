@@ -1,6 +1,6 @@
-package fr.ishtamar.starter.model.password;
+package fr.ishtamar.passwords.model.password;
 
-import fr.ishtamar.starter.model.category.Category;
+import fr.ishtamar.passwords.model.category.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

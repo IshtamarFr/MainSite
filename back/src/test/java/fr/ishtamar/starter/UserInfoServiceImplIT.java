@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.integration.service;
+package fr.ishtamar.starter;
 
 import fr.ishtamar.starter.model.auth.ModifyUserRequest;
 import fr.ishtamar.starter.model.user.UserInfo;

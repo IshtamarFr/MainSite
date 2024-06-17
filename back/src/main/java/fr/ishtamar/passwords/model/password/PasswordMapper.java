@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.model.password;
+package fr.ishtamar.passwords.model.password;
 
 import fr.ishtamar.starter.util.EntityMapper;
 import org.mapstruct.Mapper;

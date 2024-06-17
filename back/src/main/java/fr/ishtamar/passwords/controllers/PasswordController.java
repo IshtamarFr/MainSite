@@ -1,11 +1,11 @@
-package fr.ishtamar.starter.controllers;
+package fr.ishtamar.passwords.controllers;
 
-import fr.ishtamar.starter.model.category.Category;
-import fr.ishtamar.starter.model.category.CategoryService;
-import fr.ishtamar.starter.model.category.CategoryServiceImpl;
+import fr.ishtamar.passwords.model.category.Category;
+import fr.ishtamar.passwords.model.category.CategoryService;
+import fr.ishtamar.passwords.model.category.CategoryServiceImpl;
+import fr.ishtamar.passwords.model.password.*;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
-import fr.ishtamar.starter.model.password.*;
 import fr.ishtamar.starter.security.JwtService;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoService;

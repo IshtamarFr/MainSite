@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.integration.controller;
+package fr.ishtamar.starter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ishtamar.starter.model.user.UserInfo;

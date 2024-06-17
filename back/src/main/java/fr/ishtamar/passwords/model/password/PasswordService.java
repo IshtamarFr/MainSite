@@ -1,7 +1,7 @@
-package fr.ishtamar.starter.model.password;
+package fr.ishtamar.passwords.model.password;
 
 
-import fr.ishtamar.starter.model.category.Category;
+import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.model.user.UserInfo;
 
