@@ -35,7 +35,7 @@ public class AuthController {
 
     static final String TOKEN="token";
 
-    public AuthController(UserInfoServiceImpl service, JwtService jwtService, AuthenticationManager authenticationManager, UserMapper userMapper) {
+    public AuthController(UserInfoService service, JwtService jwtService, AuthenticationManager authenticationManager, UserMapper userMapper) {
         this.service=service;
         this.jwtService=jwtService;
         this.authenticationManager=authenticationManager;

@@ -29,10 +29,10 @@ public class PasswordController {
 
     public PasswordController(
             JwtService jwtService,
-            UserInfoServiceImpl userInfoService,
+            UserInfoService userInfoService,
             PasswordMapper passwordMapper,
             PasswordService passwordService,
-            CategoryServiceImpl categoryService
+            CategoryService categoryService
     ){
         this.jwtService=jwtService;
         this.userInfoService=userInfoService;

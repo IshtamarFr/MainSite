@@ -25,9 +25,9 @@ public class CategoryController {
 
     public CategoryController(
             JwtService jwtService,
-            UserInfoServiceImpl userInfoService,
+            UserInfoService userInfoService,
             CategoryMapper categoryMapper,
-            CategoryServiceImpl categoryService
+            CategoryService categoryService
     ){
         this.jwtService=jwtService;
         this.userInfoService=userInfoService;
