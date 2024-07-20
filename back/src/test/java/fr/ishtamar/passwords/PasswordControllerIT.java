@@ -3,11 +3,9 @@ package fr.ishtamar.passwords;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.category.CategoryRepository;
+import fr.ishtamar.passwords.model.category.CategoryService;
 import fr.ishtamar.passwords.model.category.CategoryServiceImpl;
-import fr.ishtamar.passwords.model.password.CreatePasswordRequest;
-import fr.ishtamar.passwords.model.password.Password;
-import fr.ishtamar.passwords.model.password.PasswordRepository;
-import fr.ishtamar.passwords.model.password.PasswordServiceImpl;
+import fr.ishtamar.passwords.model.password.*;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
 import fr.ishtamar.starter.security.JwtService;
@@ -39,11 +37,11 @@ class PasswordControllerIT {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    CategoryServiceImpl categoryService;
+    CategoryService categoryService;
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
-    PasswordServiceImpl service;
+    PasswordService service;
     @Autowired
     PasswordRepository repository;
     @Autowired

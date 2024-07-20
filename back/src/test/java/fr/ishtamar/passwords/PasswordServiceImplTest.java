@@ -1,6 +1,7 @@
 package fr.ishtamar.passwords;
 
 import fr.ishtamar.passwords.model.password.Password;
+import fr.ishtamar.passwords.model.password.PasswordService;
 import fr.ishtamar.passwords.model.password.PasswordServiceImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class PasswordServiceImplTest {
     @Autowired
-    PasswordServiceImpl passwordService;
+    PasswordService passwordService;
 
     @Test
     @DisplayName("When I calculate password, it works as expected")

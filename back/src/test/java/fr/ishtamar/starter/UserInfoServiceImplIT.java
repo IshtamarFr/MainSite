@@ -3,6 +3,7 @@ package fr.ishtamar.starter;
 import fr.ishtamar.starter.model.auth.ModifyUserRequest;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
+import fr.ishtamar.starter.model.user.UserInfoService;
 import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class UserInfoServiceImplIT {
     @Autowired
-    UserInfoServiceImpl userInfoServiceImpl;
+    UserInfoService userInfoServiceImpl;
     @Autowired
     UserInfoRepository repository;
 
