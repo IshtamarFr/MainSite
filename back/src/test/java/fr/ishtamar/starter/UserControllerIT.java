@@ -1,7 +1,7 @@
 package fr.ishtamar.starter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.TestContent;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -30,18 +29,8 @@ class UserControllerIT {
     UserInfoRepository repository;
 
     ObjectMapper mapper=new ObjectMapper();
-    final static UserInfo initialUser=UserInfo.builder()
-            .name("TickleMonster")
-            .email("test999@test.com")
-            .password(passwordEncoder().encode("Aa1234567!"))
-            .roles("ROLE_USER")
-            .build();
 
     @BeforeEach
-    void init() {
-        repository.deleteAll();
-    }
-
     @AfterEach
     void clean() {
         repository.deleteAll();
@@ -52,14 +41,15 @@ class UserControllerIT {
     @WithMockUser(roles="USER")
     void testGetUserDto() throws Exception {
         //Given
-        Long id=repository.save(initialUser).getId();
+        TestContent tc=new TestContent();
+        Long id=repository.save(tc.initialUser).getId();
 
         //When
         this.mockMvc.perform(get("/user/"+id))
 
         //Then
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("TickleMonster")))
+                .andExpect(content().string(containsString("Ishta")))
                 .andExpect(content().string(CoreMatchers.not(containsString("word"))));
     }
 
@@ -68,7 +58,8 @@ class UserControllerIT {
     @WithMockUser(roles="USER")
     void testGetInvalidUserDto() throws Exception {
         //Given
-        long id=repository.save(initialUser).getId()+1;
+        TestContent tc=new TestContent();
+        long id=repository.save(tc.initialUser).getId()+10000;
 
         //When
         this.mockMvc.perform(get("/user/"+id))
@@ -81,7 +72,8 @@ class UserControllerIT {
     @DisplayName("When I query data from user when unauthenticated, it is forbidden")
     void testGetUserDtoAsInvalid() throws Exception {
         //Given
-        long id=repository.save(initialUser).getId();
+        TestContent tc=new TestContent();
+        long id=repository.save(tc.initialUser).getId();
 
         //When
         this.mockMvc.perform(get("/user/"+id))

@@ -1,10 +1,9 @@
 package fr.ishtamar.starter;
 
-import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.exceptionhandler.BadCredentialsException;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
+import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
-import fr.ishtamar.starter.model.user.UserInfoService;
 import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ class UserInfoServiceImplTest {
     @MockBean
     UserInfoRepository userInfoRepository;
     @Autowired
-    UserInfoService userInfoServiceImpl;
+    UserInfoServiceImpl userInfoServiceImpl;
 
     final static UserInfo mockUser=UserInfo.builder()
             .name("mockTest")
