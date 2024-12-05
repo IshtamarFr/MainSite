@@ -18,5 +18,6 @@ public class FoodDto {
     private LocalDateTime createdAt;
     private LocalDateTime dlc;
     private String description;
-    private DishTypeDto dishType;
+    private Long dishType_id;
+    private String dishType_name;
 }
