@@ -1,8 +1,7 @@
-package fr.ishtamar.frozen.model.dishtype;
+package fr.ishtamar.frozen.model.containertype;
 
 import fr.ishtamar.starter.model.user.UserInfo;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,25 +10,21 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Builder
-public class DishType {
+public class ContainerType {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(unique = true)
-    @Length(max=32)
+    @Column(unique=true)
+    @Length(max=8)
     private String name;
 
-    @Min(0)
-    private Long monthsDefault; // 0 or null will be used for a forever
-
     @ManyToOne
-    @JoinColumn(name="user_id",referencedColumnName = "id")
-    @NotNull
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserInfo user;
 }

@@ -1,6 +1,8 @@
 package fr.ishtamar.frozen.model.batch;
 
+import fr.ishtamar.frozen.model.containertype.ContainerType;
 import fr.ishtamar.frozen.model.food.Food;
+import fr.ishtamar.frozen.model.location.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -34,4 +36,13 @@ public class Batch {
     @JoinColumn(name="food_id",referencedColumnName = "id")
     @NotNull
     private Food food;
+
+    @ManyToOne
+    @JoinColumn(name="containertype_id",referencedColumnName = "id")
+    private ContainerType containerType;
+
+    @ManyToOne
+    @JoinColumn(name="location_id",referencedColumnName = "id")
+    @NotNull
+    private Location location;
 }
