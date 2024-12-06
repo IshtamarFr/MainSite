@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(Long id) throws EntityNotFoundException {
         return repository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException(UserInfo.class,"id",id.toString()));
+                .orElseThrow(()-> new EntityNotFoundException(Category.class,"id",id.toString()));
     }
 
     @Override
