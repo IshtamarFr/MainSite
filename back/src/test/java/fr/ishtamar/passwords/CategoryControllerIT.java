@@ -1,6 +1,7 @@
 package fr.ishtamar.passwords;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ishtamar.TestContent;
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.category.CategoryRepository;
 import fr.ishtamar.starter.security.JwtService;
@@ -38,42 +39,7 @@ public class CategoryControllerIT {
 
     ObjectMapper mapper=new ObjectMapper();
 
-    final UserInfo initialUser=UserInfo.builder()
-            .name("Ishta")
-            .email("test@test.com")
-            .password(passwordEncoder().encode("123456"))
-            .roles("ROLE_USER")
-            .build();
-
-    final UserInfo initialUser2=UserInfo.builder()
-            .name("Pal")
-            .email("test17@test.com")
-            .password(passwordEncoder().encode("654321"))
-            .roles("ROLE_USER")
-            .build();
-
-    final Category initialCategory=Category.builder()
-            .name("Loisirs")
-            .user(initialUser)
-            .build();
-
-    final Category initialCategory2=Category.builder()
-            .name("Maison")
-            .user(initialUser)
-            .build();
-
-    final Category initialCategory3=Category.builder()
-            .name("Jeux")
-            .user(initialUser2)
-            .build();
-
     @BeforeEach
-    void init() {
-        clean();
-        userRepository.save(initialUser);
-        userRepository.save(initialUser2);
-    }
-
     @AfterEach
     void clean() {
         repository.deleteAll();
@@ -85,8 +51,12 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWorks() throws Exception {
         //Given
-        repository.save(initialCategory);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        repository.save(tc.initialCategory);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(post("/gestmdp/category")
@@ -104,8 +74,12 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWithAlreadyUsedName() throws Exception {
         //Given
-        repository.save(initialCategory);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        repository.save(tc.initialCategory);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(post("/gestmdp/category")
@@ -123,8 +97,12 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void createNewCategoryWorksWithSameNameFromOtherUser() throws Exception {
         //Given
-        repository.save(initialCategory);
-        String jwt= jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        repository.save(tc.initialCategory);
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
 
         //When
         mockMvc.perform(post("/gestmdp/category")
@@ -142,10 +120,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void getAllCategoriesByUserWorks() throws Exception {
         //Given
-        repository.save(initialCategory);
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        repository.save(tc.initialCategory);
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(get("/gestmdp/category")
@@ -163,10 +145,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void deleteCategoryWorks() throws Exception {
         //Given
-        long id=repository.save(initialCategory).getId();
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        long id=repository.save(tc.initialCategory).getId();
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(delete("/gestmdp/category/"+id)
@@ -183,10 +169,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void deleteOthersCategoryThrowsError() throws Exception {
         //Given
-        long id=repository.save(initialCategory).getId();
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        long id=repository.save(tc.initialCategory).getId();
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
 
         //When
         mockMvc.perform(delete("/gestmdp/category/"+id)
@@ -203,10 +193,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void modifyCategoryWorks() throws Exception {
         //Given
-        long id=repository.save(initialCategory).getId();
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        long id=repository.save(tc.initialCategory).getId();
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(put("/gestmdp/category/"+id)
@@ -216,8 +210,8 @@ public class CategoryControllerIT {
                 //Then
                 .andExpect(status().isOk());
 
-        assertThat(repository.findByNameAndUser("Saucisson",initialUser).size()).isEqualTo(1);
-        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(0);
+        assertThat(repository.findByNameAndUser("Saucisson",tc.initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Loisirs",tc.initialUser).size()).isEqualTo(0);
     }
 
     @Test
@@ -225,10 +219,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void modifyOthersCategoryThrowsError() throws Exception {
         //Given
-        long id=repository.save(initialCategory).getId();
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        long id=repository.save(tc.initialCategory).getId();
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
 
         //When
         mockMvc.perform(put("/gestmdp/category/"+id)
@@ -238,9 +236,9 @@ public class CategoryControllerIT {
                 //Then
                 .andExpect(status().isBadRequest());
 
-        assertThat(repository.findByNameAndUser("Saucisson",initialUser).size()).isEqualTo(0);
-        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(1);
-        assertThat(repository.findByNameAndUser("Saucisson",initialUser2).size()).isEqualTo(0);
+        assertThat(repository.findByNameAndUser("Saucisson",tc.initialUser).size()).isEqualTo(0);
+        assertThat(repository.findByNameAndUser("Loisirs",tc.initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Saucisson",tc.initialUser2).size()).isEqualTo(0);
     }
 
     @Test
@@ -248,10 +246,14 @@ public class CategoryControllerIT {
     @WithMockUser(roles="USER")
     void modifyCategoryWithTakenNameThrowsError() throws Exception {
         //Given
-        long id=repository.save(initialCategory).getId();
-        repository.save(initialCategory2);
-        repository.save(initialCategory3);
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        long id=repository.save(tc.initialCategory).getId();
+        repository.save(tc.initialCategory2);
+        repository.save(tc.initialCategory3);
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(put("/gestmdp/category/"+id)
@@ -261,7 +263,7 @@ public class CategoryControllerIT {
                 //Then
                 .andExpect(status().isBadRequest());
 
-        assertThat(repository.findByNameAndUser("Maison",initialUser).size()).isEqualTo(1);
-        assertThat(repository.findByNameAndUser("Loisirs",initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Maison",tc.initialUser).size()).isEqualTo(1);
+        assertThat(repository.findByNameAndUser("Loisirs",tc.initialUser).size()).isEqualTo(1);
     }
 }

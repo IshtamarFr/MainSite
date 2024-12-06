@@ -1,6 +1,7 @@
 package fr.ishtamar.passwords;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ishtamar.TestContent;
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.category.CategoryRepository;
 import fr.ishtamar.passwords.model.category.CategoryService;
@@ -51,78 +52,7 @@ class PasswordControllerIT {
 
     ObjectMapper mapper=new ObjectMapper();
 
-    final UserInfo initialUser=UserInfo.builder()
-            .name("Ishta")
-            .email("test@test.com")
-            .password(passwordEncoder().encode("123456"))
-            .roles("ROLE_USER")
-            .build();
-
-    final UserInfo initialUser2=UserInfo.builder()
-            .name("Pal")
-            .email("test17@test.com")
-            .password(passwordEncoder().encode("654321"))
-            .roles("ROLE_USER")
-            .build();
-
-    final Category initialCategory=Category.builder()
-            .name("Loisirs")
-            .user(initialUser)
-            .build();
-
-    final Category initialCategory2=Category.builder()
-            .name("Maison")
-            .user(initialUser)
-            .build();
-
-    final Category initialCategory3=Category.builder()
-            .name("Maison")
-            .user(initialUser2)
-            .build();
-
-    final Password initialPassword= Password.builder()
-            .passwordKey("z4-=%6H2Uzz^HT0]VX0jv9bzUE4lWEG8M??A|20r9M(%AuP<8}[nO(VrzT|A1>0?")
-            .passwordPrefix("c7_P")
-            .passwordLength(64L)
-            .siteName("saumon@test.te")
-            .category(initialCategory)
-            .active(true)
-            .build();
-
-    final Password initialPassword2= Password.builder()
-            .passwordKey("abcdefgh")
-            .passwordPrefix("a1_A")
-            .passwordLength(64L)
-            .siteName("truite@test.te")
-            .category(initialCategory)
-            .active(true)
-            .build();
-
-    final Password initialPassword3= Password.builder()
-            .passwordKey("abcdefgh")
-            .passwordPrefix("a1_A")
-            .passwordLength(64L)
-            .siteName("cabillaud@test.te")
-            .category(initialCategory3)
-            .active(true)
-            .build();
-
-    final Password initialPassword4= Password.builder()
-            .passwordKey("abcdefgh")
-            .passwordPrefix("a1_A")
-            .passwordLength(64L)
-            .siteName("thon@test.te")
-            .category(initialCategory)
-            .active(true)
-            .build();
-
     @BeforeEach
-    void init() {
-        clean();
-        userRepository.save(initialUser);
-        userRepository.save(initialUser2);
-    }
-
     @AfterEach
     void clean() {
         repository.deleteAll();
@@ -135,8 +65,12 @@ class PasswordControllerIT {
     @Secured("USER")
     void testAddPasswordWorks() throws Exception {
         //Given
-        Long id=categoryRepository.save(initialCategory).getId();
-        String jwt= jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        Long id=categoryRepository.save(tc.initialCategory).getId();
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
 
         CreatePasswordRequest request= CreatePasswordRequest.builder()
                 .siteName("Site de test")
@@ -160,8 +94,12 @@ class PasswordControllerIT {
     @Secured("USER")
     void testAddPasswordToOtherThrowsError() throws Exception {
         //Given
-        Long id=categoryRepository.save(initialCategory).getId();
-        String jwt= jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        Long id=categoryRepository.save(tc.initialCategory).getId();
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
 
         CreatePasswordRequest request= CreatePasswordRequest.builder()
                 .siteName("Site de test")
@@ -185,16 +123,20 @@ class PasswordControllerIT {
     @Secured("USER")
     void testGetAllPasswordsWorks() throws Exception {
         //Given
-        categoryRepository.save(initialCategory);
-        categoryRepository.save(initialCategory2);
-        categoryRepository.save(initialCategory3);
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
 
-        repository.save(initialPassword);
-        repository.save(initialPassword2);
-        repository.save(initialPassword3);
-        repository.save(initialPassword4);
+        categoryRepository.save(tc.initialCategory);
+        categoryRepository.save(tc.initialCategory2);
+        categoryRepository.save(tc.initialCategory3);
 
-        String jwt = jwtService.generateToken(initialUser.getEmail());
+        repository.save(tc.initialPassword);
+        repository.save(tc.initialPassword2);
+        repository.save(tc.initialPassword3);
+        repository.save(tc.initialPassword4);
+
+        String jwt = jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.get("/gestmdp/password")
@@ -213,10 +155,14 @@ class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void testCalculatePasswordWorks() throws Exception {
         //Given
-        categoryRepository.save(initialCategory);
-        Long id=repository.save(initialPassword).getId();
-        repository.save(initialPassword2);
-        String jwt = jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        categoryRepository.save(tc.initialCategory);
+        Long id=repository.save(tc.initialPassword).getId();
+        repository.save(tc.initialPassword2);
+        String jwt = jwtService.generateToken(tc.initialUser.getEmail());
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/password/"+id)
@@ -234,10 +180,14 @@ class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void testCalculateOthersPasswordThrowsError() throws Exception {
         //Given
-        categoryRepository.save(initialCategory);
-        Long id=repository.save(initialPassword).getId();
-        repository.save(initialPassword2);
-        String jwt = jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        categoryRepository.save(tc.initialCategory);
+        Long id=repository.save(tc.initialPassword).getId();
+        repository.save(tc.initialPassword2);
+        String jwt = jwtService.generateToken(tc.initialUser2.getEmail());
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.post("/gestmdp/password/"+id)
@@ -253,9 +203,13 @@ class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void testModifyMyPasswordWorks() throws Exception {
         //Given
-        Long categoryId = categoryRepository.save(initialCategory).getId();
-        Long id = repository.save(initialPassword).getId();
-        String jwt = jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        Long categoryId = categoryRepository.save(tc.initialCategory).getId();
+        Long id = repository.save(tc.initialPassword).getId();
+        String jwt = jwtService.generateToken(tc.initialUser.getEmail());
 
         CreatePasswordRequest request = CreatePasswordRequest.builder()
                 .siteName("Site de test")
@@ -285,9 +239,13 @@ class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void testModifyOthersPasswordThrowsError() throws Exception {
         //Given
-        Long categoryId = categoryRepository.save(initialCategory).getId();
-        Long id = repository.save(initialPassword).getId();
-        String jwt = jwtService.generateToken(initialUser2.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        Long categoryId = categoryRepository.save(tc.initialCategory).getId();
+        Long id = repository.save(tc.initialPassword).getId();
+        String jwt = jwtService.generateToken(tc.initialUser2.getEmail());
 
         CreatePasswordRequest request = CreatePasswordRequest.builder()
                 .siteName("Site de test")
@@ -317,10 +275,14 @@ class PasswordControllerIT {
     @WithMockUser(roles="USER")
     void testModifyMyPasswordWithOthersCategoryThrowsError() throws Exception {
         //Given
-        categoryRepository.save(initialCategory);
-        Long categoryId = categoryRepository.save(initialCategory3).getId();
-        Long id = repository.save(initialPassword).getId();
-        String jwt = jwtService.generateToken(initialUser.getEmail());
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+
+        categoryRepository.save(tc.initialCategory);
+        Long categoryId = categoryRepository.save(tc.initialCategory3).getId();
+        Long id = repository.save(tc.initialPassword).getId();
+        String jwt = jwtService.generateToken(tc.initialUser.getEmail());
 
         CreatePasswordRequest request = CreatePasswordRequest.builder()
                 .siteName("Site de test")
