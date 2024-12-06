@@ -38,11 +38,7 @@ class PasswordControllerIT {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    CategoryService categoryService;
-    @Autowired
     CategoryRepository categoryRepository;
-    @Autowired
-    PasswordService service;
     @Autowired
     PasswordRepository repository;
     @Autowired

@@ -1,8 +1,15 @@
 package fr.ishtamar;
 
+import fr.ishtamar.frozen.model.batch.Batch;
+import fr.ishtamar.frozen.model.containertype.ContainerType;
+import fr.ishtamar.frozen.model.dishtype.DishType;
+import fr.ishtamar.frozen.model.food.Food;
+import fr.ishtamar.frozen.model.location.Location;
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.password.Password;
 import fr.ishtamar.starter.model.user.UserInfo;
+
+import java.time.LocalDateTime;
 
 import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 
@@ -70,5 +77,37 @@ public class TestContent {
             .siteName("thon@test.te")
             .category(initialCategory)
             .active(true)
+            .build();
+
+    public Location location1=Location.builder()
+            .name("Haut")
+            .description("Congélateur de la cuisine")
+            .user(initialUser)
+            .build();
+
+    public DishType dishtype1=DishType.builder()
+            .name("Boeuf cuit")
+            .user(initialUser)
+            .build();
+
+    public ContainerType container1=ContainerType.builder()
+            .name("GN")
+            .user(initialUser)
+            .build();
+
+    public Food food1= Food.builder()
+            .name("Boeuf bourguignon")
+            .createdAt(LocalDateTime.now())
+            .dlc(LocalDateTime.now().plusMonths(6))
+            .dishType(dishtype1)
+            .user(initialUser)
+            .build();
+
+    public Batch batch1food1= Batch.builder()
+            .units(2L)
+            .location(location1)
+            .containerType(container1)
+            .food(food1)
+            .user(initialUser)
             .build();
 }
