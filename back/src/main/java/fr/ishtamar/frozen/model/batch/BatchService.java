@@ -1,11 +1,8 @@
 package fr.ishtamar.frozen.model.batch;
 
-import fr.ishtamar.frozen.model.food.FoodMapper;
 import fr.ishtamar.starter.util.EntityMapper;
-import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-@Mapper(uses= FoodMapper.class, componentModel = "Spring")
+@Service
 public interface BatchService extends EntityMapper<BatchDto,Batch> {
 }
