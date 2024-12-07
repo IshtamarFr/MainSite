@@ -1,6 +1,5 @@
 package fr.ishtamar.frozen.model.location;
 
-import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
@@ -45,13 +44,6 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location modifyLocation(Location location, String name) throws GenericException {
-        List<Location> candidate=repository.findByNameAndUser(name,location.getUser());
-
-        if (candidate.isEmpty()) {
-            location.setName(name);
-            return repository.save(location);
-        } else {
-            throw new GenericException("This category already exists for this user");
-        }
+        return null;
     }
 }
