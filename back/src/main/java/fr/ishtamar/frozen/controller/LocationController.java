@@ -13,6 +13,8 @@ import jakarta.validation.constraints.Size;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/frozen/location")
 public class LocationController {
@@ -33,7 +35,7 @@ public class LocationController {
     public LocationDto createLocation(
             @RequestHeader(value="Authorization",required=false) String jwt,
             @RequestParam @NotNull @Size(max=63) String name,
-            @RequestParam @Size(max=128) String description) throws EntityNotFoundException {
+            @RequestParam(required=false) @Size(max=128) String description) throws EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
         Location location=Location.builder()
                 .name(name)

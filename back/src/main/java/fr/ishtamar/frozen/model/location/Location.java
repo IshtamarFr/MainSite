@@ -14,13 +14,15 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name","user_id"})
+})
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(unique = true)
     @Length(max=32)
     private String name;
 
