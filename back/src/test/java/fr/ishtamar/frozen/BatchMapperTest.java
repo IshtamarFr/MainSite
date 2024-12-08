@@ -1,7 +1,6 @@
 package fr.ishtamar.frozen;
 
 import fr.ishtamar.TestContent;
-import fr.ishtamar.frozen.model.batch.BatchDto;
 import fr.ishtamar.frozen.model.batch.BatchMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

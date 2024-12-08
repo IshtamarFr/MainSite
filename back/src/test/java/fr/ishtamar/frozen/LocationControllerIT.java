@@ -93,4 +93,25 @@ class LocationControllerIT {
 
         assertThat(repository.findAll().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("When I try to create a location with a name already taken with another user, it is OK")
+    void testCreateLocationExistingWorksWithOther() throws Exception{
+        //Given
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+        repository.save(tc.location1);
+
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
+
+        //When
+        mockMvc.perform(post("/frozen/location")
+                        .header("Authorization","Bearer "+jwt)
+                        .param("name","Haut"))
+                //Then
+                .andExpect(status().isOk());
+
+        assertThat(repository.findAll().size()).isEqualTo(2);
+    }
 }
