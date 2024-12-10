@@ -44,7 +44,7 @@ public class LocationController {
                 .description(description)
                 .build();
 
-        return locationMapper.toDto(locationService.createLocation(location));
+        return locationMapper.toDto(locationService.createEntity(location));
     }
 
     @GetMapping("")
@@ -52,6 +52,6 @@ public class LocationController {
     public List<LocationDto> getLocationsForUser(
             @RequestHeader(value="Authorization",required=false) String jwt) throws EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        return locationMapper.toDto(locationService.getLocationsForUser(user));
+        return locationMapper.toDto(locationService.getEntitiesForUser(user));
     }
 }
