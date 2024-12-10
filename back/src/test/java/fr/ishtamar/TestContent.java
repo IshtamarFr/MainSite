@@ -85,6 +85,18 @@ public class TestContent {
             .user(initialUser)
             .build();
 
+    public Location location2=Location.builder()
+            .name("Haut")
+            .description("Congélateur de la cuisine")
+            .user(initialUser2)
+            .build();
+
+    public Location location3=Location.builder()
+            .name("Salon")
+            .description("Congélateur du salon")
+            .user(initialUser)
+            .build();
+
     public DishType dishtype1=DishType.builder()
             .name("Boeuf cuit")
             .user(initialUser)

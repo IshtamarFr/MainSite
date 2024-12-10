@@ -11,12 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -113,5 +114,30 @@ class LocationControllerIT {
                 .andExpect(status().isOk());
 
         assertThat(repository.findAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("When I try to get all my locations, it works")
+    void testGetAllLocationsForMe() throws Exception {
+        //Given
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+        repository.save(tc.location1);
+        repository.save(tc.location2);
+        repository.save(tc.location3);
+
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
+
+        //When
+        mockMvc.perform(get("/frozen/location")
+                .header("Authorization","Bearer "+jwt))
+
+        //Then
+                .andExpect(status().isOk())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$",hasSize(2)));
+
     }
 }
