@@ -19,18 +19,15 @@ import java.util.Objects;
 @RequestMapping("/gestmdp/category")
 public class CategoryController {
     private final JwtService jwtService;
-    private final UserInfoService userInfoService;
     private final CategoryMapper categoryMapper;
     private final CategoryService categoryService;
 
     public CategoryController(
             JwtService jwtService,
-            UserInfoService userInfoService,
             CategoryMapper categoryMapper,
             CategoryService categoryService
     ){
         this.jwtService=jwtService;
-        this.userInfoService=userInfoService;
         this.categoryMapper=categoryMapper;
         this.categoryService=categoryService;
     }
@@ -40,7 +37,7 @@ public class CategoryController {
     public CategoryDto createCategory(
             @RequestHeader(value="Authorization",required=false) String jwt,
             @RequestParam @NotNull @Size(max=63) String name) throws EntityNotFoundException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         Category category= Category.builder()
                 .name(name)
                 .user(user)
@@ -53,7 +50,7 @@ public class CategoryController {
     @Secured("ROLE_USER")
     public List<CategoryDto> getCategoriesForUser(
             @RequestHeader(value="Authorization",required=false) String jwt) throws EntityNotFoundException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         return categoryMapper.toDto(categoryService.getEntitiesForUser(user));
     }
 
@@ -61,7 +58,7 @@ public class CategoryController {
     @Secured("ROLE_USER")
     public String deleteCategory(@RequestHeader(value="Authorization",required=false) String jwt,@PathVariable Long id)
             throws EntityNotFoundException, GenericException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         Category category=categoryService.getEntityById(id);
 
         if (Objects.equals(category.getUser(),user)) {
@@ -79,7 +76,7 @@ public class CategoryController {
             @PathVariable Long id,
             @RequestParam @NotNull @Size(max=63) String name
     ) throws EntityNotFoundException, GenericException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         Category category=categoryService.getEntityById(id);
 
         if (Objects.equals(category.getUser(),user)) {

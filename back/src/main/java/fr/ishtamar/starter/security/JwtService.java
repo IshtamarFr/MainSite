@@ -1,5 +1,7 @@
 package fr.ishtamar.starter.security;
 
+import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.model.user.UserInfoService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,12 +19,17 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-
     @Value("${fr.ishtamar.starter.secret}")
     private String secret;
 
     @Value("${fr.ishtamar.starter.lifespan}")
     private Long lifespan;
+
+    private final UserInfoService userInfoService;
+
+    public JwtService(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
@@ -72,5 +79,9 @@ public class JwtService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public UserInfo getUserFromJwt(String jwt){
+        return userInfoService.getUserByUsername(extractUsername(jwt.substring(7)));
     }
 }
