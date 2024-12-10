@@ -1,4 +1,4 @@
-package fr.ishtamar.starter.util;
+package fr.ishtamar.starter.standard;
 
 import fr.ishtamar.starter.model.user.UserInfo;
 

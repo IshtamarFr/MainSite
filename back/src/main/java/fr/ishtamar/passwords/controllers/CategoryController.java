@@ -46,7 +46,7 @@ public class CategoryController {
                 .user(user)
                 .build();
 
-        return categoryMapper.toDto(categoryService.createCategory(category));
+        return categoryMapper.toDto(categoryService.createEntity(category));
     }
 
     @GetMapping("")
@@ -54,7 +54,7 @@ public class CategoryController {
     public List<CategoryDto> getCategoriesForUser(
             @RequestHeader(value="Authorization",required=false) String jwt) throws EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        return categoryMapper.toDto(categoryService.getCategoriesForUser(user));
+        return categoryMapper.toDto(categoryService.getEntitiesForUser(user));
     }
 
     @DeleteMapping("/{id}")
@@ -62,10 +62,10 @@ public class CategoryController {
     public String deleteCategory(@RequestHeader(value="Authorization",required=false) String jwt,@PathVariable Long id)
             throws EntityNotFoundException, GenericException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        Category category=categoryService.getCategoryById(id);
+        Category category=categoryService.getEntityById(id);
 
         if (Objects.equals(category.getUser(),user)) {
-            categoryService.deleteCategory(category);
+            categoryService.deleteEntity(category);
             return "This category was successfully deleted";
         } else {
             throw new GenericException("You are not allowed to delete this resource");
@@ -80,7 +80,7 @@ public class CategoryController {
             @RequestParam @NotNull @Size(max=63) String name
     ) throws EntityNotFoundException, GenericException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        Category category=categoryService.getCategoryById(id);
+        Category category=categoryService.getEntityById(id);
 
         if (Objects.equals(category.getUser(),user)) {
             return categoryMapper.toDto(categoryService.modifyCategory(category,name));

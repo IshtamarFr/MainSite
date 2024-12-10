@@ -1,7 +1,7 @@
 package fr.ishtamar.frozen.model.location;
 
 import fr.ishtamar.starter.model.user.UserInfo;
-import fr.ishtamar.starter.util.StdEntity;
+import fr.ishtamar.starter.standard.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

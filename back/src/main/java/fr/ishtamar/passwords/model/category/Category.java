@@ -1,6 +1,7 @@
 package fr.ishtamar.passwords.model.category;
 
 import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.standard.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Category {
+public class Category implements StdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

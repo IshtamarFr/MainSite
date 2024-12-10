@@ -14,7 +14,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl(CategoryRepository repository){this.repository=repository;}
 
     @Override
-    public Category createCategory(Category category) throws GenericException {
+    public Category createEntity(Category category) throws GenericException {
         List<Category> candidate=repository.findByNameAndUser(category.getName(),category.getUser());
 
         if (candidate.isEmpty()) {
@@ -25,18 +25,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getCategoriesForUser(UserInfo user) {
+    public List<Category> getEntitiesForUser(UserInfo user) {
         return repository.findByUser(user);
     }
 
     @Override
-    public Category getCategoryById(Long id) throws EntityNotFoundException {
+    public Category getEntityById(Long id) throws EntityNotFoundException {
         return repository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException(Category.class,"id",id.toString()));
     }
 
     @Override
-    public void deleteCategory(Category category) {
+    public void deleteEntity(Category category) {
         repository.delete(category);
     }
 

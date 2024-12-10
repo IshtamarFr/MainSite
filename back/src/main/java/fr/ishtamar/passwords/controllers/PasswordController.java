@@ -49,7 +49,7 @@ public class PasswordController {
             @RequestBody @Valid CreatePasswordRequest request
     ) throws GenericException, EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        Category category=categoryService.getCategoryById(id);
+        Category category=categoryService.getEntityById(id);
 
         if (Objects.equals(category.getUser(),user)) {
             return passwordMapper.toDto(passwordService.createPassword(request,user,category));
@@ -126,7 +126,7 @@ public class PasswordController {
             @RequestParam Long category_id
     ) throws GenericException, EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
-        Category category=categoryService.getCategoryById(category_id);
+        Category category=categoryService.getEntityById(category_id);
         Password password=passwordService.getPasswordById(id);
 
         if (Objects.equals(password.getCategory().getUser(),user) && Objects.equals(category.getUser(),user)) {
