@@ -1,12 +1,10 @@
 package fr.ishtamar.frozen.model.location;
 
 import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.util.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Data
@@ -17,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"name","user_id"})
 })
-public class Location {
+public class Location implements StdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,10 +24,12 @@ public class Location {
     @Length(max=32)
     private String name;
 
+    @Getter
     @Length(max=128)
     private String description;
 
     @ManyToOne
     @JoinColumn(name="user_id",referencedColumnName = "id")
+    @NotNull
     private UserInfo user;
 }
