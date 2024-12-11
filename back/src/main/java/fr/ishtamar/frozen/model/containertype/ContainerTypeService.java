@@ -1,4 +1,6 @@
 package fr.ishtamar.frozen.model.containertype;
 
-public interface ContainerTypeService {
+import fr.ishtamar.starter.standard.StdEntityService;
+
+public interface ContainerTypeService extends StdEntityService<ContainerType> {
 }

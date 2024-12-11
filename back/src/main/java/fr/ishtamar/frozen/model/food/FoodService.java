@@ -1,4 +1,6 @@
 package fr.ishtamar.frozen.model.food;
 
-public interface FoodService {
+import fr.ishtamar.starter.standard.StdEntityService;
+
+public interface FoodService extends StdEntityService<Food> {
 }

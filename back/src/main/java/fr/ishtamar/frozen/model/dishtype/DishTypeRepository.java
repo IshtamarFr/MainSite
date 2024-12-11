@@ -1,10 +1,6 @@
 package fr.ishtamar.frozen.model.dishtype;
 
-import fr.ishtamar.starter.model.user.UserInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fr.ishtamar.starter.standard.StdEntityRepository;
 
-import java.util.List;
-
-public interface DishTypeRepository extends JpaRepository<DishType,Long> {
-    List<DishType> findByUser(UserInfo user);
+public interface DishTypeRepository extends StdEntityRepository<DishType> {
 }

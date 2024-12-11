@@ -2,6 +2,7 @@ package fr.ishtamar.frozen.model.food;
 
 import fr.ishtamar.frozen.model.dishtype.DishType;
 import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.standard.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder
-public class Food {
+public class Food implements StdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

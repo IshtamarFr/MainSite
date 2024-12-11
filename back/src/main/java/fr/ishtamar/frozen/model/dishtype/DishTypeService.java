@@ -1,4 +1,6 @@
 package fr.ishtamar.frozen.model.dishtype;
 
-public interface DishTypeService {
+import fr.ishtamar.starter.standard.StdEntityService;
+
+public interface DishTypeService extends StdEntityService<DishType> {
 }

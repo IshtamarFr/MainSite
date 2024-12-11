@@ -1,6 +1,5 @@
 package fr.ishtamar.frozen.model.food;
 
-import fr.ishtamar.frozen.model.dishtype.DishTypeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,7 @@
 package fr.ishtamar.frozen.model.dishtype;
 
 import fr.ishtamar.starter.model.user.UserInfo;
+import fr.ishtamar.starter.standard.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Entity
 @Builder
-public class DishType {
+public class DishType implements StdEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
