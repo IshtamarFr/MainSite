@@ -5,6 +5,7 @@ import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.frozen.model.location.LocationMapper;
 import fr.ishtamar.frozen.model.location.LocationService;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
+import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoService;
 import fr.ishtamar.starter.security.JwtService;
@@ -14,6 +15,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -53,5 +55,20 @@ public class LocationController {
             @RequestHeader(value="Authorization",required=false) String jwt) throws EntityNotFoundException {
         UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
         return locationMapper.toDto(locationService.getEntitiesForUser(user));
+    }
+
+    @DeleteMapping("/{id}")
+    @Secured("ROLE_USER")
+    public String deleteLocation(@RequestHeader(value="Authorization",required=false) String jwt,@PathVariable Long id)
+            throws EntityNotFoundException, GenericException {
+        UserInfo user=jwtService.getUserFromJwt(jwt);
+        Location location=locationService.getEntityById(id);
+
+        if (Objects.equals(location.getUser(),user)) {
+            locationService.deleteEntity(location);
+            return "This location was successfully deleted";
+        } else {
+            throw new GenericException("You are not allowed to delete this resource");
+        }
     }
 }

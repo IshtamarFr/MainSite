@@ -135,9 +135,69 @@ class LocationControllerIT {
 
         //Then
                 .andExpect(status().isOk())
-                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$",hasSize(2)));
 
+    }
+
+    @Test
+    @DisplayName("When I try to delete my location, it works")
+    void testDeleteMyLocationWorks() throws Exception {
+        //Given
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        Long id=repository.save(tc.location1).getId();
+
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
+
+        //When
+        mockMvc.perform(delete("/frozen/location/"+id)
+                        .header("Authorization","Bearer "+jwt))
+
+                //Then
+                .andExpect(status().isOk());
+
+        assertThat(repository.findAll().size()).isEqualTo(0L);
+    }
+
+    @Test
+    @DisplayName("When I try to delete inexistant location, it is not found")
+    void testDeleteInexistantLocationThrowsError() throws Exception {
+        //Given
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        Long id=repository.save(tc.location1).getId()+1000;
+
+        String jwt= jwtService.generateToken(tc.initialUser.getEmail());
+
+        //When
+        mockMvc.perform(delete("/frozen/location/"+id)
+                        .header("Authorization","Bearer "+jwt))
+
+                //Then
+                .andExpect(status().isNotFound());
+
+        assertThat(repository.findAll().size()).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("When I try to delete other's location, it is bad request")
+    void testDeleteOthersLocationThrowsError() throws Exception {
+        //Given
+        TestContent tc=new TestContent();
+        userRepository.save(tc.initialUser);
+        userRepository.save(tc.initialUser2);
+        Long id=repository.save(tc.location1).getId();
+
+        String jwt= jwtService.generateToken(tc.initialUser2.getEmail());
+
+        //When
+        mockMvc.perform(delete("/frozen/location/"+id)
+                        .header("Authorization","Bearer "+jwt))
+
+                //Then
+                .andExpect(status().isBadRequest());
+
+        assertThat(repository.findAll().size()).isEqualTo(1L);
     }
 }
