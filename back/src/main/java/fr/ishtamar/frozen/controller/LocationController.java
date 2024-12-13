@@ -7,7 +7,6 @@ import fr.ishtamar.frozen.model.location.LocationService;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
-import fr.ishtamar.starter.model.user.UserInfoService;
 import fr.ishtamar.starter.security.JwtService;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,7 +24,7 @@ public class LocationController {
     private final JwtService jwtService;
     private final LocationService locationService;
 
-    public LocationController(LocationMapper locationMapper, JwtService jwtService, UserInfoService userInfoService, LocationService locationService) {
+    public LocationController(LocationMapper locationMapper, JwtService jwtService, LocationService locationService) {
         this.locationMapper = locationMapper;
         this.jwtService = jwtService;
         this.locationService = locationService;
