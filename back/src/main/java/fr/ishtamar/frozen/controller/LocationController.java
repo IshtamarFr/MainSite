@@ -23,13 +23,11 @@ import java.util.Objects;
 public class LocationController {
     private final LocationMapper locationMapper;
     private final JwtService jwtService;
-    private final UserInfoService userInfoService;
     private final LocationService locationService;
 
     public LocationController(LocationMapper locationMapper, JwtService jwtService, UserInfoService userInfoService, LocationService locationService) {
         this.locationMapper = locationMapper;
         this.jwtService = jwtService;
-        this.userInfoService = userInfoService;
         this.locationService = locationService;
     }
 
@@ -39,7 +37,7 @@ public class LocationController {
             @RequestHeader(value="Authorization",required=false) String jwt,
             @RequestParam @NotNull @Size(max=63) String name,
             @RequestParam(required=false) @Size(max=128) String description) throws EntityNotFoundException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         Location location=Location.builder()
                 .name(name)
                 .user(user)
@@ -53,7 +51,7 @@ public class LocationController {
     @Secured("ROLE_USER")
     public List<LocationDto> getLocationsForUser(
             @RequestHeader(value="Authorization",required=false) String jwt) throws EntityNotFoundException {
-        UserInfo user=userInfoService.getUserByUsername(jwtService.extractUsername(jwt.substring(7)));
+        UserInfo user=jwtService.getUserFromJwt(jwt);
         return locationMapper.toDto(locationService.getEntitiesForUser(user));
     }
 
