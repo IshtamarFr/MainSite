@@ -1,7 +1,6 @@
 package fr.ishtamar.passwords.model.password;
 
 import fr.ishtamar.passwords.model.category.Category;
-import fr.ishtamar.starter.standard.StdEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

@@ -4,8 +4,6 @@ import fr.ishtamar.frozen.model.location.Location;
 import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.frozen.model.location.LocationMapper;
 import fr.ishtamar.frozen.model.location.LocationService;
-import fr.ishtamar.passwords.model.category.Category;
-import fr.ishtamar.passwords.model.category.CategoryDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;

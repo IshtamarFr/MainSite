@@ -2,14 +2,12 @@ package fr.ishtamar.passwords.controllers;
 
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.category.CategoryService;
-import fr.ishtamar.passwords.model.category.CategoryServiceImpl;
 import fr.ishtamar.passwords.model.password.*;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.security.JwtService;
 import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoService;
-import fr.ishtamar.starter.model.user.UserInfoServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

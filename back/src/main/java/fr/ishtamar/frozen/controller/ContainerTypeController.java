@@ -4,8 +4,6 @@ import fr.ishtamar.frozen.model.containertype.ContainerType;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeDto;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeMapper;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeService;
-import fr.ishtamar.frozen.model.location.Location;
-import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;

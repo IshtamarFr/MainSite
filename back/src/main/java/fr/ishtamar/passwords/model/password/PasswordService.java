@@ -4,7 +4,6 @@ package fr.ishtamar.passwords.model.password;
 import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.model.user.UserInfo;
-import fr.ishtamar.starter.standard.StdEntityService;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;

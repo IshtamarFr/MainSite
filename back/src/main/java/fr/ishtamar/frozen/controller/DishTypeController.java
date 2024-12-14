@@ -4,8 +4,6 @@ import fr.ishtamar.frozen.model.dishtype.DishType;
 import fr.ishtamar.frozen.model.dishtype.DishTypeDto;
 import fr.ishtamar.frozen.model.dishtype.DishTypeMapper;
 import fr.ishtamar.frozen.model.dishtype.DishTypeService;
-import fr.ishtamar.frozen.model.location.Location;
-import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;

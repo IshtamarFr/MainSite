@@ -2,10 +2,8 @@ package fr.ishtamar.passwords;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ishtamar.TestContent;
-import fr.ishtamar.passwords.model.category.Category;
 import fr.ishtamar.passwords.model.category.CategoryRepository;
 import fr.ishtamar.starter.security.JwtService;
-import fr.ishtamar.starter.model.user.UserInfo;
 import fr.ishtamar.starter.model.user.UserInfoRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static fr.ishtamar.starter.security.SecurityConfig.passwordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
