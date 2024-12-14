@@ -9,4 +9,9 @@ public class DishTypeServiceImpl extends StdEntityServiceImpl<DishType> implemen
     public DishTypeServiceImpl(StdEntityRepository<DishType> repository) {
         super(repository);
     }
+
+    @Override
+    public DishType modifyDishType(DishType dishType, String name, Long monthsDefault) {
+        return null;
+    }
 }

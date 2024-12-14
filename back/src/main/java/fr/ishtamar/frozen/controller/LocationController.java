@@ -4,6 +4,8 @@ import fr.ishtamar.frozen.model.location.Location;
 import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.frozen.model.location.LocationMapper;
 import fr.ishtamar.frozen.model.location.LocationService;
+import fr.ishtamar.passwords.model.category.Category;
+import fr.ishtamar.passwords.model.category.CategoryDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
@@ -66,6 +68,24 @@ public class LocationController {
             return "This location was successfully deleted";
         } else {
             throw new GenericException("You are not allowed to delete this resource");
+        }
+    }
+
+    @PutMapping("/{id}")
+    @Secured("ROLE_USER")
+    public LocationDto modifyLocation(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable Long id,
+            @RequestParam @NotNull @Size(max=32) String name,
+            @RequestParam(required=false) @Size(max=128) String description
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=jwtService.getUserFromJwt(jwt);
+        Location location=locationService.getEntityById(id);
+
+        if (Objects.equals(location.getUser(),user)) {
+            return locationMapper.toDto(locationService.modifyLocation(location,name,description));
+        } else {
+            throw new GenericException("You are not allowed to modify this resource");
         }
     }
 }

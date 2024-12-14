@@ -9,4 +9,9 @@ public class ContainerTypeServiceImpl extends StdEntityServiceImpl<ContainerType
     public ContainerTypeServiceImpl(StdEntityRepository<ContainerType> repository) {
         super(repository);
     }
+
+    @Override
+    public ContainerType modifyContainerType(ContainerType containerType, String name) {
+        return null;
+    }
 }

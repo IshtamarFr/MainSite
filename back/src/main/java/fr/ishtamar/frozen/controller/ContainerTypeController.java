@@ -4,6 +4,8 @@ import fr.ishtamar.frozen.model.containertype.ContainerType;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeDto;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeMapper;
 import fr.ishtamar.frozen.model.containertype.ContainerTypeService;
+import fr.ishtamar.frozen.model.location.Location;
+import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
@@ -64,6 +66,23 @@ public class ContainerTypeController {
             return "This containerType was successfully deleted";
         } else {
             throw new GenericException("You are not allowed to delete this resource");
+        }
+    }
+
+    @PutMapping("/{id}")
+    @Secured("ROLE_USER")
+    public ContainerTypeDto modifyContainerType(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable Long id,
+            @RequestParam @NotNull @Size(max=8) String name
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=jwtService.getUserFromJwt(jwt);
+        ContainerType containerType=containerTypeService.getEntityById(id);
+
+        if (Objects.equals(containerType.getUser(),user)) {
+            return containerTypeMapper.toDto(containerTypeService.modifyContainerType(containerType,name));
+        } else {
+            throw new GenericException("You are not allowed to modify this resource");
         }
     }
 }

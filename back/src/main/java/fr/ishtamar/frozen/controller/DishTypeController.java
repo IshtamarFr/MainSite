@@ -4,6 +4,8 @@ import fr.ishtamar.frozen.model.dishtype.DishType;
 import fr.ishtamar.frozen.model.dishtype.DishTypeDto;
 import fr.ishtamar.frozen.model.dishtype.DishTypeMapper;
 import fr.ishtamar.frozen.model.dishtype.DishTypeService;
+import fr.ishtamar.frozen.model.location.Location;
+import fr.ishtamar.frozen.model.location.LocationDto;
 import fr.ishtamar.starter.exceptionhandler.EntityNotFoundException;
 import fr.ishtamar.starter.exceptionhandler.GenericException;
 import fr.ishtamar.starter.model.user.UserInfo;
@@ -41,9 +43,9 @@ public class DishTypeController {
         DishType dishType=DishType.builder()
                 .name(name)
                 .user(user)
-                .monthsDefault(monthsDefault)
                 .build();
 
+        dishType.setMonthsDefault(monthsDefault == null ? 0L : monthsDefault);
         return dishTypeMapper.toDto(dishTypeService.createEntity(dishType));
     }
 
@@ -67,6 +69,24 @@ public class DishTypeController {
             return "This dishType was successfully deleted";
         } else {
             throw new GenericException("You are not allowed to delete this resource");
+        }
+    }
+
+    @PutMapping("/{id}")
+    @Secured("ROLE_USER")
+    public DishTypeDto modifyDishType(
+            @RequestHeader(value="Authorization",required=false) String jwt,
+            @PathVariable Long id,
+            @RequestParam @NotNull @Size(max=32) String name,
+            @RequestParam(required=false) @Min(0) Long monthsDefault
+    ) throws EntityNotFoundException, GenericException {
+        UserInfo user=jwtService.getUserFromJwt(jwt);
+        DishType dishType=dishTypeService.getEntityById(id);
+
+        if (Objects.equals(dishType.getUser(),user)) {
+            return dishTypeMapper.toDto(dishTypeService.modifyDishType(dishType,name,monthsDefault));
+        } else {
+            throw new GenericException("You are not allowed to modify this resource");
         }
     }
 }
